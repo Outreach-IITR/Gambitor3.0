@@ -46,6 +46,9 @@ model Participant {
 model SchoolAmbassador {
   id        Int     @id @default(autoincrement())
   userId    Int     @unique
+  name             String
+  contactNumber    String
+  schoolName       String  
   extraInfo String? // Any extra fields specific to School Ambassadors
   user      User    @relation(fields: [userId], references: [id])
 }
