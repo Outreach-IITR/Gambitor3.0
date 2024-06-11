@@ -1,3 +1,4 @@
+"use client";
 import img1 from '../../../public/whale.svg'
 import Image from "next/image";
 import img2 from "../../../public/sharks.svg"
@@ -5,10 +6,12 @@ import img2 from "../../../public/sharks.svg"
 
 
 
+
 export default function RoundDescription() {
+    
     return (
-      <section id="ROUNDS" className="text-white relative z-[1]  ">
-        <h1 className="text-4xl my-[5vh] font-bold text-center">ROUNDS</h1>
+      <section  id="ROUNDS" className="text-white relative z-[1]  ">
+        <h1 className="text-[2.5vw] my-[2vw] font-bold text-center">ROUNDS</h1>
         <div className="flex  justify-between items-center ">
           <div className="">
             <Image src={img1} className='w-[35vw]'></Image>
@@ -37,8 +40,8 @@ export default function RoundDescription() {
         <div className="flex justify-between mx-[15vw]  ">
          
 
-          <div className="w-1/2 pt-[20vh]">
-            <h1 className="text-[2vw] my-2 font-bold">PINNACLE</h1>
+          <div className="w-1/2 pt-[5vw]">
+            <h1 className="text-[2vw] font-bold">PINNACLE</h1>
             <p className="text-[1vw] font-semibold">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita
               odio iste illum obcaecati? Quisquam exercitationem molestias
