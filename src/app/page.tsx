@@ -10,15 +10,16 @@ import icon1 from './_assets/insta.svg'
 import icon2 from './_assets/FB.svg'
 import icon3 from './_assets/Linkedin.svg'
 import bg2 from './_assets/phonebg.svg'
+import icon4 from './_assets/whatsapp.svg'
 export default function UnderConstruction(){
     return(
         <div className="pt-[2vw]">
             <nav className="flex justify-between pb-[2rem] px-[5vw] ">
                 <Image alt='' src={logo} className="sm:w-[15rem] w-[8rem]"/>
                 <div className="flex items-center">
-                        <button className="flex items-center border-2 rounded-xl border-black sm:px-[2em] sm:h-[3.5rem] p-[0.5em]  ">
-                        <Image alt='' className="w-[7rem] sm:w-[11rem]" src={db}/>
-                        <Image alt=''  src={dbimg} className="w-[1rem] sm:w-[1.5rem]"/>
+                        <button className="flex items-center border-2 rounded-xl border-black sm:px-[2em] sm:h-[4rem] p-[0.5em]  ">
+                        <Image alt='' className="w-[7rem] sm:w-[12rem]" src={db}/>
+                        <Image alt=''  src={dbimg} className="w-[1rem] sm:w-[2rem]"/>
                         </button>
                 </div>
             </nav>
@@ -36,13 +37,14 @@ export default function UnderConstruction(){
                         <a href=""><Image alt='' src={icon1}/></a>
                         <a href=""><Image alt='' src={icon2}/></a>
                         <a href=""><Image alt='' src={icon3}/></a>
+                        <a href=""><Image alt='' src={icon4} className="relative -top-[5px]"/></a>
                     </div>
                 </div>
             </div>
-            <div className="hidden sm:block w-[100vw] absolute bottom-0 opacity-50">
+            <div className="hidden sm:block w-[100%] absolute top-[500px] ">
                 <Image alt='' src={bg} className="w-[100%]"/>
             </div>
-            <div className="sm:hidden  w-[100%] absolute bottom-0 z-0 opacity-50">
+            <div className="sm:hidden  w-[100%] absolute bottom-0 z-0 ">
                 <Image alt='' src={bg2} className="w-full"/>
             </div>
         </div>
