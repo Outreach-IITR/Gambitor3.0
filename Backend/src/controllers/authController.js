@@ -2,6 +2,7 @@ import prisma from '../db/dbConfig.js';
 import vine, { errors } from '@vinejs/vine';
 import { registerSchema } from '../validations/authValidation.js';
 import bcrypt from "bcryptjs";
+import { Role } from '@prisma/client';
 
 class AuthController {
   static async register(req, res) {
@@ -14,10 +15,14 @@ class AuthController {
       const salt = bcrypt.genSaltSync(10);
       payload.password = bcrypt.hashSync(payload.password, salt);
 
-      
+      const user = await prisma.users.create({
+        data: payload,
+      });
 
       return res.json({
-        payload
+        status: 200,
+        message: "User created successfully",
+        user,
       });
 
 

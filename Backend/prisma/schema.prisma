@@ -11,7 +11,6 @@ generator client {
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
 }
 
 enum Role {
@@ -23,7 +22,7 @@ model User {
   id          Int               @id @default(autoincrement())
   email       String            @unique
   password    String?
-  role        Role
+  role        Role?
   googleId    String?           @unique
   createdAt   DateTime          @default(now())
   updatedAt   DateTime          @updatedAt
