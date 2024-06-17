@@ -9,8 +9,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 enum Role {
@@ -32,28 +33,28 @@ model User {
 }
 
 model Participant {
-  id               Int     @id @default(autoincrement())
-  userId           Int     @unique
-  name             String
-  contactNumber    String
-  class            Class
-  referralCode     String
-  schoolName       String
-  extraInfo        String? // Any extra fields specific to School Ambassadors
-  user             User    @relation(fields: [userId], references: [id])
+  id            Int     @id @default(autoincrement())
+  userId        Int     @unique
+  name          String
+  contactNumber String
+  class         Class
+  referralCode  String
+  schoolName    String
+  extraInfo     String? // Any extra fields specific to School Ambassadors
+  user          User    @relation(fields: [userId], references: [id])
 }
 
 model SchoolAmbassador {
-  id        Int     @id @default(autoincrement())
-  userId    Int     @unique
-  name             String
-  contactNumber    String
-  schoolName       String  
-  extraInfo String? // Any extra fields specific to School Ambassadors
-  user      User    @relation(fields: [userId], references: [id])
+  id            Int     @id @default(autoincrement())
+  userId        Int     @unique
+  name          String
+  contactNumber String
+  schoolName    String
+  extraInfo     String? // Any extra fields specific to School Ambassadors
+  user          User    @relation(fields: [userId], references: [id])
 }
 
-enum Class{
+enum Class {
   METIOX
   APOLLOX
   ATHENOX

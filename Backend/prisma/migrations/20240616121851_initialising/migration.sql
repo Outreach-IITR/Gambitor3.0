@@ -35,6 +35,9 @@ CREATE TABLE "Participant" (
 CREATE TABLE "SchoolAmbassador" (
     "id" SERIAL NOT NULL,
     "userId" INTEGER NOT NULL,
+    "name" TEXT NOT NULL,
+    "contactNumber" TEXT NOT NULL,
+    "schoolName" TEXT NOT NULL,
     "extraInfo" TEXT,
 
     CONSTRAINT "SchoolAmbassador_pkey" PRIMARY KEY ("id")
