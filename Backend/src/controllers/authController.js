@@ -1,4 +1,4 @@
-import prisma from '../db/dbConfig.js';
+import {prisma, connectDB} from '../db/index.js';
 import vine, { errors } from '@vinejs/vine';
 import { registerSchema, loginSchema } from '../validations/authValidation.js';
 import bcrypt from 'bcryptjs';
@@ -36,6 +36,7 @@ class AuthController {
 
   static async login(req, res) {
     try {
+      // connectDB()
       const body = req.body;
       const validator = vine.compile(loginSchema);
       const payload = await validator.validate(body);

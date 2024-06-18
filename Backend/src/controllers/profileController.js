@@ -1,4 +1,4 @@
-import prisma from "../db/dbConfig.js";
+import {prisma} from "../db/index.js";
 
 
 class ProfileController {
