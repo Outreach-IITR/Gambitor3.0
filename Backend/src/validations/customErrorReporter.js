@@ -1,4 +1,3 @@
-
 import { errors } from "@vinejs/vine";
 
 export class CustomErrorReporter {

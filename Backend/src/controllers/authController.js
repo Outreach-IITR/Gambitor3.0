@@ -1,18 +1,20 @@
-import {prisma, connectDB} from '../db/index.js';
-import vine, { errors } from '@vinejs/vine';
-import { registerSchema, loginSchema } from '../validations/authValidation.js';
-import bcrypt from 'bcryptjs';
-// import { Role } from '@prisma/client';
-import jwt from 'jsonwebtoken';
+import { asyncHandler } from "../utils/asyncHandler.js";
+import { ApiError } from "../utils/ApiError.js";
+import { ApiResponse } from "../utils/ApiResponse.js";
+import { prisma } from "../db/index.js";
+import vine, { errors } from "@vinejs/vine";
+import { registerSchema, loginSchema } from "../validations/authValidation.js";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 class AuthController {
-  static async register(req, res) {
+  static register = asyncHandler(async (req, res, next) => {
     try {
       const body = req.body;
       const validator = vine.compile(registerSchema);
       const payload = await validator.validate(body);
 
-      //   * Encrypt the password
+      // Encrypt the password
       const salt = bcrypt.genSaltSync(10);
       payload.password = bcrypt.hashSync(payload.password, salt);
 
@@ -20,41 +22,36 @@ class AuthController {
         data: payload,
       });
 
-      return res.json({
-        status: 200,
-        message: 'User created successfully',
-        user,
-      });
+      const response = new ApiResponse(200, user, "User created successfully");
+      return res.status(200).json(response);
     } catch (error) {
-      console.log('The error is', error);
       if (error instanceof errors.E_VALIDATION_ERROR) {
-        // console.log(error.messages);
-        return res.status(400).json({ errors: error.messages });
+        throw new ApiError(400, "Validation Error", error.messages);
       }
+      throw new ApiError(500, "Registration failed", [], error.stack);
     }
-  }
+  });
 
-  static async login(req, res) {
+  static login = asyncHandler(async (req, res, next) => {
     try {
       // connectDB()
       const body = req.body;
       const validator = vine.compile(loginSchema);
       const payload = await validator.validate(body);
 
-      //   * Find user with email
+      // Find user with email
       const findUser = await prisma.user.findUnique({
         where: {
           email: payload.email,
         },
       });
 
+      if (!findUser) {
+        throw new ApiError(400, "No user found with this email.");
+      }
       if (findUser) {
         if (!bcrypt.compareSync(payload.password, findUser.password)) {
-          return res.status(400).json({
-            errors: {
-              password: 'Incorrect Password.',
-            },
-          });
+          throw new ApiError(400, "Incorrect Password.");
         }
 
         // * Issue token to user
@@ -64,34 +61,26 @@ class AuthController {
           email: findUser.email,
           // add role and other req payload
         };
-        const token = jwt.sign(payloadData, process.env.JWT_SECRET_KEY, {
-          expiresIn: '365d',
+        const token = jwt.sign(payloadData, process.env.ACCESS_TOKEN_SECRET, {
+          expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
         });
 
-        return res.json({
-          message: 'Logged in successfully',
-          access_token: `Bearer ${token}`,
-        });
+        const response = new ApiResponse(
+          200,
+          { access_token: `Bearer ${token}` },
+          "Logged in successfully"
+        );
+        return res.status(200).json(response);
       }
-
-      return res.status(400).json({
-        errors: {
-          email: 'No user found with this email.',
-        },
-      });
+      throw new ApiError(400, "No user found with this email.");
     } catch (error) {
-      console.log('The error is', error);
       if (error instanceof errors.E_VALIDATION_ERROR) {
-        // console.log(error.messages);
-        return res.status(400).json({ errors: error.messages });
+        throw new ApiError(400, "Validation Error", error.messages);
       } else {
-        return res.status(500).json({
-          status: 500,
-          message: 'Something went wrong.Please try again.',
-        });
+        throw new ApiError(500, "Login failed");
       }
     }
-  }
+  });
 }
 
 export default AuthController;

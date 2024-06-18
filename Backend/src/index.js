@@ -1,22 +1,14 @@
-import dotenv from "dotenv"
-import express from "express";
-import ApiRoutes from "./routes/api.js";
+import dotenv from "dotenv";
+import { app } from "./app.js";
 
 dotenv.config({
-  path:"./env"
-})
-
-const app = express();
-const PORT = process.env.PORT || 8000;
-
-// * Middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-
-app.get("/", (req, res) => {
-  return res.json({ message: "Hello It's working.." });
+  path: "./.env",
 });
 
-app.use("/api", ApiRoutes);
+const PORT = process.env.PORT || 8000;
+
+app.get("/", (req, res) => {
+  return res.json({ message: "Yay It's working.." });
+});
 
 app.listen(PORT, () => console.log(`Server is running on PORT ${PORT}`));
