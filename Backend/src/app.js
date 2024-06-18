@@ -28,7 +28,7 @@ app.use((err, req, res, next) => {
   // Handle other types of errors or fall back to a generic error
   return res.status(500).json({
     success: false,
-    message: "Internal Server Error",
+    message: "Default Internal Server Error",
   });
 });
 

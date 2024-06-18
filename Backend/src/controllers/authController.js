@@ -28,6 +28,9 @@ class AuthController {
       if (error instanceof errors.E_VALIDATION_ERROR) {
         throw new ApiError(400, "Validation Error", error.messages);
       }
+      if (error instanceof ApiError) {
+        throw error;
+      }
       throw new ApiError(500, "Registration failed", [], error.stack);
     }
   });
@@ -76,8 +79,12 @@ class AuthController {
     } catch (error) {
       if (error instanceof errors.E_VALIDATION_ERROR) {
         throw new ApiError(400, "Validation Error", error.messages);
+      }
+
+      if (error instanceof ApiError) {
+        throw error;
       } else {
-        throw new ApiError(500, "Login failed");
+        throw new ApiError(500, "Internal Server Error");
       }
     }
   });
