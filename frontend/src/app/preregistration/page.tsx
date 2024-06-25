@@ -1,5 +1,6 @@
 "use client";
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import  { useState } from 'react';
 import logo from "./_assets/Pre-Registration-page-logo.svg";
 import Background from "./_assets/Background.svg";
@@ -11,6 +12,8 @@ const PDF_FILE_URL = "/Brochure.pdf";
 
 
 const PreRegistrationPage = () => {
+  const router = useRouter()
+
   const [formData, setFormData] = useState({
     name: '  ',
     category: '  ',
@@ -38,6 +41,7 @@ const PreRegistrationPage = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     // Handle form submission logic here
+    router.push('/success')
     console.log(formData); // Example: Logging form data
   };
 
