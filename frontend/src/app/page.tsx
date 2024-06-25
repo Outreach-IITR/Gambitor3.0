@@ -1,6 +1,6 @@
 
 import Image from "next/image";
-import logo from "./_assets/Logo.svg"
+import logo from "./_assets/Logo2.svg"
 import db from './_assets/DB.svg'
 import dbimg from './_assets/DownloadOutline.svg'
 import heading from './_assets/heading.svg'
@@ -14,8 +14,8 @@ import icon4 from './_assets/whatsapp.svg'
 export default function UnderConstruction(){
     return(
         <div className="pt-[2vw]">
-            <nav className="flex justify-between pb-[2rem] px-[5vw] ">
-                <Image alt='' src={logo} className="sm:w-[15rem] w-[8rem]"/>
+            <nav className="flex justify-between pb-[5rem] px-[5vw] ">
+                <Image alt='' src={logo} className="sm:w-[18rem] w-[8rem]"/>
                 <div className="flex items-center">
                         <button className="flex items-center border-2 rounded-xl border-black sm:px-[2em] sm:h-[4rem] p-[0.5em]  ">
                         <Image alt='' className="w-[7rem] sm:w-[12rem]" src={db}/>
@@ -26,7 +26,7 @@ export default function UnderConstruction(){
             <div className='flex flex-col px-[2rem] items-center relative z-[1]'>
                 <Image alt='' src={heading} className="pb-[2rem]"/>
                 <Image alt='' src={ptext} className="sm:pb-[3.5rem] pb-[2rem]"/>
-                <a href="https://forms.gle/ZCQ1e6RgWqDpCYAx7">
+                <a href="/preregistration">
                     <div className="sm:border-4 border-2 rounded-xl border-blue-600 sm:px-[4em] cursor-pointer h-[2rem] mb-[1rem] flex items-center sm:p-[1.5em] p-[1rem] " >
                         <h1 className="sm:text-2xl font-bold">REGISTER</h1>
                     </div>
@@ -41,9 +41,9 @@ export default function UnderConstruction(){
                     </div>
                 </div>
             </div>
-            <div className="hidden sm:block w-[100%] absolute top-[500px] ">
-                <Image alt='' src={bg} className="w-[100%]"/>
-            </div>
+            
+                <Image alt='' src={bg} className="hidden xl:block xl:w-[100%] xl:absolute xl:top-[500px]  sm:block w-[100%] sm:absolute sm:bottom-[0]"/>
+           
             <div className="sm:hidden  w-[100%] absolute bottom-0 z-0 ">
                 <Image alt='' src={bg2} className="w-full"/>
             </div>
