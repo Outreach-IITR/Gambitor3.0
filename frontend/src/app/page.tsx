@@ -8,7 +8,7 @@ import ptext from './_assets/ptext.svg'
 import bg from './_assets/bgpc.svg'
 import icon1 from './_assets/insta.svg'
 import icon2 from './_assets/FB.svg'
-import icon3 from './_assets/Linkedin.svg'
+import icon3 from './_assets/yt.svg'
 import bg2 from './_assets/phonebg.svg'
 import icon4 from './_assets/whatsapp.svg'
 export default function UnderConstruction(){
@@ -38,7 +38,7 @@ export default function UnderConstruction(){
                     <div className="flex justify-between space-x-4 sm:space-x-2">
                         <a href="https://www.instagram.com/gambitor.iitr?igsh=MXc3dWM3MW9vZzNyNA=="><Image className="w-[2.5rem]" alt='' src={icon1}/></a>
                         <a href="https://www.facebook.com/profile.php?id=100094215150920&mibextid=ZbWKwL"><Image className="w-[2.5rem]" alt='' src={icon2}/></a>
-                        <a href=""><Image className="w-[2.5rem]" alt='' src={icon3}/></a>
+                        <a href="https://youtube.com/@gambitoriitroorkee?si=FQNreC2Tvj7nMPRz"><Image className="w-[3rem] relative -top-[4px]" alt='' src={icon3}/></a>
                         <a href="https://whatsapp.com/channel/0029VaUzMHl5fM5bRmJVk02e"><Image alt='' src={icon4} className="w-[3rem] relative -top-[5px]"/></a>
                     </div>
                 </div>
