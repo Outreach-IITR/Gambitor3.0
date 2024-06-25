@@ -7,7 +7,7 @@ import DownloadLogo from "./_assets/download-logo.svg";
 
 // import "./aa.css";
 
-const PDF_FILE_URL = "/MOKETEST.pdf";
+const PDF_FILE_URL = "/Brochure.pdf";
 
 
 const PreRegistrationPage = () => {
@@ -42,11 +42,11 @@ const PreRegistrationPage = () => {
   };
 
   let backgroundImageStyle = {
-    // backgroundImage: url("/Background.svg"),
+    backgroundImage: `url(${Background})`,
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center center',
-    width: "98.93vw"
+    
   };
 
 
@@ -112,7 +112,7 @@ const PreRegistrationPage = () => {
                 lg:w-[300px] lg:h-14 lg:border-0.5 lg:rounded-xl lg:text-2xl lg:mt-28">REGISTER</button>
       </form>
       <div>
-        <img src={Background} alt="Background" className='m-0 w-screen bg1' style={backgroundImageStyle} />
+        <Image src={Background} alt="Background" className='m-0 w-screen' style={backgroundImageStyle} />
       </div>
     </div>
   );
