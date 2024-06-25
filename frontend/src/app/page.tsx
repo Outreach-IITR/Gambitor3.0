@@ -34,10 +34,10 @@ export default function UnderConstruction(){
                 <div className="py-[1.5rem]">
                     <h1 className="text-center mb-[1rem] sm:text-4xl font-semibold text-black ">CONTACT US:</h1>
                     <div className="flex justify-between space-x-2">
-                        <a href=""><Image alt='' src={icon1}/></a>
-                        <a href=""><Image alt='' src={icon2}/></a>
+                        <a href="https://www.instagram.com/gambitor.iitr?igsh=MXc3dWM3MW9vZzNyNA=="><Image alt='' src={icon1}/></a>
+                        <a href="https://www.facebook.com/profile.php?id=100094215150920&mibextid=ZbWKwL"><Image alt='' src={icon2}/></a>
                         <a href=""><Image alt='' src={icon3}/></a>
-                        <a href=""><Image alt='' src={icon4} className="relative -top-[5px]"/></a>
+                        <a href="https://whatsapp.com/channel/0029VaUzMHl5fM5bRmJVk02e"><Image alt='' src={icon4} className="relative -top-[5px]"/></a>
                     </div>
                 </div>
             </div>
