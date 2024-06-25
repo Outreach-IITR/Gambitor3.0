@@ -17,10 +17,12 @@ export default function UnderConstruction(){
             <nav className="flex justify-between pb-[5rem] px-[5vw] ">
                 <Image alt='' src={logo} className="sm:w-[18rem] w-[8rem]"/>
                 <div className="flex items-center">
-                        <button className="flex items-center border-2 rounded-xl border-black sm:px-[2em] sm:h-[4rem] p-[0.5em]  ">
-                        <Image alt='' className="w-[7rem] sm:w-[12rem]" src={db}/>
-                        <Image alt=''  src={dbimg} className="w-[1rem] sm:w-[2rem]"/>
-                        </button>
+                        <a href="/Brochure.pdf" download>
+                            <button className="flex items-center border-2 rounded-xl border-black sm:px-[2em] sm:h-[4rem] p-[0.5em]  ">
+                                <Image alt='' className="w-[7rem] sm:w-[12rem]" src={db}/>
+                                <Image alt=''  src={dbimg} className="w-[1rem] sm:w-[2rem]"/>
+                            </button>
+                        </a>
                 </div>
             </nav>
             <div className='flex flex-col px-[2rem] items-center relative z-[1]'>
@@ -33,11 +35,11 @@ export default function UnderConstruction(){
                 </a>
                 <div className="py-[1.5rem]">
                     <h1 className="text-center mb-[1rem] sm:text-4xl font-semibold text-black ">CONTACT US:</h1>
-                    <div className="flex justify-between space-x-2">
-                        <a href="https://www.instagram.com/gambitor.iitr?igsh=MXc3dWM3MW9vZzNyNA=="><Image alt='' src={icon1}/></a>
-                        <a href="https://www.facebook.com/profile.php?id=100094215150920&mibextid=ZbWKwL"><Image alt='' src={icon2}/></a>
-                        <a href=""><Image alt='' src={icon3}/></a>
-                        <a href="https://whatsapp.com/channel/0029VaUzMHl5fM5bRmJVk02e"><Image alt='' src={icon4} className="relative -top-[5px]"/></a>
+                    <div className="flex justify-between space-x-4 sm:space-x-2">
+                        <a href="https://www.instagram.com/gambitor.iitr?igsh=MXc3dWM3MW9vZzNyNA=="><Image className="w-[2.5rem]" alt='' src={icon1}/></a>
+                        <a href="https://www.facebook.com/profile.php?id=100094215150920&mibextid=ZbWKwL"><Image className="w-[2.5rem]" alt='' src={icon2}/></a>
+                        <a href=""><Image className="w-[2.5rem]" alt='' src={icon3}/></a>
+                        <a href="https://whatsapp.com/channel/0029VaUzMHl5fM5bRmJVk02e"><Image alt='' src={icon4} className="w-[3rem] relative -top-[5px]"/></a>
                     </div>
                 </div>
             </div>
