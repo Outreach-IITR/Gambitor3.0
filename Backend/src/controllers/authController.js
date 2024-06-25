@@ -10,25 +10,27 @@ import mailService from '../utils/mailService.js';
 class AuthController {
   static register = asyncHandler(async (req, res, next) => {
     try {
-      const body = req.body;
+      const body = req.body.formData;
+      console.log(body)
       const validator = vine.compile(registerSchema);
       const payload = await validator.validate(body);
+      console.log(payload)
       const user = await prisma.user.create({
         data: payload,
       });
-
+      console.log(body)
       const response = new ApiResponse(200, user, "User created successfully");
 
       const mailOptions = {
         from: process.env.your_gmail,
-        to: req.body.email,
+        to: req.body.formData.email,
         subject: "Registration Completed successfully.",
-        text: `Hello ${req.body.name}, \n
+        text: `Hello ${req.body.formData.name}, \n
         Team GambitoR is delighted to inform you that you have successfully registered for the first edition of GambitoR! \n  
         These are the credentials you have entered. \n
-        Email: ${req.body.email} \n
-        Mobile Number: ${req.body.contactNumber} \n
-        Password: ${req.body.contactNumber} \n
+        Email: ${req.body.formData.email} \n
+        Mobile Number: ${req.body.formData.contactNumber} \n
+        Password: ${req.body.formData.contactNumber} \n
         \n
         Use the email and password provided to login to your account once the website goes live. \n
         \n
@@ -52,6 +54,7 @@ class AuthController {
       });
 
     } catch (error) {
+      console.log(error)
       if (error instanceof errors.E_VALIDATION_ERROR) {
         throw new ApiError(400, "Validation Error", error.messages);
       }
