@@ -1,3 +1,4 @@
+'use client';
 import Image from "next/image";
 import logo from "../_assets/Logo2.svg"
 import db from '../_assets/DB.svg'
@@ -14,7 +15,7 @@ const Headingcss = {
     textShadow: '4px 4px 2px rgba(0, 0, 0, 0.25)' 
   };
 
-export default function UnderConstruction(){
+export default function SuccessPage(){
     return(
         <div className="pt-[2vw]">
             <nav className="flex justify-between pb-[5rem] px-[5vw] ">
