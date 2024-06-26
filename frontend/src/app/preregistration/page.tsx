@@ -176,14 +176,10 @@ const PreRegistrationPage = () => {
   
 
   return (
-    <div className=' p-0 m-0 text-[#3664AF] h-screen  w-screen flex flex-col items-center'>
-      <div className=' flex justify-between items-center  w-screen mt-6 lg:mt-10'>
-        <Image src={logo} alt="Logo" className='w-40 h-20 ml-6 lg:w-[320px] lg:ml-16' />
-        {/* <button className=" cursor-pointer mr-6 w-40 h-6 border-2 border-black rounded-lg flex flex-row justify-center items-center font-jost bg-white lg:mr-12 lg:w-80 lg:h-14 " onClick={handleDownload}>
-          <p className='text-base mr-0 w-full lg:ml-2 text-[0.70rem] font-semibold leading-36.8 tracking-wide text-center lg:text-2xl'>Download Brochure</p>
-          <Image src={DownloadLogo} alt="Download" className='w-4 h-4 mr-2 ml-0 lg:ml-5 lg:mr-15  lg:w-10 lg:h-8'/>
-        </button> */}
-                        <div className="flex items-center">
+    <div className=' p-0 m-0 text-[#3664AF] h-screen  w-full flex flex-col items-center'>
+      <nav className="flex justify-between  px-[5vw] w-full mt-[2vw] ">
+                <Image alt='' src={logo} className="sm:w-[307px] w-[138px]"/>
+                <div className="flex items-center">
                         <a href="/Brochure.pdf" download>
                             <button className="flex items-center border-2 rounded-[7.2px] border-black sm:w-[305px] sm:h-[56px] p-[0.5em]  ">
                                 {/* <Image alt='' className="w-[7rem] sm:w-[12rem]" src={db}/> */}
@@ -192,7 +188,7 @@ const PreRegistrationPage = () => {
                             </button>
                         </a>
                 </div>
-      </div>
+            </nav>
       <form onSubmit={handleSubmit} className='mt-6 flex flex-col justify-between items-center w-full'>
       <h1 style={Headingcss} className="mt-2 mb-[4rem] w-[25rem] h-[4rem] font-jost text-[2rem] font-extrabold leading-[7rem] tracking-[0.03em] text-center lg:w-[60rem] lg:h-[6rem] lg:text-[4.7rem] lg:my-28" >PRE-REGISTRATION</h1>
       <ErrorBox message={errors.text} /> 
