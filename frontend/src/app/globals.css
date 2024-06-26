@@ -5,13 +5,10 @@
 @tailwind utilities;
 
 .backgroundimg{
-    background-image: url('./_assets/bgpc.svg');
+    background-image: url('/Background.svg');
     background-position:100% 100%;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
 
 }
 
-.bg1{
-    background-image: url('/Background.svg'); 
-}
