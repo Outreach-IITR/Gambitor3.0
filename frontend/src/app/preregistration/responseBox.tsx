@@ -5,7 +5,7 @@ interface ResponseBoxProps {
   }
   
   const ResponseBox: React.FC<ResponseBoxProps> = ({ message }) => {
-    return message ? <div className="text-green-500 ">{message}</div> : null;
+    return message ? <div className="text-green-500 lg:text-4xl text-2xl">{message}</div> : null;
   };
   
   export default ResponseBox;

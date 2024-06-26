@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "Class" AS ENUM ('METIOX', 'APOLLOX', 'ATHENOX');
+CREATE TYPE "Category" AS ENUM ('METIOX', 'APOLLOX', 'ATHENOX');
 
 -- CreateEnum
 CREATE TYPE "Role" AS ENUM ('PARTICIPANT', 'SCHOOL_AMBASSADOR');
@@ -11,7 +11,7 @@ CREATE TABLE "User" (
     "password" TEXT,
     "name" TEXT NOT NULL,
     "contactNumber" TEXT NOT NULL,
-    "class" "Class" NOT NULL,
+    "category" "Category" NOT NULL,
     "referralCode" TEXT,
     "schoolName" TEXT NOT NULL,
     "role" "Role" NOT NULL DEFAULT 'PARTICIPANT',
@@ -24,13 +24,13 @@ CREATE TABLE "User" (
 );
 
 -- CreateTable
-CREATE TABLE "OTP" (
+CREATE TABLE "Otpvalue" (
     "id" SERIAL NOT NULL,
     "email" TEXT NOT NULL,
     "code" TEXT NOT NULL,
     "expiresAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "OTP_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Otpvalue_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex

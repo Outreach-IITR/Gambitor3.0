@@ -27,17 +27,16 @@ class AuthController {
         subject: "Registration Completed successfully.",
         text: `Hello ${req.body.formData.name}, \n
         Team GambitoR is delighted to inform you that you have successfully registered for the first edition of GambitoR! \n  
-        These are the credentials you have entered. \n
-        Email: ${req.body.formData.email} \n
-        Mobile Number: ${req.body.formData.contactNumber} \n
+        These are the credentials you have entered.
+        Email: ${req.body.formData.email} 
+        Mobile Number: ${req.body.formData.contactNumber} 
         Password: ${req.body.formData.contactNumber} \n
-        \n
         Use the email and password provided to login to your account once the website goes live. \n
         \n
         Follow us on our social media handles to stay connected! \n
         Further updates will be sent to your registered email address. \n
         \n
-        With regards, \n
+        With regards,
         Team GambitoR.
         `,
       };
@@ -94,7 +93,10 @@ class AuthController {
   static verifyOtp = asyncHandler(async (req, res, next) => {
     try {
       const { email, otp } = req.body;
+      console.log(email)
+      console.log(otp)
       const isOtpValid = await verifyOTP(email, otp);
+      console.log(isOtpValid);
       if (isOtpValid) {
         res.json({ message: 'OTP verified successfully' });
       } else {

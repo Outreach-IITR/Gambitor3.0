@@ -15,7 +15,7 @@ function generateOTP() {
     const otpCode = generateOTP();
     const expirationTime = DateTime.now().plus({ minutes: 4 }).toJSDate(); // OTP expires in 5 minutes
   
-    const otp = await prisma.OTP.create({
+    const otp = await prisma.Otpvalue.create({
       data: {
         email,
         code: otpCode,
@@ -27,17 +27,27 @@ function generateOTP() {
   }
   
   // Verify an OTP
-  async function verifyOTP(email, otpCode) {
-    const otpRecord = await prisma.OTP.findFirst({
+  async function verifyOTP(email, otpval) {
+    console.log(email)
+    console.log(otpval)
+    const currentDate = new Date();
+    const otpRecord = await prisma.Otpvalue.findFirst({
       where: {
-        email,
-        code: otpCode,
+        email: email,
+        code: otpval,  // Add OTP code match condition
         expiresAt: {
-          gte: new Date(),
+          gte: currentDate,  // Ensure the OTP is not expired
         },
       },
+      select: {
+        id: true,
+        email: true,
+        code: true,
+        expiresAt: true,
+      },
     });
-  
+    console.log(otpRecord);
+    console.log(otpRecord !== null)
     return otpRecord !== null;
   }  
 
