@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import EmailLogo from './assets/Email-logo.svg';
+import emailLogo from './assets/Email-logo.svg'
 import { useRouter,useSearchParams } from 'next/navigation';
 import axios from "../https/api"
 import { AxiosError } from 'axios';
@@ -39,11 +39,14 @@ const mailVerification = () => {
 
   const handleVerify = async (e:any) => {
     const otp = formData.num1+formData.num2+formData.num3+formData.num4;
+    setError('');
+    setResponse('');
     try{
 
         const response = await axios.post('verifyOtp',{email,otp});
-        console.log(response.data.data);
+        console.log(response.data.message);
         //set response verified successfuly
+        setResponse(response.data?.data);
         router.push(`/preregistration?isVerified=${true}&&email=${email}&&class=${className}&&name=${name}&&schoolName=${schoolName}&&contactNumber=${contactNumber}`)
         //if invalid set response 
 
@@ -51,32 +54,38 @@ const mailVerification = () => {
     {
         if (error instanceof Error && 'response' in error && error.response) {
             const axiosError = error as AxiosError;
-            console.log(axiosError.response?.data);
-            const errorMessage = (axiosError.response?.data as { errors?: { [key: string]: string } })?.errors ?? 'Unknown error';
-            console.log(errorMessage);
+            const errorMessage = axiosError.response?.data?.message;
+            console.log(axiosError.response?.data?.message);
+            setError(errorMessage)
             // set Error invalid OTP
         }
     }
   }
   const handleCancel = ()=>{
     // set response account not verified
+    setError('');
+    setResponse('Account not verified');
     router.push(`/preregistration?isVerified=${false}`)
   }
   const handleResend = async (e:any) => {
     const otp = formData.num1+formData.num2+formData.num3+formData.num4;
+    setError('');
+    setResponse('');
     try{
 
         const response = await axios.post('sendOtp',{email});
-        console.log(response.data);
+        console.log(response.data?.data);
+        setResponse(response.data?.data);
         //set response mail sent successfully
 
     }catch(error)
     {
         if (error instanceof Error && 'response' in error && error.response) {
             const axiosError = error as AxiosError;
-            console.log(axiosError.response?.data);
-            const errorMessage = (axiosError.response?.data as { errors?: { [key: string]: string } })?.errors ?? 'Unknown error';
-            console.log(errorMessage);
+            console.log(axiosError.response?.data?.message);
+            setError(axiosError.response?.data?.message)
+            // const errorMessage = (axiosError.response?.data as { errors?: { [key: string]: string } })?.errors ?? 'Unknown error';
+            // console.log(errorMessage);
             // set error
             
         }
@@ -87,7 +96,9 @@ const mailVerification = () => {
     <div className=' w-screen h-screen bg-slate-300 flex justify-center items-center'>
       <div className='bg-white h-[400px] w-[85%] flex flex-col justify-center items-center rounded-[0.9rem] md:h-[450px] md:w-[50%] lg:w-[39%] lg:h-[490px] lg:rounded-[1.5rem]'>
         <div className='text-center'>
-          <img src={EmailLogo} alt="Email Logo" className='h-16 w-16 mt-8 md:h-24 md:w-24' />
+          <img src={emailLogo} alt='' className='h-16 w-16 mt-8 md:h-24 md:w-24' />
+          <ResponseBox message={response} />
+          <ErrorBox message={error} />
         </div>
         <div className='mt-4 text-center'>
           <h2 className='font-semibold font-600 text-[1.2rem] h-8 md:text-[1.5rem]'>Please check your email</h2>
