@@ -1,13 +1,19 @@
 import {DateTime} from 'luxon';
 import { prisma } from '../db/client.js';
 function generateOTP() {
-    return Math.random().toString(36).substr(2, 6).toUpperCase();
+  let randomString = Math.random().toString(36).substring(2).toUpperCase();
+    while (randomString.length < 4) {
+      randomString += Math.random().toString(36).substring(2).toUpperCase();
+    }
+  
+    // Return the string sliced to the desired length
+    return randomString.substring(0, 4);
   }
 
  // Create OTP object 
   async function createOTP(email) {
     const otpCode = generateOTP();
-    const expirationTime = DateTime.now().plus({ minutes: 5 }).toJSDate(); // OTP expires in 5 minutes
+    const expirationTime = DateTime.now().plus({ minutes: 4 }).toJSDate(); // OTP expires in 5 minutes
   
     const otp = await prisma.OTP.create({
       data: {
