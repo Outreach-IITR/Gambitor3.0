@@ -1,15 +1,16 @@
 "use client";
 import Image from 'next/image';
-import  { useState } from 'react';
+import  { useState,useEffect } from 'react';
 import logo from "./_assets/Pre-Registration-page-logo.svg";
 import Background from "./_assets/Background.svg"
 import DownloadLogo from "./_assets/download-logo.svg";
 
 import { CSSProperties } from 'react';
 import axios from '../https/api';
-import { useRouter } from 'next/navigation';
+import { useRouter , useSearchParams } from 'next/navigation';
 import { AxiosError } from 'axios';
 import ErrorBox from './errorBox';
+import ResponseBox from './responseBox';
 // import "./aa.css";
 
 const PDF_FILE_URL = "/Brochure.pdf";
@@ -17,7 +18,8 @@ const PDF_FILE_URL = "/Brochure.pdf";
 
 const PreRegistrationPage = () => {
   const router = useRouter()
-
+  const searchParams = useSearchParams();
+  const flag = searchParams.get('isVerified');  
   const [formData, setFormData] = useState({
     name: '  ',
     class: '  ',
@@ -27,6 +29,32 @@ const PreRegistrationPage = () => {
   });
 
   const [isVerified, setIsVerified] = useState(false);
+
+  const [response, setResponse] = useState('');
+
+  useEffect(() => {
+    if (flag === 'true') {
+      setIsVerified(true);
+    } else {
+      setIsVerified(false);
+    }
+  }, [flag]);
+  useEffect(() => {
+    const name = searchParams.get('name') || '';
+    const classValue = searchParams.get('class') || '';
+    const schoolName = searchParams.get('schoolName') || '';
+    const contactNumber = searchParams.get('contactNumber') || '';
+    const email = searchParams.get('email') || '';
+
+    setFormData({
+      name,
+      class: classValue,
+      schoolName,
+      contactNumber,
+      email
+    });
+  }, [searchParams]);
+
 
   const [errors, setErrors] = useState({
     name: '',
@@ -60,7 +88,7 @@ const PreRegistrationPage = () => {
   const handleSubmit =  async (event:any) => {
     event.preventDefault();
     console.log(formData); // Example: Logging form data
-    if(!isVerified){
+    if(isVerified){
     try {
       const response = await axios.post('auth/register', { formData });
       console.log(response.data);
@@ -103,8 +131,24 @@ const PreRegistrationPage = () => {
 
   };
 
-  const handleClick = () => {
+  const handleClick = async (event:any) => {
+    event.preventDefault();
     //router.push('/otpPage'); // Redirect to a page where you need to enter OTP.
+    if(!isVerified){
+    try{
+      const response = await axios.post('sendOtp',{email : formData.email})
+      console.log(response.data);
+      router.push(`/mailverification?email=${formData.email}&&class=${formData.class}&&name=${formData.name}&&schoolName=${formData.schoolName}&&contactNumber=${formData.contactNumber}`);
+    }catch(err)
+    {
+      console.error(err);
+    }
+  }
+  else 
+    {
+      //setResponse that email already verified
+      setResponse('Email already verified');
+    }
   };
 
   let backgroundImageStyle = {
@@ -139,7 +183,8 @@ const PreRegistrationPage = () => {
       </div>
       <form onSubmit={handleSubmit} className='mt-6 flex flex-col justify-between items-center w-full'>
       <h1 style={Headingcss} className="mt-2 mb-[4rem] w-[25rem] h-[4rem] font-jost text-[2rem] font-extrabold leading-[7rem] tracking-[0.03em] text-center lg:w-[60rem] lg:h-[6rem] lg:text-[4.7rem] lg:my-28" >PRE-REGISTRATION</h1>
-      <ErrorBox message={errors.text} />
+      <ErrorBox message={errors.text} /> 
+      <ResponseBox message={response} />
         <div style={formStyleDiv}>
           <label htmlFor="name" className="mb-1 h-[37.84px] font-jost text-1rem font-semibold  leading-[3.5rem] tracking-[-0.04em] text-left lg:h-[37.84px] lg:mb-3 lg:text-[32px]">NAME</label>
           <ErrorBox message={errors.name} />
@@ -178,7 +223,7 @@ const PreRegistrationPage = () => {
           <ErrorBox message={errors.email} />
           <input type='email' id='email' className='mb-0 w-[24rem] h-[2rem] border-2 border-[#3664AF] rounded-[0.5rem] lg:text-3xl font-normal lg:w-[62rem] lg:h-[3.8rem] lg:rounded-[1rem] lg:mb-2'  value={formData.email} onChange={handleInputChange} />
           
-          <button className="cursor-pointer mt-1 bg-[#3664AF] w-24 h-10 border-0.5 border-[#3664AF] rounded-lg text-white font-jost font-[600] text-base leading-10 tracking-[-0.04em] text-center lg:w-[250px] lg:h-14 lg:border-0.5 lg:rounded-xl lg:text-2xl">VERIFY</button>
+          <button className="cursor-pointer mt-1 bg-[#3664AF] w-24 h-10 border-0.5 border-[#3664AF] rounded-lg text-white font-jost font-[600] text-base leading-10 tracking-[-0.04em] text-center lg:w-[250px] lg:h-14 lg:border-0.5 lg:rounded-xl lg:text-2xl" onClick={handleClick}>VERIFY</button>
         </div>
         <button type="submit" className="cursor-pointer mt-12 bg-[#3664AF] w-60 h-10 border-0.5 border-[#3664AF] rounded-lg text-white font-jost font-[600] text-xl leading-10 tracking-[-0.04em] text-center
                 lg:w-[300px] lg:h-14 lg:border-0.5 lg:rounded-xl lg:text-2xl lg:mt-28">REGISTER</button>
