@@ -167,6 +167,7 @@ const PreRegistrationPage = () => {
     display: 'flex',
     flexDirection: 'column',
     
+    
   };
   
   const Headingcss = {   
@@ -193,12 +194,12 @@ const PreRegistrationPage = () => {
       <h1 style={Headingcss} className="mt-2 mb-[4rem] w-[25rem] h-[4rem] font-jost text-[2rem] font-extrabold leading-[7rem] tracking-[0.03em] text-center lg:w-[60rem] lg:h-[6rem] lg:text-[4.7rem] lg:my-28" >PRE-REGISTRATION</h1>
       <ErrorBox message={errors.text} /> 
       <ResponseBox message={response} />
-        <div style={formStyleDiv}>
+        <div style={formStyleDiv} className='w-[24rem] lg:w-[62rem]'>
           <label htmlFor="name" className="mb-1 h-[37.84px] font-jost text-1rem font-semibold  leading-[3.5rem] tracking-[-0.04em] text-left lg:h-[37.84px] lg:mb-3 lg:text-[32px]">NAME</label>
           <ErrorBox message={errors.name} />
-          <input type="text" id='name' required className='pl-3 mb-0 w-[24rem] h-[2rem] border-2 border-[#3664AF] rounded-[0.5rem] lg:text-2xl font-normal lg:w-[62rem] lg:h-[3.8rem] lg:rounded-[1rem] lg:mb-4 '  value={formData.name} onChange={handleInputChange} />
+          <input type="text" id='name' required className='pl-3 mb-0 w-[100%] h-[2rem] border-2 border-[#3664AF] rounded-[0.5rem] lg:text-2xl font-normal  lg:h-[3.8rem] lg:rounded-[1rem] lg:mb-4 '  value={formData.name} onChange={handleInputChange} />
         </div>
-        <div style={formStyleDiv}>
+        <div style={formStyleDiv} className='w-[24rem] lg:w-[62rem]'>
             <label htmlFor="category" className="mb-1 h-[37.84px] font-jost text-1rem font-semibold leading-[3.5rem] tracking-[-0.04em] text-left lg:h-[37.84px] lg:mb-3 lg:text-[32px]">
                 CATEGORY
             </label>
@@ -206,7 +207,7 @@ const PreRegistrationPage = () => {
             <select 
             id="category" 
             required
-            className="pl-3 mb-0 w-[24rem] h-[2rem] border-2 border-[#3664AF] rounded-[0.5rem] lg:text-2xl font-normal lg:w-[62rem] lg:h-[3.8rem] lg:rounded-[1rem] lg:mb-4"
+            className="pl-3 mb-0  h-[2rem] border-2 border-[#3664AF] rounded-[0.5rem] lg:text-2xl font-normal  lg:h-[3.8rem] lg:rounded-[1rem] lg:mb-4"
             value={formData.category}
             onChange={handleSelectChange}
             >
@@ -216,23 +217,23 @@ const PreRegistrationPage = () => {
             <option value="ATHENOX">ATHENOX</option>
             </select>
         </div>
-        <div style={formStyleDiv}>
+        <div style={formStyleDiv} className='w-[24rem] lg:w-[62rem]'>
           <label htmlFor="schoolName" className="mb-1 h-[37.84px] font-jost text-1rem font-semibold leading-[3.5rem] tracking-[-0.04em] text-left lg:h-[37.84px] lg:mb-3 lg:text-[32px]">SCHOOL NAME</label>
           <ErrorBox message={errors.schoolName} />
-          <input type="text" id='schoolName' required className='pl-3 mb-0 w-[24rem] h-[2rem] border-2 border-[#3664AF] rounded-[0.5rem] lg:text-2xl font-normal lg:w-[62rem] lg:h-[3.8rem] lg:rounded-[1rem] lg:mb-4'  value={formData.schoolName} onChange={handleInputChange} />
+          <input type="text" id='schoolName' required className='pl-3 mb-0  h-[2rem] border-2 border-[#3664AF] rounded-[0.5rem] lg:text-2xl font-normal  lg:h-[3.8rem] lg:rounded-[1rem] lg:mb-4'  value={formData.schoolName} onChange={handleInputChange} />
         </div>
-        <div style={formStyleDiv}>
+        <div style={formStyleDiv} className='w-[24rem] lg:w-[62rem]'>
           <label htmlFor="contactNumber" className="mb-1 h-[37.84px] font-jost text-1rem font-semibold leading-[3.5rem] tracking-[-0.04em] text-left lg:h-[37.84px] lg:mb-3 lg:text-[32px]">CONTACT NUMBER</label>
           <ErrorBox message={errors.contactNumber} />
           <div className="text-red-500 lg:text-xl mb-2 ">
            Please enter your correct mobile number. <strong>This cannot be modified later.</strong>
-            </div>
-          <input type="text" id='contactNumber' required className='pl-3 mb-0 w-[24rem] h-[2rem] border-2 border-[#3664AF] rounded-[0.5rem] lg:text-2xl font-normal lg:w-[62rem] lg:h-[3.8rem] lg:rounded-[1rem] lg:mb-4'  value={formData.contactNumber} onChange={handleInputChange} />
+          </div>
+          <input type="text" id='contactNumber' required className='pl-3 mb-0 w-full h-[2rem] border-2 border-[#3664AF] rounded-[0.5rem] lg:text-2xl font-normal lg:h-[3.8rem] lg:rounded-[1rem] lg:mb-4'  value={formData.contactNumber} onChange={handleInputChange} />
         </div>
-        <div style={formStyleDiv}>
+        <div style={formStyleDiv} className='w-[24rem] lg:w-[62rem]'>
           <label htmlFor="email" className="mb-1 h-[37.84px] font-jost text-1rem font-semibold leading-[3.5rem] tracking-[-0.04em] text-left lg:h-[37.84px] lg:mb-3 lg:text-[32px]">EMAIL ADDRESS</label>
           <ErrorBox message={errors.email} />
-          <input type='email' id='email' className='pl-3 mb-0 w-[24rem] h-[2rem] border-2 border-[#3664AF] rounded-[0.5rem] lg:text-2xl font-normal lg:w-[62rem] lg:h-[3.8rem] lg:rounded-[1rem] lg:mb-2'  value={formData.email} onChange={handleInputChange} />
+          <input type='email' id='email' className='pl-3 mb-0  h-[2rem] border-2 border-[#3664AF] rounded-[0.5rem] lg:text-2xl font-normal  lg:h-[3.8rem] lg:rounded-[1rem] lg:mb-2'  value={formData.email} onChange={handleInputChange} />
           
           {!isVerified && <button className="cursor-pointer mt-1 bg-[#3664AF] w-24 h-10 border-0.5 border-[#3664AF] rounded-lg text-white font-jost font-[600] text-base leading-10 tracking-[-0.04em] text-center lg:w-[250px] lg:h-14 lg:border-0.5 lg:rounded-xl lg:text-2xl" onClick={handleClick}>VERIFY</button>}
           {isVerified &&  <button className="cursor-pointer mt-1 bg-[#39b79c] w-24 h-10 border-0.5 border-[#36afa5] rounded-lg text-white font-jost font-[600] text-base leading-10 tracking-[-0.04em] text-center lg:w-[250px] lg:h-14 lg:border-0.5 lg:rounded-xl lg:text-2xl">VERIFIED</button>}
