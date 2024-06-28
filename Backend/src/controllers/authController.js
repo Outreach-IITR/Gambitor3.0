@@ -31,7 +31,7 @@ class AuthController {
         Email: ${req.body.formData.email} 
         Mobile Number: ${req.body.formData.contactNumber} 
         Password: ${req.body.formData.contactNumber} \n
-        Use the email and password provided to login to your account once the website goes live. \n
+        Use the email and password provided to login to your account once the website goes live.
         \n
         Follow us on our social media handles to stay connected! \n
         Further updates will be sent to your registered email address. \n
