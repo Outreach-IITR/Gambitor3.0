@@ -11,7 +11,7 @@ import icon4 from './_assets/whatsapp.svg'
 import bg from '../_assets/Group.png'
 import logo2 from "../_assets/Logo.svg"
 
-import bg2 from '../_assets/Groupphone.png'
+// import bg2 from '../_assets/Groupphone.png'
 
 
 const Headingcss = {
@@ -36,8 +36,9 @@ export default function SuccessPage(){
             </nav>
             <div className="flex flex-col  items-center">
             <div className='flex flex-col px-[2rem] items-center justify-center relative z-[1] '>
-                <h1 style={Headingcss} className="text-[40px] sm:text-6xl md:text-7xl font-bold text-center my-[2rem] ">YOU HAVE SUCCESSFULLY REGISTERED !</h1>
-                <h1 style={Headingcss} className="text-[25px] w-[90%] sm:text-[40px] md:text-[60px] font-semibold mb-[4rem] text-center text-[#3664AF]">Best of Luck for Gambitor !</h1>
+                <h1 style={Headingcss} className="text-[30px] sm:text-4xl md:text-5xl font-bold text-center my-[2rem] ">YOU HAVE SUCCESSFULLY PRE-REGISTERED </h1>
+                <h1 style={Headingcss} className="text-[25px] w-[90%] sm:text-[40px] md:text-[50px] font-semibold mb-[4rem] text-center text-[#3664AF]">Please check your mail for a confirmation mail.</h1>
+                <h1 style={Headingcss} className="text-[25px] w-[90%] sm:text-[40px] md:text-[50px] font-semibold mb-[4rem] text-center text-[#3664AF]">Best of Luck for Gambitor !</h1>
             </div>
                 <div className="pb-[4rem] ">
                     <h1 className="text-center text-2xl mb-[1rem] sm:text-4xl font-medium text-[#3664AF] ">CONTACT US:</h1>
@@ -50,10 +51,10 @@ export default function SuccessPage(){
                 </div>
             </div>
             
-                <Image alt='' src={bg} className="hidden sm:block  w-full z-[-1]"/>
+                <Image alt='' src={bg} className="m-0 w-full"/>
            
             <div className="sm:hidden  w-[100%] a z-[-1] ">
-                <Image alt='' src={bg2} className="w-full"/>
+                {/* <Image alt='' src={bg2} className="w-full"/> */}
             </div>
         </div>
     )

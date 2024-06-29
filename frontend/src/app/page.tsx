@@ -1,15 +1,11 @@
 
 import Image from "next/image";
 import logo from "./_assets/Logo2.svg"
-import db from './_assets/DB.svg'
 import dbimg from './_assets/DownloadOutline.svg'
-import heading from './_assets/heading.svg'
-import ptext from './_assets/ptext.svg'
 import Background from './_assets/Group.png'
 import icon1 from './_assets/insta.svg'
 import icon2 from './_assets/FB.svg'
 import icon3 from './_assets/yt.svg'
-import bg2 from './_assets/Groupphone.png'
 import icon4 from './_assets/whatsapp.svg'
 export default function UnderConstruction(){
 
@@ -42,7 +38,7 @@ export default function UnderConstruction(){
                 </div>
             </nav>
             <div className='flex flex-col  items-center relative z-[1] mx-1'>
-                <h1 style={Headingcss} className="text-[30px] sm:text-[96px] md:text-8xl font-bold text-center my-[2rem]">Website is under <span className="text-[#3664AF]" >construction</span> !</h1>
+                <h1 style={Headingcss} className="text-[30px] sm:text-[96px] md:text-6xl font-bold text-center my-[2rem]">Website is under <span className="text-[#3664AF]" >construction</span> !</h1>
                 <h1 className="text-[17px] w-[90%] sm:text-[40px] md:text-4xl font-semibold mb-[4rem] text-center md:w-[55%]">Secure your spot and be the first to experience our exciting things by <span className="text-blue-700">pre-registering</span> through the following link!</h1>
                 {/* <Image alt='' src={heading} className="pb-[2rem]"/> */}
                 {/* <Image alt='' src={ptext} className="sm:pb-[3.5rem] pb-[2rem]"/> */}
