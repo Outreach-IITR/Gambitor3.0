@@ -22,12 +22,10 @@ export default function UnderConstruction(){
       };
 
       const Headingcss = {   
-        textShadow: '3px 3px 1px rgba(0, 0, 0, 0.25)' 
+        textShadow: '1px 1px 1px rgba(0, 0, 0, 0.25)' 
       };
     
       
-      
-
 
     return(
         <div className="pt-[2vw] " >
@@ -64,11 +62,11 @@ export default function UnderConstruction(){
                 </div>
             </div>
             
-                <Image src={Background} alt="Background" className='m-0 w-screen sm:block hidden'  />
+                <Image src={Background} alt="Background" className='m-0 w-full' />
            
-            <div className="sm:hidden  w-[100%]  z-[-1] ">
+            {/* <div className="sm:hidden  w-[100%]  z-[-1] ">
                 <Image alt='' src={bg2} className="w-full"/>
-            </div>
+            </div> */}
         </div>
     )
 }

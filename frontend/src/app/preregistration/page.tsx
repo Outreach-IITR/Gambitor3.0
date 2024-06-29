@@ -220,7 +220,7 @@ const PreRegistrationPage = () => {
         <div style={formStyleDiv} className='w-[24rem] lg:w-[62rem]'>
           <label htmlFor="schoolName" className="mb-1 h-[37.84px] font-jost text-1rem font-semibold leading-[3.5rem] tracking-[-0.04em] text-left lg:h-[37.84px] lg:mb-3 lg:text-[32px]">SCHOOL NAME</label>
           <ErrorBox message={errors.schoolName} />
-          <input type="text" id='schoolName' required className='pl-3 mb-0  h-[2rem] border-2 border-[#3664AF] rounded-[0.5rem] lg:text-2xl font-normal  lg:h-[3.8rem] lg:rounded-[1rem] lg:mb-4'  value={formData.schoolName} onChange={handleInputChange} />
+          <input type="text" id='schoolName' required className='pl-3 mb-0 h-[2rem] border-2 border-[#3664AF] rounded-[0.5rem] lg:text-2xl font-normal  lg:h-[3.8rem] lg:rounded-[1rem] lg:mb-4'  value={formData.schoolName} onChange={handleInputChange} />
         </div>
         <div style={formStyleDiv} className='w-[24rem] lg:w-[62rem]'>
           <label htmlFor="contactNumber" className="mb-1 h-[37.84px] font-jost text-1rem font-semibold leading-[3.5rem] tracking-[-0.04em] text-left lg:h-[37.84px] lg:mb-3 lg:text-[32px]">CONTACT NUMBER</label>
@@ -235,11 +235,11 @@ const PreRegistrationPage = () => {
           <ErrorBox message={errors.email} />
           <input type='email' id='email' className='pl-3 mb-0  h-[2rem] border-2 border-[#3664AF] rounded-[0.5rem] lg:text-2xl font-normal  lg:h-[3.8rem] lg:rounded-[1rem] lg:mb-2'  value={formData.email} onChange={handleInputChange} />
           
-          {!isVerified && <button className="cursor-pointer mt-1 bg-[#3664AF] w-24 h-10 border-0.5 border-[#3664AF] rounded-lg text-white font-jost font-[600] text-base leading-10 tracking-[-0.04em] text-center lg:w-[250px] lg:h-14 lg:border-0.5 lg:rounded-xl lg:text-2xl" onClick={handleClick}>VERIFY</button>}
+          {!isVerified && <button className="cursor-pointer mt-1 bg-[#3664AF] w-24 h-10 border-0.5 border-[#3664AF] rounded-lg text-white font-jost font-[600] text-base leading-10 tracking-[-0.04em] text-center lg:w-[250px] lg:h-14 lg:border-0.5 lg:rounded-xl lg:text-2xl hover:bg-[#003483]" onClick={handleClick}>VERIFY</button>}
           {isVerified &&  <button className="cursor-pointer mt-1 bg-[#39b79c] w-24 h-10 border-0.5 border-[#36afa5] rounded-lg text-white font-jost font-[600] text-base leading-10 tracking-[-0.04em] text-center lg:w-[250px] lg:h-14 lg:border-0.5 lg:rounded-xl lg:text-2xl">VERIFIED</button>}
         </div>
         <button type="submit" className="cursor-pointer mt-12 bg-[#3664AF] w-60 h-10 border-0.5 border-[#3664AF] rounded-lg text-white font-jost font-[600] text-xl leading-10 tracking-[-0.04em] text-center
-                lg:w-[300px] lg:h-14 lg:border-0.5 lg:rounded-xl lg:text-2xl lg:mt-28">REGISTER</button>
+                lg:w-[300px] lg:h-14 lg:border-0.5 lg:rounded-xl lg:text-2xl lg:mt-28 hover:bg-[#003483]">REGISTER</button>
       </form>
       <div>
         <Image src={Background} alt="Background" className='m-0 w-screen' style={backgroundImageStyle} />
