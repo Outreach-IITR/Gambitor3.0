@@ -16,7 +16,7 @@ import logo2 from "../_assets/Logo.svg"
 
 const Headingcss = {
 
-    textShadow: '2px 2px 2px rgba(0, 0, 0, 0.25)' 
+    textShadow: '2px 2px 2px rgba(0, 0, 0, 0.15)' 
   };
 
 export default function SuccessPage(){

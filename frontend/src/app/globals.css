@@ -11,4 +11,9 @@
     background-size: contain;
 
 }
+@media (max-width: 639px) {
+    .placeholder-xs::placeholder {
+        font-size: 0.75rem; 
+    }
+  }
 

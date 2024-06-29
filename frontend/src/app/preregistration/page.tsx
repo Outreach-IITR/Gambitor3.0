@@ -31,7 +31,7 @@ const PreRegistrationPage = () => {
   });
 
   const [isVerified, setIsVerified] = useState(false);
-
+  //const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState('');
 
   useEffect(() => {
@@ -114,13 +114,6 @@ const PreRegistrationPage = () => {
           email: errorMessage?.email ?? '',
           text:''
         }));}
-        if (formData.name.trim() === '') {
-          setErrors((prevErrors) => ({ ...prevErrors, name: 'Name is required' }));
-        }
-    
-        if (formData.schoolName.trim() === '') {
-          setErrors((prevErrors) => ({ ...prevErrors, schoolName: 'Name of school is required' }));
-        }
         else
         {
           setErrors(() => ({
@@ -131,6 +124,13 @@ const PreRegistrationPage = () => {
             email:'',
             text:''
           }));
+        }
+        if (formData.name.trim() === '') {
+          setErrors((prevErrors) => ({ ...prevErrors, name: 'Name is required' }));
+        }
+    
+        if (formData.schoolName.trim() === '') {
+          setErrors((prevErrors) => ({ ...prevErrors, schoolName: 'Name of school is required' }));
         }
         setErrors((prevErrors) => ({ ...prevErrors, text: axiosError.response?.data?.error }));
         
@@ -149,16 +149,21 @@ const PreRegistrationPage = () => {
   const handleClick = async (event:any) => {
     event.preventDefault();
     //router.push('/otpPage'); // Redirect to a page where you need to enter OTP.
-    if(!isVerified){
+    if(formData.email === '')  setErrors((prevErrors) => ({ ...prevErrors, email: 'Email address cannot be empty' }));
+    else if(!isVerified){
+     //setLoading(true);
     try{
       const response = await axios.post('/sendOtp',{email : formData.email})
       console.log(response.data);
-      setResponse(response.data?.data);
+      //setResponse(response.data?.data);
       router.push(`/mailverification?email=${formData.email}&&category=${formData.category}&&name=${formData.name}&&schoolName=${formData.schoolName}&&contactNumber=${formData.contactNumber}`);
     }catch(err)
     {
       console.error(err);
     }
+    //  finally{
+    //   setLoading(false);
+    // }
   }
   else 
     {
@@ -184,7 +189,7 @@ const PreRegistrationPage = () => {
   };
   
   const Headingcss = {   
-    textShadow: '4px 4px 2px rgba(0, 0, 0, 0.25)' 
+    textShadow: '4px 4px 2px rgba(0, 0, 0, 0.10)' 
   };
 
   
@@ -205,8 +210,6 @@ const PreRegistrationPage = () => {
             </nav>
       <form onSubmit={handleSubmit} className='mt-6 flex flex-col justify-between items-center w-full'>
       <h1 style={Headingcss} className="mt-2 mb-[4rem] w-[25rem] h-[4rem] font-jost text-[2rem] font-extrabold leading-[7rem] tracking-[0.03em] text-center lg:w-[60rem] lg:h-[6rem] lg:text-[4.7rem] lg:my-28" >PRE-REGISTRATION</h1>
-      {/* <ErrorBox message={errors.text} /> 
-      <ResponseBox message={response} /> */}
         <div style={formStyleDiv} className='w-[24rem] lg:w-[62rem]'>
           <label htmlFor="name" className="mb-1 h-[37.84px] font-jost text-1rem font-semibold  leading-[3.5rem] tracking-[-0.04em] text-left lg:h-[37.84px] lg:mb-3 lg:text-[32px]">NAME</label>
           <ErrorBox message={errors.name} />
@@ -242,14 +245,14 @@ const PreRegistrationPage = () => {
           {/* <div className="text-red-500 lg:text-xl mb-2 ">
            Please enter your correct mobile number. <strong>This cannot be modified later.</strong>
           </div> */}
-          <input type="text" id='contactNumber' placeholder='Enter your correct mobile number.This cannot be modified later.' required className='pl-3 mb-0 w-full h-[2rem] border-2 border-[#3664AF] rounded-[0.5rem] lg:text-2xl font-normal lg:h-[3.8rem] lg:rounded-[1rem] lg:mb-4 placeholder-blue-800 lg:placeholder:text-xl sm:placeholder:text-sm'  value={formData.contactNumber} onChange={handleInputChange} />
+          <input type="text" id='contactNumber' placeholder='Enter your correct mobile number.This cannot be modified later.' required className='pl-3 mb-0 w-full h-[2rem] border-2 border-[#3664AF] rounded-[0.5rem] lg:text-2xl font-normal lg:h-[3.8rem] lg:rounded-[1rem] lg:mb-4 placeholder-blue-800 lg:placeholder:text-xl sm:placeholder:text-sm placeholder-xs'  value={formData.contactNumber} onChange={handleInputChange} />
         </div>
         <div style={formStyleDiv} className='w-[24rem] lg:w-[62rem]'>
           <label htmlFor="email" className="mb-1 h-[37.84px] font-jost text-1rem font-semibold leading-[3.5rem] tracking-[-0.04em] text-left lg:h-[37.84px] lg:mb-3 lg:text-[32px]">EMAIL ADDRESS</label>
           <ErrorBox message={errors.email} />
-          <input type='email' id='email' className='pl-3 mb-0  h-[2rem] border-2 border-[#3664AF] rounded-[0.5rem] lg:text-2xl font-normal  lg:h-[3.8rem] lg:rounded-[1rem] lg:mb-2'  value={formData.email} onChange={handleInputChange} />
+          <input type='email' id='email' required disabled={isVerified} className='pl-3 mb-0  h-[2rem] border-2 border-[#3664AF] rounded-[0.5rem] lg:text-2xl font-normal  lg:h-[3.8rem] lg:rounded-[1rem] lg:mb-2'  value={formData.email} onChange={handleInputChange} />
           
-          {!isVerified && <button className="cursor-pointer mt-1 bg-[#3664AF] w-24 h-10 border-0.5 border-[#3664AF] rounded-lg text-white font-jost font-[600] text-base leading-10 tracking-[-0.04em] text-center lg:w-[250px] lg:h-14 lg:border-0.5 lg:rounded-xl lg:text-2xl hover:bg-[#003483]" onClick={handleClick}>VERIFY</button>}
+          {!isVerified && <button className="cursor-pointer mt-1 bg-[#3664AF] w-24 h-10 border-0.5 border-[#3664AF] rounded-lg text-white font-jost font-[600] text-base leading-10 tracking-[-0.04em] text-center lg:w-[250px] lg:h-14 lg:border-0.5 lg:rounded-xl lg:text-2xl hover:bg-[#003483]" onClick={handleClick}> VERIFY</button>}
           {isVerified &&  <button className="cursor-pointer mt-1 bg-[#39b79c] w-24 h-10 border-0.5 border-[#36afa5] rounded-lg text-white font-jost font-[600] text-base leading-10 tracking-[-0.04em] text-center lg:w-[250px] lg:h-14 lg:border-0.5 lg:rounded-xl lg:text-2xl">VERIFIED</button>}
         </div>
         <ErrorBox message={errors.text} /> 

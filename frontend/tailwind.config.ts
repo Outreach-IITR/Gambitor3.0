@@ -15,7 +15,11 @@ const config: Config = {
       },
       fontFamily: {
         'jost' : ['Jost']
-      }
+      },
+      fontSize: {
+        'xs': '0.75rem', // Define a smaller font size
+        'xxs': '0.625rem', // Define an extra smaller font size
+      },
      
     },
   },
