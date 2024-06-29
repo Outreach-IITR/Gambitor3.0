@@ -1,14 +1,9 @@
 import {DateTime} from 'luxon';
 import { prisma } from '../db/client.js';
 function generateOTP() {
-  let randomString = Math.random().toString(36).substring(2).toUpperCase();
-    while (randomString.length < 4) {
-      randomString += Math.random().toString(36).substring(2).toUpperCase();
-    }
-  
-    // Return the string sliced to the desired length
-    return randomString.substring(0, 4);
-  }
+  let otp = Math.floor(1000 + Math.random() * 9000);
+  return otp.toString();
+}
 
  // Create OTP object 
   async function createOTP(email) {

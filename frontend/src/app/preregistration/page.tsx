@@ -100,7 +100,7 @@ const PreRegistrationPage = () => {
     } catch (error) {
       if (error instanceof Error && 'response' in error && error.response) {
         const axiosError = error as AxiosError;
-        console.log(axiosError.response?.data);
+        console.log(axiosError.response?.data?.error);
         const errorMessage = (axiosError.response?.data as { errors?: { [key: string]: string } })?.errors ?? 'Unknown error';
         console.log(errorMessage);
   
@@ -121,7 +121,19 @@ const PreRegistrationPage = () => {
         if (formData.schoolName.trim() === '') {
           setErrors((prevErrors) => ({ ...prevErrors, schoolName: 'Name of school is required' }));
         }
-          
+        else
+        {
+          setErrors(() => ({
+            name:'',
+            category:'',
+            schoolName:'',
+            contactNumber: '',
+            email:'',
+            text:''
+          }));
+        }
+        setErrors((prevErrors) => ({ ...prevErrors, text: axiosError.response?.data?.error }));
+        
       } else {
         console.error('An error occurred:', error instanceof Error ? error.message : 'Unknown error');
       }
@@ -141,6 +153,7 @@ const PreRegistrationPage = () => {
     try{
       const response = await axios.post('/sendOtp',{email : formData.email})
       console.log(response.data);
+      setResponse(response.data?.data);
       router.push(`/mailverification?email=${formData.email}&&category=${formData.category}&&name=${formData.name}&&schoolName=${formData.schoolName}&&contactNumber=${formData.contactNumber}`);
     }catch(err)
     {
@@ -192,8 +205,8 @@ const PreRegistrationPage = () => {
             </nav>
       <form onSubmit={handleSubmit} className='mt-6 flex flex-col justify-between items-center w-full'>
       <h1 style={Headingcss} className="mt-2 mb-[4rem] w-[25rem] h-[4rem] font-jost text-[2rem] font-extrabold leading-[7rem] tracking-[0.03em] text-center lg:w-[60rem] lg:h-[6rem] lg:text-[4.7rem] lg:my-28" >PRE-REGISTRATION</h1>
-      <ErrorBox message={errors.text} /> 
-      <ResponseBox message={response} />
+      {/* <ErrorBox message={errors.text} /> 
+      <ResponseBox message={response} /> */}
         <div style={formStyleDiv} className='w-[24rem] lg:w-[62rem]'>
           <label htmlFor="name" className="mb-1 h-[37.84px] font-jost text-1rem font-semibold  leading-[3.5rem] tracking-[-0.04em] text-left lg:h-[37.84px] lg:mb-3 lg:text-[32px]">NAME</label>
           <ErrorBox message={errors.name} />
@@ -212,6 +225,7 @@ const PreRegistrationPage = () => {
             onChange={handleSelectChange}
             >
             <option value="None">Choose a category</option>
+            <option value="ARETEOX" >ARETEOX</option>
             <option value="METIOX" >METIOX</option>
             <option value="APOLLOX">APOLLOX</option>
             <option value="ATHENOX">ATHENOX</option>
@@ -225,10 +239,10 @@ const PreRegistrationPage = () => {
         <div style={formStyleDiv} className='w-[24rem] lg:w-[62rem]'>
           <label htmlFor="contactNumber" className="mb-1 h-[37.84px] font-jost text-1rem font-semibold leading-[3.5rem] tracking-[-0.04em] text-left lg:h-[37.84px] lg:mb-3 lg:text-[32px]">CONTACT NUMBER</label>
           <ErrorBox message={errors.contactNumber} />
-          <div className="text-red-500 lg:text-xl mb-2 ">
+          {/* <div className="text-red-500 lg:text-xl mb-2 ">
            Please enter your correct mobile number. <strong>This cannot be modified later.</strong>
-          </div>
-          <input type="text" id='contactNumber' required className='pl-3 mb-0 w-full h-[2rem] border-2 border-[#3664AF] rounded-[0.5rem] lg:text-2xl font-normal lg:h-[3.8rem] lg:rounded-[1rem] lg:mb-4'  value={formData.contactNumber} onChange={handleInputChange} />
+          </div> */}
+          <input type="text" id='contactNumber' placeholder='Enter your correct mobile number.This cannot be modified later.' required className='pl-3 mb-0 w-full h-[2rem] border-2 border-[#3664AF] rounded-[0.5rem] lg:text-2xl font-normal lg:h-[3.8rem] lg:rounded-[1rem] lg:mb-4 placeholder-blue-800 lg:placeholder:text-xl sm:placeholder:text-sm'  value={formData.contactNumber} onChange={handleInputChange} />
         </div>
         <div style={formStyleDiv} className='w-[24rem] lg:w-[62rem]'>
           <label htmlFor="email" className="mb-1 h-[37.84px] font-jost text-1rem font-semibold leading-[3.5rem] tracking-[-0.04em] text-left lg:h-[37.84px] lg:mb-3 lg:text-[32px]">EMAIL ADDRESS</label>
@@ -238,6 +252,8 @@ const PreRegistrationPage = () => {
           {!isVerified && <button className="cursor-pointer mt-1 bg-[#3664AF] w-24 h-10 border-0.5 border-[#3664AF] rounded-lg text-white font-jost font-[600] text-base leading-10 tracking-[-0.04em] text-center lg:w-[250px] lg:h-14 lg:border-0.5 lg:rounded-xl lg:text-2xl hover:bg-[#003483]" onClick={handleClick}>VERIFY</button>}
           {isVerified &&  <button className="cursor-pointer mt-1 bg-[#39b79c] w-24 h-10 border-0.5 border-[#36afa5] rounded-lg text-white font-jost font-[600] text-base leading-10 tracking-[-0.04em] text-center lg:w-[250px] lg:h-14 lg:border-0.5 lg:rounded-xl lg:text-2xl">VERIFIED</button>}
         </div>
+        <ErrorBox message={errors.text} /> 
+        <ResponseBox message={response} />  
         <button type="submit" className="cursor-pointer mt-12 bg-[#3664AF] w-60 h-10 border-0.5 border-[#3664AF] rounded-lg text-white font-jost font-[600] text-xl leading-10 tracking-[-0.04em] text-center
                 lg:w-[300px] lg:h-14 lg:border-0.5 lg:rounded-xl lg:text-2xl lg:mt-28 hover:bg-[#003483]">REGISTER</button>
       </form>

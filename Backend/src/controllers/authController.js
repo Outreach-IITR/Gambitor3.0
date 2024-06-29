@@ -24,12 +24,12 @@ class AuthController {
       const mailOptions = {
         from: process.env.your_gmail,
         to: req.body.formData.email,
-        subject: "Registration Completed successfully.",
+        subject: "Pre-Registration for GambitoR Successful.",
         text: `Hello ${req.body.formData.name}, \n
-        Team GambitoR is delighted to inform you that you have successfully registered for the first edition of GambitoR! \n  
+        Team GambitoR is delighted to inform you that you have successfully registered for GambitoR 3.0! \n  
         These are the credentials you have entered.
-        Email: ${req.body.formData.email} 
         Mobile Number: ${req.body.formData.contactNumber} 
+        Email: ${req.body.formData.email} 
         Password: ${req.body.formData.contactNumber} \n
         Use the email and password provided to login to your account once the website goes live.
         \n
@@ -57,6 +57,8 @@ class AuthController {
       if (error instanceof errors.E_VALIDATION_ERROR) {
         throw new ApiError(400, "Validation Error", error.messages);
       }
+      if (error.code === 'P2002' && error.meta.target.includes('email')) {
+        res.status(400).json({ error: 'This email is already registered. Please use a different email.' });}
       if (error instanceof ApiError) {
         throw error;
       }
@@ -73,7 +75,7 @@ class AuthController {
         from: process.env.your_gmail,
         to: email,
         subject: "Email confirmation",
-        text: `Your OTP code is ${otpCode}. Please use this code to verify your email.`
+        text: `Thank you for pre-registering for GambitoR 3.0 .Please use the code ${otpCode} to verify your email and proceed with the pre-registration`
       };
       mailService.sendMail(mailOptions, function (err) {
         if (err) {
