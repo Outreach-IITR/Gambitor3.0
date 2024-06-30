@@ -30,8 +30,8 @@ model User {
   email                 String            @unique @db.VarChar(191)
   password              String?
   name                  String
-  contactNumber         String
-  category                 Category
+  contactNumber         String            @db.VarChar(10)
+  category              Category
   referralCode          String?
   schoolName            String
   role                  Role              @default(PARTICIPANT)
@@ -43,7 +43,9 @@ model User {
 
 model Otpvalue {
   id          Int      @id @default(autoincrement())
-  email       String
+  email       String   @db.VarChar(191)
   code        String
   expiresAt   DateTime
 }
+
+

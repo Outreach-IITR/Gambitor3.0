@@ -4,21 +4,21 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { prisma } from "../db/client.js";
 import vine, { errors } from "@vinejs/vine";
 import { registerSchema } from "../validations/userValidation.js";
-import {createOTP,verifyOTP} from "../utils/otpGenerator.js"
-import mailService from '../utils/mailService.js';
+import { createOTP, verifyOTP } from "../utils/otpGenerator.js";
+import mailService from "../utils/mailService.js";
 
 class AuthController {
   static register = asyncHandler(async (req, res, next) => {
     try {
       const body = req.body.formData;
-      console.log(body)
+      console.log(body);
       const validator = vine.compile(registerSchema);
       const payload = await validator.validate(body);
-      console.log(payload)
+      console.log(payload);
       const user = await prisma.user.create({
         data: payload,
       });
-      console.log(body)
+      console.log(body);
       const response = new ApiResponse(200, user, "User created successfully");
 
       const mailOptions = {
@@ -40,10 +40,10 @@ class AuthController {
         Team GambitoR.
         `,
       };
-    
+
       mailService.sendMail(mailOptions, function (err) {
         if (err) {
-          next(new ApiError(500,err.message,[],err.stack));
+          next(new ApiError(500, err.message, [], err.stack));
         } else {
           res.status(201).json({
             status: "success",
@@ -51,14 +51,16 @@ class AuthController {
           });
         }
       });
-
     } catch (error) {
-      console.log(error)
+      console.log(error);
       if (error instanceof errors.E_VALIDATION_ERROR) {
         throw new ApiError(400, "Validation Error", error.messages);
       }
-      if (error.code === 'P2002' && error.meta.target.includes('email')) {
-        res.status(400).json({ error: 'This email is already registered. Please use a different email.' });}
+      if (error.code === "P2002" && error.meta.target.includes("email")) {
+        res
+          .status(400)
+          .json({ error: "This email is already registered. Please use a different email." });
+      }
       if (error instanceof ApiError) {
         throw error;
       }
@@ -75,11 +77,11 @@ class AuthController {
         from: process.env.your_gmail,
         to: email,
         subject: "Email confirmation",
-        text: `Thank you for pre-registering for GambitoR 3.0 .Please use the code ${otpCode} to verify your email and proceed with the pre-registration`
+        text: `Thank you for pre-registering for GambitoR 3.0 .Please use the code ${otpCode} to verify your email and proceed with the pre-registration`,
       };
       mailService.sendMail(mailOptions, function (err) {
         if (err) {
-          next(new ApiError(500,err.message,[],err.stack));
+          next(new ApiError(500, err.message, [], err.stack));
         } else {
           res.status(200).json({
             status: "success",
@@ -95,21 +97,19 @@ class AuthController {
   static verifyOtp = asyncHandler(async (req, res, next) => {
     try {
       const { email, otp } = req.body;
-      console.log(email)
-      console.log(otp)
+      console.log(email);
+      console.log(otp);
       const isOtpValid = await verifyOTP(email, otp);
       console.log(isOtpValid);
       if (isOtpValid) {
-        res.json({ message: 'OTP verified successfully' });
+        res.json({ message: "OTP verified successfully" });
       } else {
-        res.status(400).json({ message: 'Invalid OTP' });
+        res.status(400).json({ message: "Invalid OTP" });
       }
     } catch (error) {
       next(error);
     }
   });
-
-
 }
 
 export default AuthController;
