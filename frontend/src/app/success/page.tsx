@@ -3,10 +3,10 @@ import Image from "next/image";
 import logo from "../_assets/Logo2.svg"
 import db from '../_assets/DB.svg'
 import dbimg from '../_assets/DownloadOutline.svg'
-import icon1 from './_assets/insta.svg'
-import icon2 from './_assets/FB.svg'
-import icon3 from './_assets/yt.svg'
-import icon4 from './_assets/whatsapp.svg'
+import icon1 from '../_assets/insta.svg'
+import icon2 from '../_assets/FB.svg'
+import icon3 from '../_assets/yt.svg'
+import icon4 from '../_assets/whatsapp.svg'
 
 import bg from '../_assets/Group.png'
 import logo2 from "../_assets/Logo.svg"
