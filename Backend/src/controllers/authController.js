@@ -20,7 +20,7 @@ class AuthController {
       });
       console.log(body);
       const response = new ApiResponse(200, user, "User created successfully");
-
+      
       const mailOptions = {
         from: process.env.your_gmail,
         to: req.body.formData.email,
@@ -73,6 +73,7 @@ class AuthController {
       const email = req.body.email;
       const otpCode = await createOTP(email);
       console.log(otpCode);
+      console.log(process.env.your_gmail)
       const mailOptions = {
         from: process.env.your_gmail,
         to: email,

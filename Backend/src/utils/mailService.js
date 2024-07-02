@@ -17,6 +17,7 @@ const mailService = nodemailer.createTransport({
       console.log(error);
     } else {
       console.log('Server is ready to take our messages');
+      console.log(process.env.your_gmail)
     }
   });
 

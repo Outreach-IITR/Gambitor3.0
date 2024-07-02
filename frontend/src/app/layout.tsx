@@ -5,7 +5,7 @@ import "./globals.css";
 const inter = Jost({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Gambitor 3.0",
+  title: "Gambitor | IIT Roorkee",
   description: "Gambitor is a competition conducted by IIT Roorkee Outreach cell.",
 };
 
