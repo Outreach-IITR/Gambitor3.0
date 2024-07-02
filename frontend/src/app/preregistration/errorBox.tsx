@@ -6,7 +6,12 @@ interface ErrorBoxProps {
 }
 
 const ErrorBox: React.FC<ErrorBoxProps> = ({ message }) => {
-  return message ? <div className="text-red-500 lg:text-2xl text-1xl text-left mt-1">{message}</div> : null;
+  if (!message) return null;
+  return (
+    <div className="text-red-500 lg:text-2xl text-1xl text-left mt-1">
+      {message}
+    </div>
+  );
 };
 
 export default ErrorBox;

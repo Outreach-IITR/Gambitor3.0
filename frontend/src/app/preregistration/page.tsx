@@ -1,10 +1,11 @@
 "use client";
 import Image from 'next/image';
+import React, { Suspense } from 'react';
 import  { useState,useEffect } from 'react';
 import logo from "./_assets/Pre-Registration-page-logo.svg";
 import Background from "./_assets/Background.svg"
 import DownloadLogo from "./_assets/download-logo.svg";
-
+import dynamic from 'next/dynamic';
 import { CSSProperties } from 'react';
 import axios from '../https/api';
 import { useRouter , useSearchParams } from 'next/navigation';
@@ -13,7 +14,9 @@ import ErrorBox from './errorBox';
 import ResponseBox from './responseBox';
 // import "./aa.css";
 import db from './_assets/DB.svg'
-import dbimg from './_assets/DownloadOutline.svg'
+import dbimg from './_assets/DownloadOutline.svg';
+
+
 
 const PDF_FILE_URL = "/Brochure.pdf";
 
@@ -99,10 +102,9 @@ const PreRegistrationPage = () => {
       router.push('/success'); // Redirect to a success page
     } catch (error) {
       if (error instanceof Error && 'response' in error && error.response) {
-        const axiosError = error as AxiosError;
-        console.log(axiosError.response?.data?.error);
-        const errorMessage = (axiosError.response?.data as { errors?: { [key: string]: string } })?.errors ?? 'Unknown error';
-        console.log(errorMessage);
+        const axiosError = error as AxiosError<{ errors?: { [key: string]: string }, error?: string }>;
+        const errorMessage = axiosError.response?.data?.errors ?? 'Unknown error';
+        console.log(errorMessage)
   
         // Set errors state based on errorMessage
         if(errorMessage!='Unknown error'){
@@ -132,7 +134,7 @@ const PreRegistrationPage = () => {
         if (formData.schoolName.trim() === '') {
           setErrors((prevErrors) => ({ ...prevErrors, schoolName: 'Name of school is required' }));
         }
-        setErrors((prevErrors) => ({ ...prevErrors, text: axiosError.response?.data?.error }));
+        setErrors((prevErrors) => ({ ...prevErrors, text: axiosError.response?.data?.error ?? '' }));
         
       } else {
         console.error('An error occurred:', error instanceof Error ? error.message : 'Unknown error');
@@ -267,4 +269,12 @@ const PreRegistrationPage = () => {
   );
 };
 
-export default PreRegistrationPage;
+const Preregistration = dynamic(() => Promise.resolve(PreRegistrationPage), { ssr: false });
+
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Preregistration />
+    </Suspense>
+  );
+}
