@@ -48,7 +48,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 4000;
 
 app.get("/", (req, res) => {
   return res.json({ message: "Yay It's working.." });
