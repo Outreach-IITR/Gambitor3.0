@@ -83,6 +83,7 @@ class AuthController {
       mailService.sendMail(mailOptions, function (err) {
         if (err) {
           next(new ApiError(500, err.message, [], err.stack));
+          console.log(err)
         } else {
           res.status(200).json({
             status: "success",
@@ -94,6 +95,8 @@ class AuthController {
       throw error;
     }
   });
+
+
 
   static verifyOtp = asyncHandler(async (req, res, next) => {
     try {

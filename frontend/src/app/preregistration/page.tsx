@@ -161,7 +161,7 @@ const PreRegistrationPage = () => {
       router.push(`/mailverification?email=${formData.email}&&category=${formData.category}&&name=${formData.name}&&schoolName=${formData.schoolName}&&contactNumber=${formData.contactNumber}`);
     }catch(err)
     {
-      console.error(err);
+      console.log(err);
     }
     //  finally{
     //   setLoading(false);
