@@ -1,6 +1,10 @@
 import express from "express";
 import cors from "cors";
 import { ApiError } from "./utils/ApiError.js";
+import session from "express-session";
+
+//routes import
+import ApiRoutes from "./routes/user.route.js";
 
 const app = express();
 
@@ -8,6 +12,15 @@ app.use(
   cors({
     origin: process.env.CORS_ORIGIN,
     credentials: true,
+  })
+);
+
+// use session for google login
+app.use(
+  session({
+    resave: false,
+    saveUninitialized: true,
+    secret: process.env.SESSION_SECRET,
   })
 );
 
@@ -31,8 +44,5 @@ app.use((err, req, res, next) => {
     message: "Default Internal Server Error",
   });
 });
-
-//routes import
-import ApiRoutes from "./routes/user.route.js";
 
 export { app };
