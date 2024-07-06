@@ -89,21 +89,25 @@ class AuthController {
     }
   });
 
-
   static loadAuth = (req, res) => {
-    res.render('auth');
-}
+    res.render("auth");
+  };
 
-static successGoogleLogin = (req , res) => { 
-	if(!req.user) 
-		res.redirect('/failure'); 
-    console.log(req.user);
-	res.send("Welcome " + req.user.email); 
-}
+  static successGoogleLogin = (req, res) => {
+    if (!req.user) {
+      console.log("User not found in request");
+      return res.redirect('/api/v1/auth/failure');
+    }
+    
+    console.log("User found:", req.user);
+    const response = new ApiResponse(200, req.user, "User google login successfully");
+    return res.status(200).json(response);
+  };
+  
 
-static failureGoogleLogin = (req , res) => { 
-	res.send("Error"); 
-}
+  static failureGoogleLogin = (req, res) => {
+    res.status(400).json({ message: 'Google login failed' });
+  };
 }
 
 export default AuthController;

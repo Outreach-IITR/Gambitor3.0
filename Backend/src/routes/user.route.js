@@ -3,7 +3,7 @@ import AuthController from "../controllers/authController.js";
 // import authMiddleware from "../middlewares/authenticate.js";
 // import ProfileController from "../controllers/profileController.js";
 import passport from "passport";
-import "../utils/passport.js";
+import "../utils/passportConfig.js";
 
 const router = Router();
 
@@ -17,22 +17,23 @@ router.post("/auth/login", AuthController.login);
 // * Profile routes
 //router.get("/profile", authMiddleware, ProfileController.index); //Private route
 
-// Auth
-router.get("/auth/google", passport.authenticate("google", { scope: ["email", "profile"] }));
+// Route to initiate Google OAuth2 login
+router.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
-// Auth Callback
+// Google OAuth2 callback route
 router.get(
   "/auth/google/callback",
-  passport.authenticate("google", {
-    successRedirect: "/success",
-    failureRedirect: "/failure",
-  })
+  passport.authenticate("google", { failureRedirect: "/api/v1/auth/failure" }),
+  (req, res) => {
+    // Successful authentication, redirect to success page
+    res.redirect("/api/v1/auth/success");
+  }
 );
 
 // Success
-router.get("/success", AuthController.successGoogleLogin);
+router.get("/auth/success", AuthController.successGoogleLogin);
 
 // failure
-router.get("/failure", AuthController.failureGoogleLogin);
+router.get("/auth/failure", AuthController.failureGoogleLogin);
 
 export default router;
