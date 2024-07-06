@@ -10,8 +10,6 @@ const router = Router();
 router.use(passport.initialize());
 router.use(passport.session());
 
-router.get("/", AuthController.loadAuth);
-
 router.post("/auth/register", AuthController.register);
 router.post("/auth/login", AuthController.login);
 // * Profile routes

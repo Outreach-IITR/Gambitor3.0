@@ -14,6 +14,15 @@ class AuthController {
       const validator = vine.compile(registerSchema);
       const payload = await validator.validate(body);
 
+      // Check if the email already exists in the database
+      const existingUser = await prisma.user.findUnique({
+        where: { email: payload.email },
+      });
+
+      if (existingUser) {
+        throw new ApiError(400, "Email already in use");
+      }
+
       // Encrypt the password
       const salt = bcrypt.genSaltSync(10);
       payload.password = bcrypt.hashSync(payload.password, salt);
@@ -31,7 +40,7 @@ class AuthController {
       if (error instanceof ApiError) {
         throw error;
       }
-      throw new ApiError(500, "Registration failed", [], error.stack);
+      throw new ApiError(500, "Registration failed", []);
     }
   });
 
@@ -89,24 +98,26 @@ class AuthController {
     }
   });
 
-  static loadAuth = (req, res) => {
-    res.render("auth");
-  };
+  static successGoogleLogin = asyncHandler(async (req, res, next) => {
+    try {
+      if (!req.user) {
+        res.redirect("/api/v1/auth/failure");
+        throw new ApiError(400, "User not found in request", []);
+      }
 
-  static successGoogleLogin = (req, res) => {
-    if (!req.user) {
-      console.log("User not found in request");
-      return res.redirect('/api/v1/auth/failure');
+      console.log("User found:", req.user);
+      const response = new ApiResponse(200, req.user, "User google login successfully");
+      return res.status(200).json(response);
+    } catch (error) {
+      if (error instanceof ApiError) {
+        throw error;
+      }
+      throw new ApiError(500, "Registration failed");
     }
-    
-    console.log("User found:", req.user);
-    const response = new ApiResponse(200, req.user, "User google login successfully");
-    return res.status(200).json(response);
-  };
-  
+  });
 
   static failureGoogleLogin = (req, res) => {
-    res.status(400).json({ message: 'Google login failed' });
+    res.status(400).json({ message: "Google login failed" });
   };
 }
 
