@@ -88,6 +88,22 @@ class AuthController {
       }
     }
   });
+
+
+  static loadAuth = (req, res) => {
+    res.render('auth');
+}
+
+static successGoogleLogin = (req , res) => { 
+	if(!req.user) 
+		res.redirect('/failure'); 
+    console.log(req.user);
+	res.send("Welcome " + req.user.email); 
+}
+
+static failureGoogleLogin = (req , res) => { 
+	res.send("Error"); 
+}
 }
 
 export default AuthController;

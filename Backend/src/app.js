@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import { ApiError } from "./utils/ApiError.js";
 import session from "express-session";
+import './utils/passport.js';
 
 //routes import
 import ApiRoutes from "./routes/user.route.js";
@@ -14,6 +15,9 @@ app.use(
     credentials: true,
   })
 );
+
+app.set('view engine', 'ejs');
+app.set('views', './views'); 
 
 // use session for google login
 app.use(
