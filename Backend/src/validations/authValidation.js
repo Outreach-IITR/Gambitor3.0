@@ -5,12 +5,19 @@ import { CustomErrorReporter } from "./customErrorReporter.js";
 vine.errorReporter = () => new CustomErrorReporter();
 
 export const registerSchema = vine.object({
-  name: vine.string().minLength(2).maxLength(150),
   email: vine.string().email(),
-  password: vine.string().minLength(6).maxLength(100).confirmed(),
+  password: vine.string().minLength(6).maxLength(100).regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/, 'Password must include uppercase, lowercase, digit, and special character'),
 });
 
 export const loginSchema = vine.object({
   email: vine.string().email(),
   password: vine.string(),
+});
+
+export const infoSchema = vine.object({
+  name:vine.string(),
+  category:vine.string().in(['ARETEOX','METIOX', 'ATHENOX', 'APOLLOX']),
+  schoolName:vine.string(),
+  contactNumber:vine.string().minLength(10, 'Mobile number must be exactly 10 digits long').maxLength(10, 'Mobile number must be exactly 10 digits long').regex(/^\d+$/, 'Mobile number must contain only numbers'),
+  state:vine.string(),
 });

@@ -34,4 +34,12 @@ router.get("/auth/success", AuthController.successGoogleLogin);
 // failure
 router.get("/auth/failure", AuthController.failureGoogleLogin);
 
+//mail verification
+
+router.post('/sendOtp',AuthController.sendOtp);
+router.post('/verifyOtp',AuthController.verifyOtp);
+//info
+
+router.post('/user/:id/details', AuthController.updateAdditionalDetails);
+
 export default router;
