@@ -1,0 +1,33 @@
+.YTCarousel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10rem;
+}
+
+.YTCarousel__Title {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 4rem;
+  font-family: Montserrat, sans-serif;
+}
+
+.YTCarousel__Title h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #f96508;
+  font-family: inherit;
+  line-height: 2.75rem;
+}
+
+.YTCarousel__Title p {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+@media (max-width: 1000px) {
+  .YTCarousel {
+    margin: 5rem 0;
+  }
+}

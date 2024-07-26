@@ -4,29 +4,29 @@ import img1 from "../../../public/dolphine.svg"
 
 export default function AboutSection(){
     return(
-        <div className="flex mx-[15vw] justify-between mb-0 space-x-[5vw] relative z-[1]">
-            <div className="w-[35vw]">
-                <h1 className="text-[1.5vw] my-2 font-bold">ABOUT US</h1>
-                <p className="text-[1vw] font-semibold">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita odio iste illum obcaecati? Quisquam exercitationem molestias perferendis repellat eaque rerum quasi harum maiores eos distinctio aspernatur deleniti facere architecto explicabo quo dolor sint ad, veniam quod modi. Aspernatur totam iusto est, vitae placeat pariatur reiciendis itaque. Repellendus ut odit repellat similique doloremque a esse laborum laboriosam nulla saepe recusandae at consequuntur, accusamus sunt odio itaque repudiandae expedita quisquam maxime officiis id voluptatem magni sit! Commodi similique deleniti neque sunt cupiditate in obcaecati laboriosam nam, impedit repellat iure molestias tenetur quia id. Itaque nostrum sapiente dolorum nulla, hic repudiandae laborum eaque.
-                </p>
+        <div className="flex flex-col lg:justify-between lg:flex-row relative z-[1] max-w-[1380px] mx-auto">
+            <div className="lg:w-[50%] order-2 lg:order-1">
+                <h1 className="text-[36px] leading-[45px] my-2 font-medium font-overpass">ABOUT US</h1>
+                <p className="text-[20px] font-overpass leading-[25px] font-medium">
+                GambitoR is a prestigious national-level exam tailored specifically for students from classes 9th to 12th who strive for excellence and have a passion for tackling and conquering challenges. This unique competition evaluates students' logical and analytical skills through questions designed by our student community, all within the exciting and adventurous theme of Pirates of the Caribbean. Organized by the Outreach Cell of IIT Roorkee, this year marks the third edition of GambitoR, promising to bring out the best in each participant. Get ready to sail on this adventure and discover what you’re truly capable of!                </p>
 
             </div>
-            <div className="">
+            <div className=" pl-[10vw] flex relative order-1 flex-col items-center lg:it lg:w-[50%]  top-[2rem] justify-center">
                  
-                    <div className="relative top-[2vw] ">
+                    <div className="relative -left-[10rem] top-2 ">
 
-                    <h1 className="text-[1.5vw] text-blue-900 ">Registrations</h1>
-                    <h1 className="text-[2vw]">12000+</h1>
-                    </div>
+                        <h1 className="text-[1.5rem] text-blue-900 ">Registrations</h1>
+                        <h1 className="text-[2rem]">12000+</h1>
 
-                    <div className="relative top-[10vw] left-[2vw] ">
-                    <h1 className="text-[1.5vw] text-blue-900 ">Cities</h1>
-                    <h1 className="text-[2vw] ">900+</h1>
                     </div>
-                <div className="">
-                <Image  className="relative -top-[4vw] w-[20vw] " src={img1}></Image>
-                </div>
+                    <div className="">
+                        <Image alt="" className="relative " src={img1}></Image>
+                    </div>
+                    <div className="relative -top-[5rem] ">
+                        <h1 className="text-[1.5rem] text-blue-900 ">Cities</h1>
+                        <h1 className="text-[2rem] ">900+</h1>
+                    </div>
+                
             </div>
             
 

@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Overpass:wght@400;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+
+/* src/index.css or src/App.css */
+/* @font-face {
+    font-family: 'Cooper Black';
+    src: url('./assets/fonts/CooperBlack.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+} */
+
+
+.blur-background {
+    filter: blur(3px); /* Adjust the blur intensity as needed */
+   
+    z-index: 1;
+}
+
+.non-blur {
+   
+    z-index: 2;
+}
+
+
+.sticky {
+    position: sticky;
+    top: 1000;
+    background: white;
+    z-index: 1000;
+  }
+
+
+
+  
+ 
+  
+ 
+  
+ 
+  
+
+  
+
+
+
+ 
