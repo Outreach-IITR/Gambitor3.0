@@ -111,6 +111,30 @@
     margin: 0 auto;
   } 
 
+  .slider {
+    box-sizing: border-box;
+    position: relative;
+    width: 90%;
+    height: 22rem;
+    margin: 0 auto;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+  }
+
+  
+.img__descp {
+  width: 40%;
+  height: 6rem;
+  text-align: center;
+  font-family: "Poppins";
+  font-size: 0.875rem;
+  font-weight: 00;
+  color: white;
+}
+
   /* @font-face {
     font-family: 'Cooper Black';
     src: url('./assets/fonts/CooperBlack.ttf') format('truetype');
