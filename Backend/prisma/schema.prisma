@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,48 +7,41 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role {
-  PARTICIPANT
-  SCHOOL_AMBASSADOR
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Otpvalue {
+  id        Int      @id @default(autoincrement())
+  email     String
+  code      String
+  expiresAt DateTime
 }
 
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model User {
-  id          Int               @id @default(autoincrement())
-  email       String            @unique
-  password    String?
-  role        Role
-  googleId    String?           @unique
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
-  // Relations
-  participant Participant?
-  ambassador  SchoolAmbassador?
+  id            Int      @id @default(autoincrement())
+  email         String   @unique @db.VarChar(191)
+  password      String?
+  name          String?
+  contactNumber String?
+  category      Category?
+  referralCode  String?
+  schoolName    String?
+  state         String?
+  role          Role     @default(PARTICIPANT)
+  profile       String?
+  googleId      String?  @unique
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
 
-model Participant {
-  id               Int     @id @default(autoincrement())
-  userId           Int     @unique
-  name             String
-  contactNumber    String
-  class            Class
-  referralCode     String
-  schoolName       String
-  extraInfo        String? // Any extra fields specific to School Ambassadors
-  user             User    @relation(fields: [userId], references: [id])
-}
-
-model SchoolAmbassador {
-  id        Int     @id @default(autoincrement())
-  userId    Int     @unique
-  name             String
-  contactNumber    String
-  schoolName       String  
-  extraInfo String? // Any extra fields specific to School Ambassadors
-  user      User    @relation(fields: [userId], references: [id])
-}
-
-enum Class{
+enum Category {
+  ARETEOX
   METIOX
   APOLLOX
   ATHENOX
+}
+
+enum Role {
+  PARTICIPANT
+  SCHOOL_AMBASSADOR
+  BOTH
 }
