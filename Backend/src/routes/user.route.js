@@ -38,6 +38,12 @@ router.get("/auth/failure", AuthController.failureGoogleLogin);
 
 router.post('/sendOtp',AuthController.sendOtp);
 router.post('/verifyOtp',AuthController.verifyOtp);
+
+// mobile verification
+
+router.post('/sendOtpPhone',AuthController.sendOtpPhone);
+router.post('/verifyOtpPhone',AuthController.verifyOtpPhone);
+
 //info
 
 router.post('/user/:id/details', AuthController.updateAdditionalDetails);

@@ -8,6 +8,11 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import {createOTP,verifyOTP} from "../utils/otpGenerator.js"
 import mailService from "../utils/mailService.js";
+const accountSid = process.env.ACCOUNT_SID;
+const authToken = process.env.ACCOUNT_TOKEN;
+// import twilio from 'twilio';
+// const client = twilio(accountSid, authToken);
+import { sendOtp,generateOTP } from "../utils/mobileOTP.js";
 
 class AuthController {
   static register = asyncHandler(async (req, res, next) => {
@@ -205,6 +210,75 @@ class AuthController {
       next(error);
     }
   });
+
+  static sendOtpPhone =asyncHandler(async (req, res, next) => {
+    try {
+      const phoneNumber = "+91" + req.body.contactNumber
+      if (!phoneNumber) {
+        return res.status(400).json({ message: 'Phone number is required' });
+      }
+
+      const otp = generateOTP();
+      const expiresAt = new Date(Date.now() + 5 * 60 * 1000);
+      await prisma.phoneotp.create({
+        data: {
+          phoneNumber,
+          otp,
+          expiresAt,
+        },
+      });
+  
+      const response = await sendOtp(phoneNumber, otp);
+      
+      console.log(`Verification code sent to ${phoneNumber}`);
+      res.status(200).json({
+        status: "success",
+        data: "SMS sent successfully.",
+        response
+        });
+    } catch (error) {
+      console.error('Error sending verification code:', error);
+    res.status(500).json({
+      status: "error",
+      message: "Failed to send SMS."
+    });      
+    }
+  });
+  
+  static verifyOtpPhone = asyncHandler(async (req, res, next) => {
+    try {
+      const phoneNumber = "+91" + req.body.contactNumber
+      const otp = req.body.otp;
+      if (!phoneNumber || !otp) {
+        return res.status(400).json({ message: 'Phone number and OTP are required' });
+      }
+      const otpRecord = await prisma.phoneotp.findFirst({
+        where: {
+          phoneNumber,
+          otp,
+          expiresAt: {
+            gt: new Date(),
+          },
+        },
+      });
+  
+      if (otpRecord) {
+        await prisma.phoneotp.delete({
+          where: {
+            id: otpRecord.id,
+          },
+        });
+        return res.status(200).json({ message: 'OTP verified successfully' });
+      } else {
+        return res.status(400).json({ message: 'Invalid or expired OTP' });
+      }
+    } catch (error) {
+      console.error('Error verifying code:', error);
+      throw error
+    }
+  });
+
+
 }
 
 export default AuthController;
