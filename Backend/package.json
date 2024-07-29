@@ -26,8 +26,13 @@
     "ejs": "^3.1.10",
     "express": "^4.19.2",
     "express-session": "^1.18.0",
+    "fast-two-sms": "^1.0.4",
     "jsonwebtoken": "^9.0.2",
+    "luxon": "^3.4.4",
+    "nodemailer": "^6.9.14",
     "passport": "^0.7.0",
-    "passport-google-oauth2": "^0.2.0"
+    "passport-google-oauth2": "^0.2.0",
+    "springedge": "^1.0.6",
+    "twilio": "^5.2.2"
   }
 }

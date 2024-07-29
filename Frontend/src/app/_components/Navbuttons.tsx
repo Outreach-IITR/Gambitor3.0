@@ -1,19 +1,28 @@
 "use client";
+
+
+
+
+
+
 function NavButton({text}:any){
     return (
-       <a href={`#${text}`}>
+       
         
-           <button className="pointer-events-none border border-blue-500 rounded p-[0.5vw] bg-white w-[10vw] text-[0.9vw] text-black font-semibold h-[2.8vw]">{text}</button>
-       </a> 
+           <button id={`b${text}`} className="text-[20px] font-overpass leading-[25px] font-medium pointer-events-none border border-blue-500 rounded bg-white w-[166px]  text-black  h-[60px] active:bg-blue-700">{text}</button>
+       
     );
 }
 
 export default function NavButtons() {
+    
+
     const buttons = ['ROUNDS','CATEGORIES','PRIZES','SYLLABUS','DATE/VENUE','TESTIMONAL']
     return (
-        <div className="py-[5vw] z-[1] relative" >
-            <ul className="flex flex-row justify-between px-[15vw]"
+        <div className="py-[9rem] z-[1] relative hidden lg:block max-w-[1380px] mx-auto" >
+            <ul className="flex flex-row justify-between "
             onClick ={(event)=>{
+                //scroll to section
                 event.preventDefault();
                 const target = event.target as HTMLAnchorElement;
                 const id = target.getAttribute('href')?.replace('#','')
@@ -21,10 +30,9 @@ export default function NavButtons() {
                 element?.scrollIntoView({
                     behavior: 'smooth'
                 })
-            }}
-            >
+            }}>
                 {buttons.map((text)=>(
-                    <li key={text}><NavButton text={text}/></li>
+                    <a href={`#${text}`} className="" onClick={(event)=>{ console.log(event.target)}} key={text}><NavButton text={text}/></a>
                 ))}
             </ul>
         </div>
