@@ -15,95 +15,188 @@ const authToken = process.env.ACCOUNT_TOKEN;
 import { sendOtp,generateOTP } from "../utils/mobileOTP.js";
 
 class AuthController {
+  
   static register = asyncHandler(async (req, res, next) => {
+    const body = req.body;
+    const validator = vine.compile(registerSchema);
+  
     try {
-      const body = req.body;
-      const validator = vine.compile(registerSchema);
+      // Validate request body
       const payload = await validator.validate(body);
-
+  
       // Check if the email already exists in the database
       const existingUser = await prisma.user.findUnique({
         where: { email: payload.email },
       });
-
+  
       if (existingUser) {
         throw new ApiError(400, "Email already in use");
       }
-
+  
       // Encrypt the password
       const salt = bcrypt.genSaltSync(10);
       payload.password = bcrypt.hashSync(payload.password, salt);
-
+  
+      // Create new user
       const user = await prisma.user.create({
         data: payload,
       });
-
+  
+      // Send success response
       const response = new ApiResponse(200, user, "User created successfully");
       return res.status(200).json(response);
     } catch (error) {
       if (error instanceof errors.E_VALIDATION_ERROR) {
+        // Handle validation errors specifically
         throw new ApiError(400, "Validation Error", error.messages);
       }
-      if (error instanceof ApiError) {
-        throw error;
-      }
-      throw new ApiError(500, "Registration failed", []);
+  
+      // Pass other errors to the global error handler
+      throw error;
     }
   });
+  
+  // static register = asyncHandler(async (req, res, next) => {
+  //   try {
+  //     const body = req.body;
+  //     const validator = vine.compile(registerSchema);
+  //     const payload = await validator.validate(body);
+
+  //     // Check if the email already exists in the database
+  //     const existingUser = await prisma.user.findUnique({
+  //       where: { email: payload.email },
+  //     });
+
+  //     if (existingUser) {
+  //       throw new ApiError(400, "Email already in use");
+  //     }
+
+  //     // Encrypt the password
+  //     const salt = bcrypt.genSaltSync(10);
+  //     payload.password = bcrypt.hashSync(payload.password, salt);
+
+  //     const user = await prisma.user.create({
+  //       data: payload,
+  //     });
+
+  //     const response = new ApiResponse(200, user, "User created successfully");
+  //     return res.status(200).json(response);
+  //   } catch (error) {
+  //     if (error instanceof errors.E_VALIDATION_ERROR) {
+  //       throw new ApiError(400, "Validation Error", error.messages);
+  //     }
+  //     if (error instanceof ApiError) {
+  //       throw error;
+  //     }
+  //     throw new ApiError(500, "Registration failed", []);
+  //   }
+  // });
 
   static login = asyncHandler(async (req, res, next) => {
+    const body = req.body;
+    const validator = vine.compile(loginSchema);
+  
     try {
-      // connectDB()
-      const body = req.body;
-      const validator = vine.compile(loginSchema);
+      // Validate request body
       const payload = await validator.validate(body);
-
+  
       // Find user with email
       const findUser = await prisma.user.findUnique({
         where: {
           email: payload.email,
         },
       });
-
+  
       if (!findUser) {
+        // User not found
         throw new ApiError(400, "No user found with this email.");
       }
-      if (findUser) {
-        if (!bcrypt.compareSync(payload.password, findUser.password)) {
-          throw new ApiError(400, "Incorrect Password.");
-        }
-
-        // * Issue token to user
-        const payloadData = {
-          id: findUser.id,
-          name: findUser.name,
-          email: findUser.email,
-          // add role and other req payload
-        };
-        const token = jwt.sign(payloadData, process.env.ACCESS_TOKEN_SECRET, {
-          expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
-        });
-
-        const response = new ApiResponse(
-          200,
-          { access_token: `Bearer ${token}` },
-          "Logged in successfully"
-        );
-        return res.status(200).json(response);
+  
+      // Check if password is correct
+      if (!bcrypt.compareSync(payload.password, findUser.password)) {
+        throw new ApiError(400, "Incorrect Password.");
       }
-      throw new ApiError(400, "No user found with this email.");
+  
+      // Issue token to user
+      const payloadData = {
+        id: findUser.id,
+        name: findUser.name,
+        email: findUser.email,
+        // add role and other required payload data
+      };
+      const token = jwt.sign(payloadData, process.env.ACCESS_TOKEN_SECRET, {
+        expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
+      });
+  
+      // Send success response
+      const response = new ApiResponse(
+        200,
+        { access_token: `Bearer ${token}` },
+        "Logged in successfully"
+      );
+      return res.status(200).json(response);
     } catch (error) {
       if (error instanceof errors.E_VALIDATION_ERROR) {
+        // Handle validation errors specifically
         throw new ApiError(400, "Validation Error", error.messages);
       }
-
-      if (error instanceof ApiError) {
         throw error;
-      } else {
-        throw new ApiError(500, "Internal Server Error");
-      }
     }
   });
+  
+
+  // static login = asyncHandler(async (req, res, next) => {
+  //   try {
+  //     const body = req.body;
+  //     const validator = vine.compile(loginSchema);
+  //     const payload = await validator.validate(body);
+
+  //     // Find user with email
+  //     const findUser = await prisma.user.findUnique({
+  //       where: {
+  //         email: payload.email,
+  //       },
+  //     });
+
+  //     if (!findUser) {
+  //       throw new ApiError(400, "No user found with this email.");
+  //     }
+  //     if (findUser) {
+  //       if (!bcrypt.compareSync(payload.password, findUser.password)) {
+  //         throw new ApiError(400, "Incorrect Password.");
+  //       }
+
+  //       // * Issue token to user
+  //       const payloadData = {
+  //         id: findUser.id,
+  //         name: findUser.name,
+  //         email: findUser.email,
+  //         // add role and other req payload
+  //       };
+  //       const token = jwt.sign(payloadData, process.env.ACCESS_TOKEN_SECRET, {
+  //         expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
+  //       });
+
+  //       const response = new ApiResponse(
+  //         200,
+  //         { access_token: `Bearer ${token}` },
+  //         "Logged in successfully"
+  //       );
+  //       return res.status(200).json(response);
+  //     }
+  //     throw new ApiError(400, "No user found with this email.");
+  //   } catch (error) {
+  //     if (error instanceof errors.E_VALIDATION_ERROR) {
+  //       throw new ApiError(400, "Validation Error", error.messages);
+  //     }
+
+  //     if (error instanceof ApiError) {
+  //       throw error;
+  //     } else {
+  //       throw new ApiError(500, "Internal Server Error");
+  //     }
+  //   }
+  // });
 
   static successGoogleLogin = asyncHandler(async (req, res, next) => {
     try {

@@ -1,9 +1,9 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth2";
-import { prisma } from "../db/index.js"; // Adjust the import path as necessary
+import { prisma } from "../db/index.js";
 
 passport.serializeUser((user, done) => {
-  done(null, user.id); // Serialize user ID instead of entire user object
+  done(null, user.id); 
 });
 
 passport.deserializeUser(async (id, done) => {

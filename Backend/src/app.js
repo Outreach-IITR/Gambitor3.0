@@ -38,6 +38,7 @@ app.use((err, req, res, next) => {
   if (err instanceof ApiError) {
     return res.status(err.statusCode).json({
       success: err.success,
+      statusCode: err.statusCode,
       message: err.message,
       errors: err.errors,
     });
@@ -46,6 +47,7 @@ app.use((err, req, res, next) => {
   // Handle other types of errors or fall back to a generic error
   return res.status(500).json({
     success: false,
+    statusCode: 500,
     message: "Default Internal Server Error",
   });
 });

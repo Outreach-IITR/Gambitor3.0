@@ -1,1 +1,1 @@
-export const DB_NAME = "gambitor_3.0";
+export const DB_NAME = "gambitor demo";
