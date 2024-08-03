@@ -7,7 +7,7 @@ import b2 from "../../../public/bubble2.svg"
 import b3 from "../../../public/bubble3.svg"
 import b4 from "../../../public/bubble4.svg"
 import { useEffect } from 'react';
-import AOS from "aos";
+
 import "aos/dist/aos.css";
 
 
@@ -17,9 +17,7 @@ import "aos/dist/aos.css";
 
 
 export default function RoundDescription() {
-    useEffect(()=>{
-      AOS.init()
-    },[])
+    
     
     return (
       <section  id="ROUNDS" className="text-white relative z-[1] mt-[10rem] max-w-[1380px] mx-auto ">
@@ -29,8 +27,7 @@ export default function RoundDescription() {
          <h1 className="text-[3rem] mt-[4rem] font-bold text-center leading-[60px] font-overpass">ROUNDS</h1>
          <Image alt='' src={b3}/>
         </div>
-        <div data-aos="fade-up"
-            data-aos-duration="1000">
+        <div >
 
           <div className="flex justify-between items-center">
             <div className="hidden lg:block">

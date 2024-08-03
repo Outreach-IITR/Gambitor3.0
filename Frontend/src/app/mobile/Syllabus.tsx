@@ -13,7 +13,7 @@ import Timemap from './assets/Syllabus/Timemap.svg';
 export default function Syllabus() {
     const [selectedClass, setSelectedClass] = useState('XI');
 
-    const showPara = (className) => {
+    const showPara = (className:string) => {
         setSelectedClass(className);
     }
     

@@ -5,10 +5,17 @@
 
 
 .special{
-    @apply bg-blue-300
+    @apply bg-blue-300 transition-colors duration-300
 }
 .special2{
-    @apply bg-blue-800
+    @apply bg-blue-800 transition-colors duration-300
+}
+
+.cat1{
+  @apply flex-1 p-16 text-blue-900 transition-colors duration-300 bg-yellow-100 border border-yellow-300 cursor-pointer rounded-3xl pointer-events-none
+}
+.cat2{
+  @apply flex-1 p-16 transition-colors duration-300 border border-white cursor-pointer rounded-3xl pointer-events-none
 }
 
 .YTCarousel {
@@ -19,25 +26,7 @@
     margin-top: 10rem;
   }
   
-.YTCarousel__Title {
-    width: 100%;
-    text-align: center;
-    margin-bottom: 4rem;
-    font-family: Montserrat, sans-serif;
-  }
-  
-.YTCarousel__Title h3 {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #f96508;
-    font-family: inherit;
-    line-height: 2.75rem;
-  }
-  
-.YTCarousel__Title p {
-    font-size: 0.875rem;
-    font-weight: 500;
-  }
+
   
 @media (max-width: 1000px) {
     .YTCarousel {
@@ -125,15 +114,7 @@
   }
 
   
-.img__descp {
-  width: 40%;
-  height: 6rem;
-  text-align: center;
-  font-family: "Poppins";
-  font-size: 0.875rem;
-  font-weight: 00;
-  color: white;
-}
+
 
   /* @font-face {
     font-family: 'Cooper Black';
