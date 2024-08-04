@@ -1,5 +1,5 @@
 import Image from "next/image";
-import img1 from "../../../public/dolphine.svg"
+
 
 
 export default function AboutSection(){

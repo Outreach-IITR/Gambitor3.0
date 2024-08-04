@@ -4,7 +4,6 @@
 
 
 
-
 function NavButton({text}:any){
     return (
        

@@ -5,10 +5,10 @@
 
 
 .special{
-    @apply bg-blue-300 transition-colors duration-300
+    @apply  transition-colors duration-300
 }
 .special2{
-    @apply bg-blue-800 transition-colors duration-300
+    @apply bg-[#2B40B0] transition-colors duration-300
 }
 
 .cat1{
