@@ -55,6 +55,11 @@ const Register = () => {
                             placeholder="Email"
                         />
                     </div>
+                        <a href="/verify">
+                        <button className="w-[20%] py-1 mt-3 text-sm font-medium tracking-wide text-white bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                            Verify
+                        </button>
+                        </a>
 
                     <div className="relative mt-4">
                         <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
