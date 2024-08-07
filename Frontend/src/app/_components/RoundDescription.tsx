@@ -1,5 +1,5 @@
 "use client";
-import img1 from '../../../public/whale.svg'
+
 import Image from "next/image";
 import img2 from "../../../public/sharks.svg"
 import b1 from "../../../public/bubble1.svg"
@@ -7,7 +7,7 @@ import b2 from "../../../public/bubble2.svg"
 import b3 from "../../../public/bubble3.svg"
 import b4 from "../../../public/bubble4.svg"
 import { useEffect } from 'react';
-import AOS from "aos";
+
 import "aos/dist/aos.css";
 
 
@@ -17,9 +17,7 @@ import "aos/dist/aos.css";
 
 
 export default function RoundDescription() {
-    useEffect(()=>{
-      AOS.init()
-    },[])
+    
     
     return (
       <section  id="ROUNDS" className="text-white relative z-[1] mt-[10rem] max-w-[1380px] mx-auto ">
@@ -27,19 +25,18 @@ export default function RoundDescription() {
         <div className='flex justify-center'>
 
          <h1 className="text-[3rem] mt-[4rem] font-bold text-center leading-[60px] font-overpass">ROUNDS</h1>
-         <Image alt='' src={b3}/>
+         <img alt='' src="bubble3"/>
         </div>
-        <div data-aos="fade-up"
-            data-aos-duration="1000">
+        <div >
 
           <div className="flex justify-between items-center">
             <div className="hidden lg:block">
-              <Image alt='' src={img1} className='w-[100%] relative right-[20rem]'></Image>
+              <img alt='' src="whale.svg" className='w-[100%] relative right-[20rem]'></img>
             </div>
           <div className="w-[100%] lg:w-1/2">
             <div className='flex'>
               <h1 className="text-[36px] my-2 font-semibold leading-[45px]">INCEPTION</h1>
-              <Image alt='' className='ml-[10px]' src={b1}/>
+              <img alt='' className='ml-[10px]' src="bubble1.svg"/>
             </div>
             
             <p className="text-[20px] font-overpass leading-[25px] font-medium">
@@ -62,7 +59,7 @@ export default function RoundDescription() {
           <div className="w-full lg:w-1/2 pt-[10rem]">
             <div className="flex">
               <h1 className="text-[36px] font-semibold leading-[45px]">PINNACLE</h1>
-              <Image alt='' className='ml-[10px]' src={b3}/>
+              <img alt='' className='ml-[10px]' src="bubble3.svg"/>
             </div>
             <p className="text-[20px] font-overpass leading-[25px] font-medium">
             When you have cleared the depths for the Inception round, we 
@@ -77,8 +74,8 @@ export default function RoundDescription() {
             </p>
           </div>
           <div className='flex justify-center items-center hidden lg:block'>
-            <Image alt='' src={img2} className='pl-[5rem] w-[100%] '></Image>
-            <Image alt='' className='ml-[10px]' src={b4}/>
+            <img alt='' src="/sharks.svg" className='pl-[5rem] w-[100%] '></img>
+            <img alt='' className='ml-[10px]' src="bubble4.svg"/>
           </div>
         </div>
         </div>

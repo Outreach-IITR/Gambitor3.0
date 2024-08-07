@@ -7,7 +7,7 @@ import linkedin from "./assets/linkedin.png";
 import twitter from "./assets/twitter.png";
 import logo from "./assets/footerImg.png";
 import Link from "next/link";
-import mockPaper from "./assets/MOCKTEST.pdf";
+// import mockPaper from "./assets/MOCKTEST.pdf";
 import Background from "../../../public/footerback.png"
 
 
@@ -22,7 +22,7 @@ function Footer() {
     
   };
 
-  const downloadPDF = (data, fileName) => {
+  const downloadPDF = (data: string, fileName: string) => {
     fetch(data).then((response) => {
       response.blob().then((blob) => {
         // Creating new object of PDF file

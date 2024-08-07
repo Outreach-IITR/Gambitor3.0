@@ -1,9 +1,14 @@
 
-<style>
+{/* <style>
   @import url('https://fonts.cdnfonts.com/css/cooper-black');
-</style>
+</style> */}
 
-export default function Buttongp({ text }) {
+interface ButtongpProps {
+  text: string;
+}
+
+
+export default function Buttongp({text}: ButtongpProps) {
   return (
     <button style={{ 
       background: "#2445B5", 
@@ -20,7 +25,7 @@ export default function Buttongp({ text }) {
       justifyContent:'center',
       alignItems:'center'
     }}>
-      {text}
+      {text.replace(/'/g, '&apos;')}
     </button>
   );
 }

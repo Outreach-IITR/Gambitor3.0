@@ -12,7 +12,7 @@ export default function Navbar() {
 
     function toggleIcons(event:any) {
         event.preventDefault();
-        setIsTogglerVisible((prevSrc) => (prevSrc === Toggler ? Cross : Toggler));
+        setIsTogglerVisible((prevSrc:any) => (prevSrc === Toggler ? Cross : Toggler));
     }
 
     

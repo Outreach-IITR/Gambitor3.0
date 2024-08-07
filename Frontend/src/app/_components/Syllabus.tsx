@@ -3,11 +3,12 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 
 
+
 function NavButton({text}:any){
     return (
        
         
-        <button id={`b${text}`}  className="pointer-events-none border border-blue-500 rounded xl:w-[261px] w-[20vw] text-[20px] leading-[25px] text-white font-bold h-[60px] active:bg-blue-700 cursor-pointer">{text}</button>
+        <button id={`b${text}`}  className="border border-blue-500 rounded xl:w-[261px] w-[20vw] text-[20px] leading-[25px] text-white font-bold h-[60px] cursor-pointer">{text}</button>
        
     );
 }

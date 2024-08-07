@@ -50,10 +50,10 @@ const HomePageCarousel = () => {
   };
 
   return (
-    <div className="YTCarousel relative z-1">
-      <div className="YTCarousel__Title">
-        <h3>IIT Roorkee at a Glance</h3>
-        <p>Don't just take our word, see for yourself</p>
+    <div className="YTCarousel relative z-1" id="TESTIMONAL">
+      <div className="">
+        <h3 className="text-[3rem] font-bold text-center leading-[60px] font-overpass text-white mb-10">IIT Roorkee at a Glance</h3>
+        {/* <p>Don't just take our word, see for yourself</p> */}
       </div>
 
       <section className="slider">
@@ -94,7 +94,7 @@ const HomePageCarousel = () => {
       {slides.map((img, indx) => {
         return (
           indx === current && (
-            <div key={indx} className="img__descp">
+            <div key={indx} className="text-[1.2rem] font-medium text-center leading-[30px] font-overpass text-white max-w-[50rem]">
               {img.description}
             </div>
           )

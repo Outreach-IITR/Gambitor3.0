@@ -10,9 +10,9 @@ import Toggler from './assets/Navbar/toggler.svg'
 export default function Navbar() {
     const [isTogglerVisible, setIsTogglerVisible] = useState(Toggler);
 
-    function toggleIcons(event) {
+    function toggleIcons(event:any) {
         event.preventDefault();
-        setIsTogglerVisible((prevSrc) => (prevSrc === Toggler ? Cross : Toggler));
+        setIsTogglerVisible((prevSrc:any) => (prevSrc === Toggler ? Cross : Toggler));
     }
 
     return (
