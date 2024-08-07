@@ -50,7 +50,6 @@ class AuthController {
         // Handle validation errors specifically
         throw new ApiError(400, "Validation Error", error.messages);
       }
-  
       // Pass other errors to the global error handler
       throw error;
     }
@@ -370,8 +369,6 @@ class AuthController {
       throw error
     }
   });
-
-
 }
 
 export default AuthController;

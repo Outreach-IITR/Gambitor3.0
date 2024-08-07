@@ -1,6 +1,5 @@
 import express from "express";
 import cors from "cors";
-import { ApiError } from "./utils/ApiError.js";
 import session from "express-session";
 import "./utils/passportConfig.js";
 import globalErrorHandler from "./controllers/errorController.js";
