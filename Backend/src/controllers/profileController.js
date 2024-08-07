@@ -24,7 +24,25 @@ class ProfileController {
 
   static async show() {}
 
-  static async update(req, res) {}
+  static updateUser = asyncHandler(async (req, res) => {
+    try {
+      const userId = parseInt(req.params.id);
+      const updateData = req.body; // Get all fields to update from the request body
+
+      // Update the user profile in the database
+      const user = await prisma.user.update({
+        where: { id: userId },
+        data: updateData,
+      });
+      const response = new ApiResponse(200, { user }, "User profile updated successfully");
+      return res.status(200).json(response);
+    } catch (error) {
+      if (error instanceof ApiError) {
+        throw error;
+      }
+      throw new ApiError(500, "Something went wrong with the server while updating profile");
+    }
+  });
 
   static async destroy() {}
 }
