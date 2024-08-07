@@ -3,6 +3,7 @@ import cors from "cors";
 import { ApiError } from "./utils/ApiError.js";
 import session from "express-session";
 import "./utils/passportConfig.js";
+import globalErrorHandler from "./controllers/errorController.js";
 
 //routes import
 import ApiRoutes from "./routes/user.route.js";
@@ -30,26 +31,6 @@ app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use("/api/v1", ApiRoutes);
 
 // Error-handling middleware
-app.use((err, req, res, next) => {
-  if (res.headersSent) {
-    return next(err);
-  }
-
-  if (err instanceof ApiError) {
-    return res.status(err.statusCode).json({
-      success: err.success,
-      statusCode: err.statusCode,
-      message: err.message,
-      errors: err.errors,
-    });
-  }
-
-  // Handle other types of errors or fall back to a generic error
-  return res.status(500).json({
-    success: false,
-    statusCode: 500,
-    message: "Default Internal Server Error",
-  });
-});
+app.use(globalErrorHandler);
 
 export { app };
