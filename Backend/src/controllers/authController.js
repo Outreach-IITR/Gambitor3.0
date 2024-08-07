@@ -18,6 +18,7 @@ class AuthController {
   static register = asyncHandler(async (req, res, next) => {
     try {
       const body = req.body;
+      console.log(body)
       const validator = vine.compile(registerSchema);
       const payload = await validator.validate(body);
 

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import AuthController from "../controllers/authController.js";
-// import authMiddleware from "../middlewares/authenticate.js";
-// import ProfileController from "../controllers/profileController.js";
+import authMiddleware from "../middlewares/authenticate.js";
+import ProfileController from "../controllers/profileController.js";
 import passport from "passport";
 import "../utils/passportConfig.js";
 
@@ -47,5 +47,8 @@ router.post('/verifyOtpPhone',AuthController.verifyOtpPhone);
 //info
 
 router.post('/user/:id/details', AuthController.updateAdditionalDetails);
+
+// user routes to update profile
+router.put('/user/:id/update',authMiddleware,ProfileController.updateUser);
 
 export default router;
