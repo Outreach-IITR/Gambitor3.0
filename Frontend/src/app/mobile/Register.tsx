@@ -15,13 +15,13 @@ export default function Register() {
     
     
     return (
-        <div className="relative h-[Screen] w-screen text-white">
+        <div className="relative h-[Screen] w-full text-white">
              <div className="h-[750px] w-dvw  flex flex-col m-0 pr-0 justify-between flex-wrap blur-background">
                     <Navbar></Navbar>
                    
                     <div className="relative  ">
                         <Image src={ArtBoard} alt="ArtBoard" className="absolute top-[7px] left-[65%] h-[92.4px] w-[138.67px]" />
-                        <Image src={About} alt="About" className="absolute left-0 w-screen  " />
+                        <Image src={About} alt="About" className="absolute left-0 w-full  " />
                     </div>
             </div>
             <div className="flex flex-col justify-center items-center non-blur text-black">

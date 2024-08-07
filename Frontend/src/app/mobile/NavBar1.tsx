@@ -16,7 +16,7 @@ export default function Navbar() {
     }
 
     return (
-        <div className="sticky top-0  ">
+        <div className="sticky top-0 bg-transparent backdrop-blur-xl ">
             <div className="relative pt-1 pl-6 flex flex-row justify-between items-center bg-[#2445B5] backdrop-blur">
             <div>
                 <Image src={Logo} alt="Logo" className="h-12" />

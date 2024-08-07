@@ -21,7 +21,7 @@ import W1 from './assets/Prize/w1.svg'
 export default function Prize() {
     
     return (
-        <div className="relative bg-[#2445B5]  h-[1550px] w-screen text-white mb-0 pb-0">
+        <div className="relative bg-[#2445B5]  h-[1550px] w-full text-white mb-0 pb-0">
             {/* <Navbar></Navbar> */}
             <div className="flex flex-col items-center">
                 <h1 className="font-cooper w-screen absolute text-[32px] text-center top-[100px]  text-white font-normal leading-[36.7px] ">PRIZES</h1>

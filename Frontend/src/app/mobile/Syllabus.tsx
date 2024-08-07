@@ -18,18 +18,18 @@ export default function Syllabus() {
     }
     
     return (
-        <div className="relative bg-[#2445B5] h-[1284px] w-screen text-white">
+        <div className="relative bg-[#2445B5] h-[1284px] w-full text-white">
            
-            <Image src={V1} alt="" className="absolute left-0 top-[12%] w-screen "/>
+            <Image src={V1} alt="" className="absolute left-0 top-[12%] w-full "/>
             <Image src={W1} alt="" className="absolute left-[3%] top-[40%] " />
             <div className="flex flex-col items-center">
                 <h1 className="font-cooper w-screen absolute text-[32px] text-center top-[120px] text-white font-normal leading-[36.7px]">SYLLABUS</h1>
                 <div>
                     <div className="absolute top-[200px] left-[10%] flex flex-row justify-between w-[80%]">
-                        <div onClick={() => showPara('IX')} className="cursor-pointer w-[70px] border-2 text-center h-[36px] flex flex-row justify-center items-center border-[3px] rounded-[12px] border-[#013369] hover:border-[#FFE909] hover:bg-[#FFF8DD] hover:text-[#003874]">IX & X</div>
-                        <div onClick={() => showPara('X')} className="cursor-pointer w-[70px] border-2 text-center h-[36px] flex flex-row justify-center items-center border-[3px] rounded-[12px] border-[#013369] hover:border-[#FFE909] hover:bg-[#FFF8DD] hover:text-[#003874]">IX & X</div>
-                        <div onClick={() => showPara('XI')} className="cursor-pointer w-[70px] border-2 text-center h-[36px] flex flex-row justify-center items-center border-[3px] rounded-[12px] border-[#013369] hover:border-[#FFE909] hover:bg-[#FFF8DD] hover:text-[#003874]">XI</div>
-                        <div onClick={() => showPara('XII')} className="cursor-pointer w-[70px] border-2 text-center h-[36px] flex flex-row justify-center items-center border-[3px] rounded-[12px] border-[#013369] hover:border-[#FFE909] hover:bg-[#FFF8DD] hover:text-[#003874]">XII</div>
+                        <div onClick={() => showPara('IX')} className="cursor-pointer w-[70px]  text-center h-[36px] flex flex-row justify-center items-center border-[3px] rounded-[12px] border-[#013369] hover:border-[#FFE909] hover:bg-[#FFF8DD] hover:text-[#003874]">IX & X</div>
+                        <div onClick={() => showPara('X')} className="cursor-pointer w-[70px]  text-center h-[36px] flex flex-row justify-center items-center border-[3px] rounded-[12px] border-[#013369] hover:border-[#FFE909] hover:bg-[#FFF8DD] hover:text-[#003874]">IX & X</div>
+                        <div onClick={() => showPara('XI')} className="cursor-pointer w-[70px]  text-center h-[36px] flex flex-row justify-center items-center border-[3px] rounded-[12px] border-[#013369] hover:border-[#FFE909] hover:bg-[#FFF8DD] hover:text-[#003874]">XI</div>
+                        <div onClick={() => showPara('XII')} className="cursor-pointer w-[70px]  text-center h-[36px] flex flex-row justify-center items-center border-[3px] rounded-[12px] border-[#013369] hover:border-[#FFE909] hover:bg-[#FFF8DD] hover:text-[#003874]">XII</div>
                     </div>
                 </div>
 
@@ -48,8 +48,8 @@ export default function Syllabus() {
                     )}
                 </div>
             </div>
-            <h1 className="font-cooper w-screen absolute text-[32px] text-center top-[720px] text-white font-normal leading-[36.7px]">TIMELINE MAP</h1>
-            <div className="absolute bottom-[120px] w-screen flex justify-center items-center">
+            <h1 className="font-cooper w-full absolute text-[32px] text-center top-[720px] text-white font-normal leading-[36.7px]">TIMELINE MAP</h1>
+            <div className="absolute bottom-[120px] w-full flex justify-center items-center">
             <Image src={Timemap} alt="" className="h-[324.99px] w-[329px] "/>   
 
             </div>

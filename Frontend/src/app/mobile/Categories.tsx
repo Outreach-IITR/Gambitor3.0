@@ -15,10 +15,10 @@ import Drops from './assets/CATEGORIES/Drops.svg'
 export default function Categories() {
     
     return (
-        <div className="relative bg-[#2445B5]  h-[1052px] w-screen text-white">
+        <div className="relative bg-[#2445B5]  h-[1052px] w-full text-white">
             {/* <Navbar></Navbar> */}
             <div>
-                <h1 className="font-cooper w-screen absolute text-[32px] text-center top-[100px]  text-white font-normal leading-[36.7px] ">CATEGORIES</h1>
+                <h1 className="font-cooper w-full absolute text-[32px] text-center top-[100px]  text-white font-normal leading-[36.7px] ">CATEGORIES</h1>
                 <div className="absolute w-screen top-[22%] h-[700px]  flex flex-col items-center justify-between ">
                     <CatDiv Name="ARETEOX" Class="CLASS IX "></CatDiv>
                     <CatDiv Name="METIOX" Class="CLASS X"></CatDiv>

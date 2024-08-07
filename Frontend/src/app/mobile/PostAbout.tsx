@@ -9,7 +9,7 @@ function PostAbout() {
   const [count, setCount] = useState(0);
 
   return (
-    <div className='flex flex-col h-[852px] relative bg-[#E5F2FF] ' >
+    <div className='flex flex-col h-[852px] relative bg-[#E5F2FF] z-[-1]' >
       <div style={{ 
         display: 'flex', 
         flexDirection: 'column', 
@@ -35,7 +35,7 @@ function PostAbout() {
           zIndex:'-1'
         }} 
       /> */}
-      <Image src={bottomgp} alt="Bottom Graphic" style={{ width: '100%', marginTop: 'auto' }} />
+      
     </div>
   );
 }

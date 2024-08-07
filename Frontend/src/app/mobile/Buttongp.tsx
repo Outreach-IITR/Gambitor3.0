@@ -1,7 +1,7 @@
 
-{/* <style>
+<style>
   @import url('https://fonts.cdnfonts.com/css/cooper-black');
-</style> */}
+</style> 
 
 interface ButtongpProps {
   text: string;
