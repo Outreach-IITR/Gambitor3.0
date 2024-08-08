@@ -6,55 +6,60 @@ import vine, { errors } from "@vinejs/vine";
 import { registerSchema, loginSchema, infoSchema } from "../validations/authValidation.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import {createOTP,verifyOTP} from "../utils/otpGenerator.js"
+import { createOTP, verifyOTP } from "../utils/otpGenerator.js";
 import mailService from "../utils/mailService.js";
 const accountSid = process.env.ACCOUNT_SID;
 const authToken = process.env.ACCOUNT_TOKEN;
 // import twilio from 'twilio';
 // const client = twilio(accountSid, authToken);
-import { sendOtp,generateOTP } from "../utils/mobileOTP.js";
+import { sendOtp, generateOTP } from "../utils/mobileOTP.js";
+import generateTokenAndSetCookie from "../utils/generateTokenAndSetCookie.js";
 
 class AuthController {
-  
   static register = asyncHandler(async (req, res, next) => {
     const body = req.body;
     const validator = vine.compile(registerSchema);
-  
+
     try {
       // Validate request body
       const payload = await validator.validate(body);
-  
+
       // Check if the email already exists in the database
       const existingUser = await prisma.user.findUnique({
         where: { email: payload.email },
       });
-  
+
       if (existingUser) {
         throw new ApiError(400, "Email already in use");
       }
-  
+
       // Encrypt the password
       const salt = bcrypt.genSaltSync(10);
       payload.password = bcrypt.hashSync(payload.password, salt);
-  
+
       // Create new user
       const user = await prisma.user.create({
         data: payload,
       });
-  
-      // Send success response
-      const response = new ApiResponse(200, user, "User created successfully");
-      return res.status(200).json(response);
+
+      if (user) {
+        const payloadData = {
+          id: user.id,
+          email: user.email,
+        };
+        generateTokenAndSetCookie(payloadData, res);
+        const response = new ApiResponse(200, user, "User created successfully");
+        return res.status(200).json(response);
+      }
     } catch (error) {
       if (error instanceof errors.E_VALIDATION_ERROR) {
-        // Handle validation errors specifically
-        throw new ApiError(400, "Validation Error", error.messages);
+        throw new ApiError(400, "Validation Error", error.message);
       }
       // Pass other errors to the global error handler
       throw error;
     }
   });
-  
+
   // static register = asyncHandler(async (req, res, next) => {
   //   try {
   //     const body = req.body;
@@ -94,40 +99,30 @@ class AuthController {
   static login = asyncHandler(async (req, res, next) => {
     const body = req.body;
     const validator = vine.compile(loginSchema);
-  
+
     try {
-      // Validate request body
       const payload = await validator.validate(body);
-  
-      // Find user with email
       const findUser = await prisma.user.findUnique({
         where: {
           email: payload.email,
         },
       });
-  
+
       if (!findUser) {
-        // User not found
         throw new ApiError(400, "No user found with this email.");
       }
-  
-      // Check if password is correct
+
       if (!bcrypt.compareSync(payload.password, findUser.password)) {
         throw new ApiError(400, "Incorrect Password.");
       }
-  
+
       // Issue token to user
       const payloadData = {
         id: findUser.id,
-        name: findUser.name,
         email: findUser.email,
-        // add role and other required payload data
       };
-      const token = jwt.sign(payloadData, process.env.ACCESS_TOKEN_SECRET, {
-        expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
-      });
-  
-      // Send success response
+      generateTokenAndSetCookie(payloadData, res);
+
       const response = new ApiResponse(
         200,
         { access_token: `Bearer ${token}` },
@@ -136,13 +131,11 @@ class AuthController {
       return res.status(200).json(response);
     } catch (error) {
       if (error instanceof errors.E_VALIDATION_ERROR) {
-        // Handle validation errors specifically
         throw new ApiError(400, "Validation Error", error.messages);
       }
-        throw error;
+      throw error;
     }
   });
-  
 
   // static login = asyncHandler(async (req, res, next) => {
   //   try {
@@ -226,20 +219,20 @@ class AuthController {
       const validatedData = await validator.validate(req.body);
       // Extract additional fields from req.body if present
       const { referralCode, profile } = req.body;
-  
+
       // Merge validated data with additional fields
       const data = {
         ...validatedData,
         referralCode,
-        profile
+        profile,
       };
       // Update user in database
       const userId = parseInt(req.params.id);
       const updatedUser = await prisma.user.update({
         where: { id: userId },
-        data: data
+        data: data,
       });
-  
+
       res.json(updatedUser);
     } catch (error) {
       if (error instanceof errors.E_VALIDATION_ERROR) {
@@ -273,7 +266,7 @@ class AuthController {
       mailService.sendMail(mailOptions, function (err) {
         if (err) {
           next(new ApiError(500, err.message, [], err.stack));
-          console.log(err)
+          console.log(err);
         } else {
           res.status(200).json({
             status: "success",
@@ -303,11 +296,11 @@ class AuthController {
     }
   });
 
-  static sendOtpPhone =asyncHandler(async (req, res, next) => {
+  static sendOtpPhone = asyncHandler(async (req, res, next) => {
     try {
-      const phoneNumber = "+91" + req.body.contactNumber
+      const phoneNumber = "+91" + req.body.contactNumber;
       if (!phoneNumber) {
-        return res.status(400).json({ message: 'Phone number is required' });
+        return res.status(400).json({ message: "Phone number is required" });
       }
 
       const otp = generateOTP();
@@ -319,30 +312,30 @@ class AuthController {
           expiresAt,
         },
       });
-  
+
       const response = await sendOtp(phoneNumber, otp);
-      
+
       console.log(`Verification code sent to ${phoneNumber}`);
       res.status(200).json({
         status: "success",
         data: "SMS sent successfully.",
-        response
-        });
+        response,
+      });
     } catch (error) {
-      console.error('Error sending verification code:', error);
-    res.status(500).json({
-      status: "error",
-      message: "Failed to send SMS."
-    });      
+      console.error("Error sending verification code:", error);
+      res.status(500).json({
+        status: "error",
+        message: "Failed to send SMS.",
+      });
     }
   });
-  
+
   static verifyOtpPhone = asyncHandler(async (req, res, next) => {
     try {
-      const phoneNumber = "+91" + req.body.contactNumber
+      const phoneNumber = "+91" + req.body.contactNumber;
       const otp = req.body.otp;
       if (!phoneNumber || !otp) {
-        return res.status(400).json({ message: 'Phone number and OTP are required' });
+        return res.status(400).json({ message: "Phone number and OTP are required" });
       }
       const otpRecord = await prisma.phoneotp.findFirst({
         where: {
@@ -353,20 +346,20 @@ class AuthController {
           },
         },
       });
-  
+
       if (otpRecord) {
         await prisma.phoneotp.delete({
           where: {
             id: otpRecord.id,
           },
         });
-        return res.status(200).json({ message: 'OTP verified successfully' });
+        return res.status(200).json({ message: "OTP verified successfully" });
       } else {
-        return res.status(400).json({ message: 'Invalid or expired OTP' });
+        return res.status(400).json({ message: "Invalid or expired OTP" });
       }
     } catch (error) {
-      console.error('Error verifying code:', error);
-      throw error
+      console.error("Error verifying code:", error);
+      throw error;
     }
   });
 }

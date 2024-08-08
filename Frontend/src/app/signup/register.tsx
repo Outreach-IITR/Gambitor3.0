@@ -1,10 +1,27 @@
 "use client"
 import React, { useState } from 'react';
 import { FaEnvelope, FaEye, FaEyeSlash, FaLock } from 'react-icons/fa'; // Importing icons
+import axios from 'axios';
 
 const Register = () => {
     const [passwordVisible, setPasswordVisible] = useState(false);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
+    const handleSubmit = async(e:any) => {
+        e.preventDefault();
+        // Handle form submission logic here
+        console.log('Email:', email);
+        console.log('Password:', password);
+        try {
+            const response = await axios.post('http://localhost:8000/api/v1/auth/register', { email:email,password:password });
+            console.log(response.data);
+            console.log('success')
+          } catch (error) {
+             console.log(error)
+          }
+
+    };
     // Function to toggle password visibility
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
@@ -45,7 +62,7 @@ const Register = () => {
                         <span className="mx-2 text-xs text-gray-500">or continue with email</span>
                         <hr className="flex-grow border-gray-300" />
                     </div>
-
+                    <form onSubmit={handleSubmit}>
                     <div className="relative mt-6">
                         <FaEnvelope className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                         <input
@@ -53,6 +70,8 @@ const Register = () => {
                             className="block w-full pl-10 pr-4 py-3 text-gray-700 bg-white border border-gray-300 rounded-lg focus:border-blue-400 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300"
                             type="email"
                             placeholder="Email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
 
@@ -63,6 +82,8 @@ const Register = () => {
                             className="block w-full pl-10 pr-4 py-3 text-gray-700 bg-white border border-gray-300 rounded-lg focus:border-blue-400 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300"
                             type={passwordVisible ? "text" : "password"} // Toggle between "text" and "password"
                             placeholder="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                         {passwordVisible ? (
                             <FaEyeSlash
@@ -88,7 +109,7 @@ const Register = () => {
                             Sign up
                         </button>
                     </div>
-
+                    </form>
                     <div className="mt-6 text-center text-xs text-gray-500 no-underline">
                         
                             Already have an account?

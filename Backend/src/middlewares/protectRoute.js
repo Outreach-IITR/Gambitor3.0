@@ -1,13 +1,12 @@
-import User from "../models/userModel.js";
 import jwt from "jsonwebtoken";
 
 const protectRoute = async (req, res, next) => {
   try {
     const token = req.cookies.jwt;
 
-    if (!token) return res.status(401).json({ message: "Unauthorized" });
+    if (!token) return res.status(401).json({ message: "Unauthorized Access" });
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 
     const user = await User.findById(decoded.userId).select("-password");
 
