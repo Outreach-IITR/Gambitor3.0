@@ -131,8 +131,15 @@ class AuthController {
   static updateAdditionalDetails = asyncHandler(async (req, res) => {
     try {
       // Validate input data
+      console.log(req.body);
+      const name=req.body.name;
+      const formdata= {
+        ...req.body.formData,
+        name
+      }
+      console.log(formdata)
       const validator = vine.compile(infoSchema);
-      const validatedData = await validator.validate(req.body);
+      const validatedData = await validator.validate(formdata);
       // Extract additional fields from req.body if present
       const { referralCode, profile } = req.body;
   
@@ -143,7 +150,9 @@ class AuthController {
         profile
       };
       // Update user in database
+      console.log(req.params)
       const userId = parseInt(req.params.id);
+      console.log(userId);
       const updatedUser = await prisma.user.update({
         where: { id: userId },
         data: data

@@ -1,6 +1,6 @@
 "use client";
-import { useState ,Suspense} from "react";
-import OTPInput from "./otp";
+import { useState,Suspense } from "react";
+import OTPInput from "../verify/otp";
 import axios from '../https/api'
 import { AxiosError } from "axios";
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -8,17 +8,23 @@ interface ResponseData {
   message?: string;
   data?: string;
 }
-import dynamic from 'next/dynamic';
 import ErrorBox from "../_components/ErrorBox";
 import ResponseBox from "../_components/ResponseBox";
+import dynamic from "next/dynamic";
 
-const VerificationComponent = () =>{
-
+const PhoneVerificationComponent = ()=>{
 
     const [otp, setOtp] = useState(Array(4).fill(''));
     const searchParams = useSearchParams();
     const router=useRouter()
-    const email = searchParams.get('email');
+    const firstName = searchParams.get('firstName');
+    const id = searchParams.get('id');
+    const lastName = searchParams.get('lastName');
+    const state = searchParams.get('state');
+    const category = searchParams.get('category');
+    const schoolName = searchParams.get('schoolName');
+    const contactNumber = searchParams.get('contactNumber');
+    const referralCode = searchParams.get('referralCode');
     const [response, setResponse] = useState<string>('');
     const [error, setError] = useState<string>('');
     const handleInputChange = (e:any, index:any) => {
@@ -31,9 +37,9 @@ const VerificationComponent = () =>{
     setError('');
     setResponse('');
     try {
-      const response = await axios.post<ResponseData>('/verifyOtp', { email, otp: otpVal });
+      const response = await axios.post<ResponseData>('/verifyOtpPhone', { contactNumber, otp: otpVal });
       setResponse(response.data?.data || '');
-      router.push(`/signup?isVerified=true&email=${email}`);
+      router.push(`/personalinfo?isVerified=true&firstName=${firstName}&&category=${category}&&lastName=${lastName}&&schoolName=${schoolName}&&contactNumber=${contactNumber}&&state=${state}&&referralCode=${referralCode}&&id=${id}`);
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         const errorMessage = (error.response.data as ResponseData)?.message || 'An error occurred';
@@ -45,14 +51,14 @@ const VerificationComponent = () =>{
   const handleCancel = () => {
     setError('');
     setResponse('Account not verified');
-    router.push(`/signup?isVerified=false`);
+    router.push(`/personalinfo?isVerified=false&firstName=${firstName}&&category=${category}&&lastName=${lastName}&&schoolName=${schoolName}&&contactNumber=${contactNumber}&&state=${state}&&referralCode=${referralCode}&&id=${id}`);
   };
 
   const handleResend = async () => {
     setError('');
     setResponse('');
     try {
-      const response = await axios.post<ResponseData>('/sendOtp', { email });
+      const response = await axios.post<ResponseData>('/sendOtpPhone', { contactNumber });
       setResponse(response.data?.data || '');
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
@@ -72,7 +78,7 @@ const VerificationComponent = () =>{
           <ErrorBox message={error} /> 
         </div>
         <div className='mt-4 text-center'>
-          <h2 className='font-semibold font-600 text-[1.2rem] h-8 md:text-[1.5rem]'>Please check your email</h2>
+          <h2 className='font-semibold font-600 text-[1.2rem] h-8 md:text-[1.5rem]'>Please check your Messages</h2>
           <p className='mt-1 text-[1rem] font-normal md:text-[1.2rem]'>We’ve sent a code to </p>
         </div>
         <div className='text-center mt-8 flex flex-row w-full justify-center'>
@@ -90,12 +96,12 @@ const VerificationComponent = () =>{
     )
 }
 
-const Verify = dynamic(() => Promise.resolve(VerificationComponent), { ssr: false });
+const PhoneVerify = dynamic(() => Promise.resolve(PhoneVerificationComponent), { ssr: false });
 
 export default function Page() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <Verify />
+      <PhoneVerify />
     </Suspense>
   );
 }

@@ -1,10 +1,12 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useState,useEffect,Suspense } from 'react';
 import { FaEnvelope, FaEye, FaEyeSlash, FaLock } from 'react-icons/fa'; // Importing icons
 import axios from '../https/api'
 import { useRouter , useSearchParams } from 'next/navigation';
 import { AxiosError } from 'axios';
 import ErrorBox from '../_components/ErrorBox';
+import ResponseBox from '../_components/ResponseBox';
+import dynamic from 'next/dynamic';
 
 interface ApiError {
     statusCode: number;
@@ -18,9 +20,27 @@ const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const router = useRouter()
+    const searchParams = useSearchParams();
+    const flag = searchParams.get('isVerified'); 
     const [isVerified, setIsVerified] = useState(false);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const [message, setMessage] = useState('');  
+
+    useEffect(() => {
+        if (flag === 'true') {
+          setIsVerified(true);
+        } else {
+          setIsVerified(false);
+        }
+      }, [flag]);
+    
+    useEffect(() => {
+        const email = searchParams.get('email') || '';
+        setEmail(
+          email
+        );
+      }, [searchParams]);
+
     const handleSubmit = async(e:any) => {
         e.preventDefault();
         // Handle form submission logic here
@@ -28,9 +48,10 @@ const Register = () => {
         try {
             const response = await axios.post('/auth/register', { email:email,password:password });
             console.log(response.data);
+            const userId=response.data.data.id;
             setMessage('User created successfully!');
             setErrors({});
-            router.push('/personalinfo')
+            router.push(`/personalinfo?id=${userId}`)
           } catch (error) {
              console.log(error)
              if (error && typeof error === 'object' && 'response' in error) {
@@ -58,7 +79,36 @@ const Register = () => {
     // To verify email address
 
     const handleVerify = async(e:any) => {
-      
+        e.preventDefault();
+        if(email === '')  setErrors((prevErrors) => ({ ...prevErrors, email: 'Email address cannot be empty' }));
+        else if(!isVerified){
+         //setLoading(true);
+        try{
+          const response = await axios.post('/sendOtp',{email : email})
+          console.log(response.data);
+          //setResponse(response.data?.data);
+          router.push(`/verify?email=${email}`);
+        }catch(error)
+        {
+          console.log(error);
+          if (error && typeof error === 'object' && 'response' in error) {
+            const axiosError = error as { response?: { data?: ApiError } };
+            const apiError = axiosError.response?.data as ApiError;
+            if (apiError) {
+              setMessage(apiError.message);
+              setErrors(apiError.errors);
+            } else {
+              setMessage('An unexpected error occurred.');
+            }
+          } else {
+            setMessage('An unexpected error occurred.');
+          }
+        }
+      }
+      else 
+        {
+          setMessage('Email already verified');
+        }
     }
 
     return (
@@ -104,15 +154,19 @@ const Register = () => {
                             className="block w-full pl-10 pr-4 py-3 text-gray-700 bg-white border border-gray-300 rounded-lg focus:border-blue-400 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300"
                             type="email"
                             placeholder="Email"
+                            disabled={isVerified}
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
                         
                     </div>
                         <a href="/verify">
-                        <button className="w-[20%] py-1 mt-3 text-sm font-medium tracking-wide text-white bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                        {!isVerified && <button onClick={handleVerify} className="w-[20%] py-1 mt-3 text-sm font-medium tracking-wide text-white bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
                             Verify
-                        </button>
+                        </button>}
+                        {isVerified && <button className="w-[20%] py-1 mt-3 text-sm font-medium tracking-wide text-white bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                            Verified
+                        </button>}
                         </a>
                     <ErrorBox message={errors.email}/>
                     <div className="relative mt-4">
@@ -180,4 +234,12 @@ const Register = () => {
     );
 };
 
-export default Register;
+const Signup = dynamic(() => Promise.resolve(Register), { ssr: false });
+
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Signup />
+    </Suspense>
+  );
+}
