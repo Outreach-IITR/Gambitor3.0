@@ -147,6 +147,7 @@ const Register = () => {
                         <hr className="flex-grow border-gray-300" />
                     </div>
                     <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit}>
                     <div className="relative mt-6">
                         <FaEnvelope className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                         <input
@@ -205,6 +206,7 @@ const Register = () => {
                         </button>
                         
                     </div>
+                    </form>
                     </form>
                     <div className="mt-6 text-center text-xs text-gray-500 no-underline">
                         
