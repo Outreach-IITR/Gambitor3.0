@@ -5,7 +5,6 @@ import { prisma } from "../db/index.js";
 import vine, { errors } from "@vinejs/vine";
 import { registerSchema, loginSchema, infoSchema } from "../validations/authValidation.js";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 import { createOTP, verifyOTP } from "../utils/otpGenerator.js";
 import mailService from "../utils/mailService.js";
 const accountSid = process.env.ACCOUNT_SID;
@@ -125,7 +124,7 @@ class AuthController {
 
       const response = new ApiResponse(
         200,
-        { access_token: `Bearer ${token}` },
+        findUser,
         "Logged in successfully"
       );
       return res.status(200).json(response);

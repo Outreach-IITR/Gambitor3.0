@@ -10,6 +10,10 @@ const router = Router();
 router.use(passport.initialize());
 router.use(passport.session());
 
+router.get("/", (req, res) => {
+  return res.json({ message: "Yay It's working..." });
+});
+
 router.post("/auth/register", AuthController.register);
 router.post("/auth/login", AuthController.login);
 // * Profile routes
@@ -23,8 +27,8 @@ router.get(
   "/auth/google/callback",
   passport.authenticate("google", { failureRedirect: "/api/v1/auth/failure" }),
   (req, res) => {
-    // Successful authentication, redirect to success page
-    res.redirect("/api/v1/auth/success");
+    // Successful authentication, redirect to home page
+    res.redirect("/api/v1/");
   }
 );
 
@@ -48,4 +52,4 @@ router.post('/verifyOtpPhone',AuthController.verifyOtpPhone);
 
 router.post('/user/:id/details', AuthController.updateAdditionalDetails);
 
-export default router;
+export {router};

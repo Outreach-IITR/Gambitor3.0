@@ -6,7 +6,7 @@ import globalErrorHandler from "./controllers/errorController.js";
 import cookieParser from "cookie-parser";
 
 //routes import
-import ApiRoutes from "./routes/user.route.js";
+import {router} from "./routes/user.route.js";
 
 const app = express();
 
@@ -16,6 +16,9 @@ app.use(
     credentials: true,
   })
 );
+
+// Error-handling middleware
+app.use(globalErrorHandler);
 
 // use session for google login
 app.use(
@@ -29,9 +32,6 @@ app.use(
 app.use(cookieParser());
 app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
-app.use("/api/v1", ApiRoutes);
-
-// Error-handling middleware
-app.use(globalErrorHandler);
+app.use("/api/v1", router);
 
 export { app };
