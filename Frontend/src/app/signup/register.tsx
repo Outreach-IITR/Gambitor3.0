@@ -3,7 +3,7 @@ import React, { useState,useEffect,Suspense } from 'react';
 import { FaEnvelope, FaEye, FaEyeSlash, FaLock } from 'react-icons/fa'; // Importing icons
 import axios from '../https/api'
 import { useRouter , useSearchParams } from 'next/navigation';
-import { AxiosError } from 'axios';
+// import { AxiosError } from 'axios';
 import ErrorBox from '../_components/ErrorBox';
 import ResponseBox from '../_components/ResponseBox';
 import dynamic from 'next/dynamic';
