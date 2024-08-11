@@ -10,6 +10,10 @@ const router = Router();
 router.use(passport.initialize());
 router.use(passport.session());
 
+router.get("/", (req, res) => {
+  return res.json({ message: "Yay It's working..." });
+});
+
 router.post("/auth/register", AuthController.register);
 router.post("/auth/login", AuthController.login);
 // * Profile routes
@@ -21,28 +25,24 @@ router.get("/auth/google", passport.authenticate("google", { scope: ["profile", 
 // Google OAuth2 callback route
 router.get(
   "/auth/google/callback",
-  passport.authenticate("google", { failureRedirect: "/api/v1/auth/failure" }),
-  (req, res) => {
-    // Successful authentication, redirect to success page
-    res.redirect("/api/v1/auth/success");
-  }
+  passport.authenticate("google", {
+    successRedirect: "http://localhost:3000/personalinfo",
+    failureRedirect: "http://localhost:3000/login",
+  })
 );
-
-// Success
-router.get("/auth/success", AuthController.successGoogleLogin);
 
 // failure
 router.get("/auth/failure", AuthController.failureGoogleLogin);
 
 //mail verification
 
-router.post('/sendOtp',AuthController.sendOtp);
-router.post('/verifyOtp',AuthController.verifyOtp);
+router.post("/sendOtp", AuthController.sendOtp);
+router.post("/verifyOtp", AuthController.verifyOtp);
 
 // mobile verification
 
-router.post('/sendOtpPhone',AuthController.sendOtpPhone);
-router.post('/verifyOtpPhone',AuthController.verifyOtpPhone);
+router.post("/sendOtpPhone", AuthController.sendOtpPhone);
+router.post("/verifyOtpPhone", AuthController.verifyOtpPhone);
 
 //info
 
@@ -52,4 +52,4 @@ router.post('/user/:id/details', AuthController.updateAdditionalDetails);
 router.put('/user/:id/update',authMiddleware,ProfileController.updateUser);
 router.get('/user/:id/sa',ProfileController.schoolAmbassador);
 
-export default router;
+export { router };

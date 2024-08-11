@@ -41,39 +41,43 @@ const Register = () => {
         );
       }, [searchParams]);
 
-    const handleSubmit = async(e:any) => {
-        e.preventDefault();
-        // Handle form submission logic here
-        if(isVerified){
-        try {
-            const response = await axios.post('/auth/register', { email:email,password:password });
-            console.log(response.data);
-            const userId=response.data.data.id;
-            setMessage('User created successfully!');
-            setErrors({});
-            router.push(`/personalinfo?id=${userId}`)
-          } catch (error) {
-             console.log(error)
-             if (error && typeof error === 'object' && 'response' in error) {
-                const axiosError = error as { response?: { data?: ApiError } };
-                const apiError = axiosError.response?.data as ApiError;
-                if (apiError) {
-                  setMessage(apiError.message);
-                  setErrors(apiError.errors);
-                } else {
-                  setMessage('An unexpected error occurred.');
-                }
-              } else {
-                setMessage('An unexpected error occurred.');
-              }
+  const loginwithgoogle = () => {
+    window.open("http://localhost:8000/api/v1/auth/google/callback", "_self");
+  };
+
+  const handleSubmit = async(e:any) => {
+    e.preventDefault();
+    // Handle form submission logic here
+    if(isVerified){
+    try {
+        const response = await axios.post('/auth/register', { email:email,password:password });
+        console.log(response.data);
+        const userId=response.data.data.id;
+        setMessage('User created successfully!');
+        setErrors({});
+        router.push(`/personalinfo?id=${userId}`)
+      } catch (error) {
+         console.log(error)
+         if (error && typeof error === 'object' && 'response' in error) {
+            const axiosError = error as { response?: { data?: ApiError } };
+            const apiError = axiosError.response?.data as ApiError;
+            if (apiError) {
+              setMessage(apiError.message);
+              setErrors(apiError.errors);
+            } else {
+              setMessage('An unexpected error occurred.');
+            }
+          } else {
+            setMessage('An unexpected error occurred.');
           }
-        }
-        else
-         setMessage('Email not verified . Verify your email first !')
-    };
+      }
+    }
+    else
+     setMessage('Email not verified . Verify your email first !')
+};
     // Function to toggle password visibility
     const togglePasswordVisibility = () => {
-        setPasswordVisible(!passwordVisible);
+      setPasswordVisible(!passwordVisible);
     };
 
     // To verify email address
@@ -112,41 +116,34 @@ const Register = () => {
     }
 
     return (
-        <div className="flex w-full h-screen font-[Public Sans]">
-            {/* Left side: Form section */}
-            <div className="flex items-center justify-center w-full lg:w-1/2 bg-white">
-                <div className="w-full max-w-md px-8 py-10">
-                    <div className="flex">
-                        <img
-                            className="w-40 h-auto"
-                            src="logo.svg"
-                            alt="Logo"
-                        />
-                    </div>
+      <div className="flex w-full h-screen font-[Public Sans]">
+        {/* Left side: Form section */}
+        <div className="flex items-center justify-center w-full lg:w-1/2 bg-white">
+          <div className="w-full max-w-md px-8 py-10">
+            <div className="flex">
+              <img className="w-40 h-auto" src="logo.svg" alt="Logo" />
+            </div>
 
-                    <p className="mt-6 text-2xl font-semibold text-center text-black">
-                        Create a new account
-                    </p>
-                    <p className="mt-2 text-xs text-center text-gray-600">
-                        Welcome back! Select a method to sign up
-                    </p>
+            <p className="mt-6 text-2xl font-semibold text-center text-black">
+              Create a new account
+            </p>
+            <p className="mt-2 text-xs text-center text-gray-600">
+              Welcome back! Select a method to sign up
+            </p>
 
-                    <a
-                        href="http://localhost:8000/api/v1/auth/google"
-                        className="flex items-center justify-center mt-8 py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50"
-                    >
-                        <img src="google-icon.svg" alt="Google Icon" className="w-6 h-6 mr-2" />
-                        <span className="text-sm font-medium text-gray-700">
-                            Google
-                        </span>
-                    </a>
+            <a
+              onClick={loginwithgoogle}
+              className="flex items-center cursor-pointer justify-center mt-8 py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50"
+            >
+              <img src="google-icon.svg" alt="Google Icon" className="w-6 h-6 mr-2" />
+              <span className="text-sm font-medium text-gray-700">Google</span>
+            </a>
 
                     <div className="flex items-center my-4">
                         <hr className="flex-grow border-gray-300" />
                         <span className="mx-2 text-xs text-gray-500">or continue with email</span>
                         <hr className="flex-grow border-gray-300" />
                     </div>
-                    <form onSubmit={handleSubmit}>
                     <form onSubmit={handleSubmit}>
                     <div className="relative mt-6">
                         <FaEnvelope className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -207,7 +204,6 @@ const Register = () => {
                         
                     </div>
                     </form>
-                    </form>
                     <div className="mt-6 text-center text-xs text-gray-500 no-underline">
                         
                             Already have an account?
@@ -221,20 +217,20 @@ const Register = () => {
                 
             </div>
 
-            {/* Right side: Image section */}
-            <div className="hidden lg:flex lg:w-1/2 items-center justify-center bg-blue-600">
-                <div
-                    className="w-full h-full bg-cover bg-center"
-                    style={{
-                        backgroundImage: "url('/dolphin.svg')",
-                    }}
-                >
-                    {/* Add any additional content or styling specific to the image section here */}
-                </div>
-            </div>
+        {/* Right side: Image section */}
+        <div className="hidden lg:flex lg:w-1/2 items-center justify-center bg-blue-600">
+          <div
+            className="w-full h-full bg-cover bg-center"
+            style={{
+              backgroundImage: "url('/dolphin.svg')",
+            }}
+          >
+            {/* Add any additional content or styling specific to the image section here */}
+          </div>
         </div>
+      </div>
     );
-};
+  };
 
 const Signup = dynamic(() => Promise.resolve(Register), { ssr: false });
 

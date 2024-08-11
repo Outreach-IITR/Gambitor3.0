@@ -10,6 +10,10 @@ const Login= () => {
         setPasswordVisible(!passwordVisible);
     };
 
+    const loginwithgoogle = ()=>{
+        window.open("http://localhost:8000/api/v1/auth/google/callback","_self")
+    }
+
     return (
         <div className="flex w-full h-screen font-[Public Sans]">
             {/* Left side: Form section */}
@@ -29,10 +33,9 @@ const Login= () => {
                     <p className="mt-2 text-xs text-center text-gray-600">
                         Welcome back! Select a method to register
                     </p>
-
                     <a
-                        href="#"
-                        className="flex items-center justify-center mt-8 py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50"
+                        onClick={loginwithgoogle}
+                        className="flex items-center cursor-pointer justify-center mt-8 py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50"
                     >
                         <img src="google-icon.svg" alt="Google Icon" className="w-6 h-6 mr-2" />
                         <span className="text-sm font-medium text-gray-700">
