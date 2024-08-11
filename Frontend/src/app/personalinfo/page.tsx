@@ -1,5 +1,4 @@
 "use client";
-
 import Image from "next/image";
 import { useState, ChangeEvent, FormEvent ,useEffect ,Suspense} from "react";
 import axios from '../https/api'
@@ -106,7 +105,7 @@ const PersonalInfoComponent = () => {
         const name = formData.firstName+" " +formData.lastName
         const response = await axios.post(`/user/${id}/details`,{ formData ,name:name });
         console.log(response.data);
-        router.push('/')
+        router.push('/dashboard')
     } catch(error)
     {
        console.log(error);

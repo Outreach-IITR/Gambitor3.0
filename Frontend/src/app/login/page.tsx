@@ -28,7 +28,7 @@ const LoginComponent = () => {
       };
       const response = await axios.post("/auth/login", payLoad);
       console.log(response.data);
-      router.push("/");
+      router.push("/dashboard");
     } catch (error) {
       console.log(error);
     }
