@@ -1,12 +1,12 @@
 import twilio from 'twilio';
 const accountSid = process.env.ACCOUNT_SID;
 const authToken = process.env.ACCOUNT_TOKEN;
-// const client = new twilio(accountSid, authToken);
+const client = new twilio(accountSid, authToken);
 const TWILIO_PHONE_NUMBER = process.env.TWILIO_PHONE_NUMBER;
 
 const sendOtp = (phoneNumber, otp) => {
   return client.messages.create({
-    body: `Your OTP for Gambitor3.0 is ${otp}`,
+    body: `Your OTP for phone number verification for Gambitor3.0 is ${otp}`,
     from: TWILIO_PHONE_NUMBER,
     to: phoneNumber,
   });

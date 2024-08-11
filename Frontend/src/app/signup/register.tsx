@@ -166,7 +166,7 @@ const Register = () => {
                             Verified
                         </button>}
                         </a>
-                    <ErrorBox message={errors.email}/>
+                    <ErrorBox message={errors?.email}/>
                     <div className="relative mt-4">
                         <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                         <input
@@ -190,7 +190,7 @@ const Register = () => {
                         )}
                        
                     </div>
-                    <ErrorBox message={errors.password}/>
+                    <ErrorBox message={errors?.password}/>
                     <div className="mt-4 text-right">
                         <a href="#" className="text-xs text-blue-600">
                             Forgot Password?

@@ -15,7 +15,7 @@ router.get("/", (req, res) => {
 });
 
 router.post("/auth/register", AuthController.register);
-router.post("/auth/login", AuthController.login);
+router.post("/auth/login",authMiddleware,AuthController.login);
 // * Profile routes
 //router.get("/profile", authMiddleware, ProfileController.index); //Private route
 
@@ -50,6 +50,6 @@ router.post('/user/:id/details', AuthController.updateAdditionalDetails);
 
 // user routes to update profile
 router.put('/user/:id/update',authMiddleware,ProfileController.updateUser);
-router.get('/user/:id/sa',ProfileController.schoolAmbassador);
+router.get('/school-ambassador/:id',ProfileController.schoolAmbassador);
 
 export { router };

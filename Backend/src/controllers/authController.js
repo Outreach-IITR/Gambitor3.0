@@ -7,10 +7,6 @@ import { registerSchema, loginSchema, infoSchema } from "../validations/authVali
 import bcrypt from "bcryptjs";
 import { createOTP, verifyOTP } from "../utils/otpGenerator.js";
 import mailService from "../utils/mailService.js";
-const accountSid = process.env.ACCOUNT_SID;
-const authToken = process.env.ACCOUNT_TOKEN;
-// import twilio from 'twilio';
-// const client = twilio(accountSid, authToken);
 import { sendOtp, generateOTP } from "../utils/mobileOTP.js";
 import generateTokenAndSetCookie from "../utils/generateTokenAndSetCookie.js";
 
@@ -45,6 +41,7 @@ class AuthController {
         };
         generateTokenAndSetCookie(payloadData, res);
         const response = new ApiResponse(200, user, "User created successfully");
+        
         return res.status(200).json(response);
       }
     } catch (error) {
@@ -163,10 +160,12 @@ class AuthController {
       const validator = vine.compile(infoSchema);
       const validatedData = await validator.validate(formdata);
       // Extract additional fields from req.body if present
-      const { referralCode, profile } = req.body;
-
+      const { referralCode} = req.body.formData;
+      
       if (referralCode) {
-        const referringUser = await prisma.user.findUnique({ where: { referralCode } });
+        console.log(referralCode)
+        const referringUser = await prisma.user.findUnique({ where: { myReferral:referralCode } });
+        console.log(referringUser)
         if (referringUser) {
           // Increment the referral count for the referring user
           await prisma.user.update({
@@ -183,18 +182,17 @@ class AuthController {
       const data = {
         ...validatedData,
         referralCode,
-        profile,
       };
       // Update user in database
       console.log(req.params)
+      console.log(data)
       const userId = parseInt(req.params.id);
       console.log(userId);
       const updatedUser = await prisma.user.update({
         where: { id: userId },
         data: data,
       });
-
-      res.json(updatedUser);
+     res.json(updatedUser);
     } catch (error) {
       if (error instanceof errors.E_VALIDATION_ERROR) {
         throw new ApiError(400, "Validation Error", error.messages);
