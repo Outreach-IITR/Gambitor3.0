@@ -21,8 +21,9 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:8000/api/v1/auth/google/callback",
+      callbackURL: "/api/v1/auth/google/callback",
       passReqToCallback: true,
+      scope: ["profile", "email"],
     },
     async (req, accessToken, refreshToken, profile, done) => {
       try {
@@ -41,11 +42,9 @@ passport.use(
 );
 
 async function findOrCreateUser(profile) {
-  // Find user by email first
   let user = await prisma.user.findUnique({ where: { email: profile.email } });
 
   if (!user) {
-    // If user does not exist, create a new one
     user = await prisma.user.create({
       data: {
         googleId: profile.id,
@@ -54,7 +53,6 @@ async function findOrCreateUser(profile) {
       },
     });
   } else if (!user.googleId) {
-    // If user exists but does not have googleId, update it
     user = await prisma.user.update({
       where: { email: profile.email },
       data: { googleId: profile.id },

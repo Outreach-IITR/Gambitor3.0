@@ -23,7 +23,6 @@ class AuthController {
       // Validate request body
       const payload = await validator.validate(body);
 
-      // Check if the email already exists in the database
       const existingUser = await prisma.user.findUnique({
         where: { email: payload.email },
       });
@@ -32,11 +31,9 @@ class AuthController {
         throw new ApiError(400, "Email already in use");
       }
 
-      // Encrypt the password
       const salt = bcrypt.genSaltSync(10);
       payload.password = bcrypt.hashSync(payload.password, salt);
 
-      // Create new user
       const user = await prisma.user.create({
         data: payload,
       });
@@ -58,42 +55,6 @@ class AuthController {
       throw error;
     }
   });
-
-  // static register = asyncHandler(async (req, res, next) => {
-  //   try {
-  //     const body = req.body;
-  //     const validator = vine.compile(registerSchema);
-  //     const payload = await validator.validate(body);
-
-  //     // Check if the email already exists in the database
-  //     const existingUser = await prisma.user.findUnique({
-  //       where: { email: payload.email },
-  //     });
-
-  //     if (existingUser) {
-  //       throw new ApiError(400, "Email already in use");
-  //     }
-
-  //     // Encrypt the password
-  //     const salt = bcrypt.genSaltSync(10);
-  //     payload.password = bcrypt.hashSync(payload.password, salt);
-
-  //     const user = await prisma.user.create({
-  //       data: payload,
-  //     });
-
-  //     const response = new ApiResponse(200, user, "User created successfully");
-  //     return res.status(200).json(response);
-  //   } catch (error) {
-  //     if (error instanceof errors.E_VALIDATION_ERROR) {
-  //       throw new ApiError(400, "Validation Error", error.messages);
-  //     }
-  //     if (error instanceof ApiError) {
-  //       throw error;
-  //     }
-  //     throw new ApiError(500, "Registration failed", []);
-  //   }
-  // });
 
   static login = asyncHandler(async (req, res, next) => {
     const body = req.body;
@@ -122,11 +83,7 @@ class AuthController {
       };
       generateTokenAndSetCookie(payloadData, res);
 
-      const response = new ApiResponse(
-        200,
-        findUser,
-        "Logged in successfully"
-      );
+      const response = new ApiResponse(200, findUser, "Logged in successfully");
       return res.status(200).json(response);
     } catch (error) {
       if (error instanceof errors.E_VALIDATION_ERROR) {
@@ -188,24 +145,6 @@ class AuthController {
   //     }
   //   }
   // });
-
-  static successGoogleLogin = asyncHandler(async (req, res, next) => {
-    try {
-      if (!req.user) {
-        res.redirect("/api/v1/auth/failure");
-        throw new ApiError(400, "User not found in request", []);
-      }
-
-      console.log("User found:", req.user);
-      const response = new ApiResponse(200, req.user, "User google login successfully");
-      return res.status(200).json(response);
-    } catch (error) {
-      if (error instanceof ApiError) {
-        throw error;
-      }
-      throw new ApiError(500, "Registration failed");
-    }
-  });
 
   static failureGoogleLogin = (req, res) => {
     res.status(400).json({ message: "Google login failed" });

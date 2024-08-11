@@ -17,7 +17,6 @@ app.use(
   })
 );
 
-// Error-handling middleware
 app.use(globalErrorHandler);
 
 // use session for google login
