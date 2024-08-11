@@ -45,6 +45,7 @@ class AuthController {
         };
         generateTokenAndSetCookie(payloadData, res);
         const response = new ApiResponse(200, user, "User created successfully");
+        
         return res.status(200).json(response);
       }
     } catch (error) {
