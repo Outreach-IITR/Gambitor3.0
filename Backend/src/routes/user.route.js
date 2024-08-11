@@ -50,5 +50,6 @@ router.post('/user/:id/details', AuthController.updateAdditionalDetails);
 
 // user routes to update profile
 router.put('/user/:id/update',authMiddleware,ProfileController.updateUser);
+router.get('/user/:id/sa',ProfileController.schoolAmbassador);
 
 export default router;

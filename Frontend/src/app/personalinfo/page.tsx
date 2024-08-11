@@ -1,31 +1,88 @@
 "use client";
 
 import Image from "next/image";
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent ,useEffect ,Suspense} from "react";
+import axios from '../https/api'
+import { AxiosError } from "axios";
+import { useRouter,useSearchParams } from "next/navigation";
+import ErrorBox from "../_components/ErrorBox";
+import dynamic from 'next/dynamic';
 
 interface FormData {
   firstName: string;
   lastName: string;
-  class: string;
+  category: string;
   schoolName: string;
-  phoneNumber: string;
+  contactNumber: string;
   state: string;
   referralCode: string;
   profilePhoto: File | null;
 }
+interface ApiError {
+  statusCode: number;
+  message: string;
+  errors: { [key: string]: string };
+  success: boolean;
+}
 
-export default function PersonalInfo() {
+const PersonalInfoComponent = () => {
+
+  const [id,setId] =useState('-1');
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [message, setMessage] = useState('');  
+  
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
     lastName: "",
-    class: "",
+    category: "",
     schoolName: "",
-    phoneNumber: "",
+    contactNumber: "",
     state: "",
     referralCode: "",
     profilePhoto: null,
   });
+  const searchParams = useSearchParams();
+  const flag = searchParams.get('isVerified'); 
+  const router = useRouter();
+  useEffect(() => {
+    const id = searchParams.get('id') || '-1';
+    setId(
+      id
+    );
+  }, [searchParams]);
 
+  useEffect(() => {
+    if (flag === 'true') {
+      setIsVerified(true);
+    } else {
+      setIsVerified(false);
+    }
+  }, [flag]);
+
+
+  useEffect(() => {
+    const firstName = searchParams.get('firstName') || '';
+    const lastName = searchParams.get('lastName') || '';
+    const category = searchParams.get('category') || '';
+    const schoolName = searchParams.get('schoolName') || '';
+    const contactNumber = searchParams.get('contactNumber') || '';
+    const state = searchParams.get('state') || '';
+    const referralCode = searchParams.get('referralCode') || '';
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      firstName,
+      lastName,
+      category ,
+      schoolName,
+      contactNumber,
+      state,
+      referralCode
+    }));
+  }, [searchParams]);
+
+
+  const [isVerified, setIsVerified] = useState(false);
+  const [response, setResponse] = useState('');
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = e.target;
     if (name === "profilePhoto") {
@@ -40,11 +97,76 @@ export default function PersonalInfo() {
       }));
     }
   };
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+   
+  const handleSubmit = async(e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(formData);
+    if(isVerified){
+    try{
+        const name = formData.firstName+" " +formData.lastName
+        const response = await axios.post(`/user/${id}/details`,{ formData ,name:name });
+        console.log(response.data);
+    } catch(error)
+    {
+       console.log(error);
+       if (error && typeof error === 'object' && 'response' in error) {
+        const axiosError = error as { response?: { data?: ApiError } };
+        const apiError = axiosError.response?.data as ApiError;
+        console.log('hi')
+        if (apiError) {
+          setMessage(apiError.message);
+          setErrors(apiError.errors);
+        } else {
+          setMessage('An unexpected error occurred.');
+        }
+      } else {
+        setMessage('An unexpected error occurred.');
+      }
+    }}else
+    {
+      setMessage('Verify your phone number')
+    }
   };
+
+
+  const handleVerify = async(e:any) => {
+    e.preventDefault();
+    if(formData.contactNumber === '')  setErrors((prevErrors) => ({ ...prevErrors, contactNumber: 'Phone Number cannot be empty' }));
+    if(!isVerified){
+    try{
+      const response = await axios.post('/sendOtpPhone',{contactNumber:formData.contactNumber})
+      console.log(response.data);
+      setResponse(response.data?.data);
+      router.push(`/verifyphone?firstName=${formData.firstName}&&category=${formData.category}&&lastName=${formData.lastName}&&schoolName=${formData.schoolName}&&contactNumber=${formData.contactNumber}&&state=${formData.state}&&referralCode=${formData.referralCode}&&id=${id}`);
+    }catch(error)
+    {
+      console.log(error);
+      if (error && typeof error === 'object' && 'response' in error) {
+        const axiosError = error as { response?: { data?: ApiError } };
+        const apiError = axiosError.response?.data as ApiError;
+        if (apiError) {
+          setMessage(apiError.message);
+          setErrors(apiError.errors);
+        } else {
+          setMessage('An unexpected error occurred.');
+        }
+      } else {
+        setMessage('An unexpected error occurred.');
+      }
+    }
+  }
+  else 
+    {
+      setMessage('Mobile Number already verified');
+    }
+}
+
+// Previous Step functionality
+
+const handleClick = async(e:any) => {
+  router.push('/signup')
+}
+
 
   return (
     <div className="min-h-screen flex text-black">
@@ -85,7 +207,7 @@ export default function PersonalInfo() {
             height={32}
             className="rounded-full mr-2"
           />
-          <button className="px-4 py-2 border border-black border-opacity-20 text-black text-opacity-60 text-sm items-center justify-center flex rounded">
+          <a href='/signup'><button className="px-4 py-2 border border-black border-opacity-20 text-black text-opacity-60 text-sm items-center justify-center flex rounded">
             Sign Out
             <Image
               src="/exit.png"
@@ -94,7 +216,7 @@ export default function PersonalInfo() {
               height={16}
               className="ml-2"
             />
-          </button>
+          </button></a>
         </div>
         <h1 className="text-3xl font-bold">Personal Info</h1>
         <p className="mb-6">
@@ -116,6 +238,7 @@ export default function PersonalInfo() {
                 name="firstName"
                 value={formData.firstName}
                 onChange={handleChange}
+                required
                 className="w-full px-3 py-2 border border-gray-300 rounded peer"
               />
             </div>
@@ -132,6 +255,7 @@ export default function PersonalInfo() {
                 name="lastName"
                 value={formData.lastName}
                 onChange={handleChange}
+                required
                 className="w-full px-3 py-2 border border-gray-300 rounded peer"
               />
             </div>
@@ -144,12 +268,13 @@ export default function PersonalInfo() {
               </label>
               <input
                 type="text"
-                id="class"
-                name="class"
-                value={formData.class}
+                id="category"
+                name="category"
+                value={formData.category}
                 onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded peer"
               />
+              <ErrorBox message={errors.category}/>
             </div>
             <div className="w-1/3 px-2 mb-4">
               <label
@@ -164,8 +289,10 @@ export default function PersonalInfo() {
                 name="schoolName"
                 value={formData.schoolName}
                 onChange={handleChange}
+                required
                 className="w-full px-3 py-2 border border-gray-300 rounded peer"
               />
+              <ErrorBox message={errors.schoolName}/>
             </div>
             <div className="w-1/3 px-2 mb-4">
               <label
@@ -176,12 +303,22 @@ export default function PersonalInfo() {
               </label>
               <input
                 type="text"
-                id="phoneNumber"
-                name="phoneNumber"
-                value={formData.phoneNumber}
+                id="contactNumber"
+                name="contactNumber"
+                value={formData.contactNumber}
                 onChange={handleChange}
+                disabled={isVerified}
                 className="w-full px-3 py-2 border border-gray-300 rounded peer"
               />
+              <a href="/verifyPhone">
+              {!isVerified && <button onClick={handleVerify} className="w-[30%] py-1 mt-3 text-sm font-medium tracking-wide text-white bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                  Verify
+              </button>}
+              {isVerified && <button className="w-[30%] py-1 mt-3 text-sm font-medium tracking-wide text-white bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                  Verified
+              </button>}
+              </a>
+              <ErrorBox message={errors.contactNumber}/>
             </div>
           </div>
           <div className="w-1/4 mb-4">
@@ -197,8 +334,10 @@ export default function PersonalInfo() {
               name="state"
               value={formData.state}
               onChange={handleChange}
+              required
               className="w-full px-3 py-2 border border-gray-300 rounded peer"
             />
+            <ErrorBox message={errors.state}/>
           </div>
           <div className="w-1/4 mb-4">
             <label
@@ -246,6 +385,7 @@ export default function PersonalInfo() {
             <button
               type="button"
               className="px-4 py-2 border border-black border-opacity-20 text-black text-opacity-60 text-sm rounded"
+              onClick={handleClick}
             >
               Previous Step
             </button>
@@ -262,8 +402,19 @@ export default function PersonalInfo() {
               Get help
             </a>
           </div>
+          <ErrorBox message={message}/>
         </form>
       </div>
     </div>
+  );
+}
+
+const PersonalInfo = dynamic(() => Promise.resolve(PersonalInfoComponent), { ssr: false });
+
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PersonalInfo />
+    </Suspense>
   );
 }

@@ -1,13 +1,9 @@
 import express from "express";
 import cors from "cors";
-import { ApiError } from "./utils/ApiError.js";
 import session from "express-session";
 import "./utils/passportConfig.js";
-import dotenv from "dotenv";
-
-dotenv.config({
-  path: "./.env",
-});
+import globalErrorHandler from "./controllers/errorController.js";
+import cookieParser from "cookie-parser";
 
 //routes import
 import ApiRoutes from "./routes/user.route.js";
@@ -37,29 +33,12 @@ app.use(
   })
 );
 
+app.use(cookieParser());
 app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use("/api/v1", ApiRoutes);
 
 // Error-handling middleware
-app.use((err, req, res, next) => {
-  if (res.headersSent) {
-    return next(err);
-  }
-
-  if (err instanceof ApiError) {
-    return res.status(err.statusCode).json({
-      success: err.success,
-      message: err.message,
-      errors: err.errors,
-    });
-  }
-
-  // Handle other types of errors or fall back to a generic error
-  return res.status(500).json({
-    success: false,
-    message: "Default Internal Server Error",
-  });
-});
+app.use(globalErrorHandler);
 
 export { app };

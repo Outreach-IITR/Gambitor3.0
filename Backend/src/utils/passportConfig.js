@@ -1,9 +1,10 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth2";
-import { prisma } from "../db/index.js"; // Adjust the import path as necessary
+import { prisma } from "../db/index.js";
+import jwt from "jsonwebtoken";
 
 passport.serializeUser((user, done) => {
-  done(null, user.id); // Serialize user ID instead of entire user object
+  done(null, user.id); 
 });
 
 passport.deserializeUser(async (id, done) => {
@@ -26,7 +27,13 @@ passport.use(
     async (request, accessToken, refreshToken, profile, done) => {
       try {
         const user = await findOrCreateUser(profile);
-        return done(null, user);
+        // Generate JWT
+        const token = jwt.sign(
+          { id: user.id, email: user.email, name: user.name },
+          process.env.JWT_SECRET,
+          { expiresIn: '1h' }
+        );
+        return done(null, { user, token });
       } catch (err) {
         return done(err, null);
       }

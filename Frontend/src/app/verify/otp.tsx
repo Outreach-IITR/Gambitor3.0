@@ -1,27 +1,33 @@
 "use client"
 
 
-import { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect, ChangeEvent, KeyboardEvent } from 'react';
 
+interface OTPInputProps {
+  length: number; // Define the type for 'length'
+  onChange: (e: ChangeEvent<HTMLInputElement>, index: number) => void; // Define onChange function type
+}
 
-const OTPInput = ({ length, onChange }) => {
-  const inputsRef = useRef([]);
+const OTPInput: React.FC<OTPInputProps> = ({ length, onChange }) => {
+  const inputsRef = useRef<HTMLInputElement[]>(Array.from({ length }));
 
   useEffect(() => {
-    inputsRef.current[0].focus();
+    if (inputsRef.current[0]) {
+      inputsRef.current[0].focus();
+    }
   }, []);
 
-  const handleChange = (e:any, index:any) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>, index: number) => {
     const value = e.target.value;
-    if (value.length === 1 && index < length - 1) {
+    if (value.length === 1 && index < length - 1 && inputsRef.current[index + 1]) {
       inputsRef.current[index + 1].focus();
     }
     onChange(e, index);
   };
 
-  const handleKeyDown = (e:any, index:number) => {
-    if (e.key === 'Backspace' && index > 0) {
-      if (e.target.value === '') {
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>, index: number) => {
+    if (e.key === 'Backspace' && index > 0 && inputsRef.current[index - 1]) {
+      if (e.currentTarget.value === '') {
         inputsRef.current[index - 1].focus();
       }
     }
@@ -33,8 +39,12 @@ const OTPInput = ({ length, onChange }) => {
         <input
           key={index}
           type="text"
-          maxLength="1"
-          ref={(el) => (inputsRef.current[index] = el)}
+          maxLength={1}
+          ref={(el) => {
+            if (el) {
+              inputsRef.current[index] = el;
+            }
+          }}
           onChange={(e) => handleChange(e, index)}
           onKeyDown={(e) => handleKeyDown(e, index)}
           className="w-10 h-10 text-center text-xl border border-gray-300 rounded focus:outline-none focus:border-blue-500"
