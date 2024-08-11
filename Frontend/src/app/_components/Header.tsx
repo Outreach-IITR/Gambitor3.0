@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function Header(){
     return(
-        <div className="my-[2rem] mb-[4rem] relative z-1 max-w-[1380px] mx-auto flex justify-between items-center">
+        <div className="py-[2rem] pb-[4rem] relative z-1 max-w-[1380px] mx-auto flex justify-between items-center">
            <img alt="" src="/logo.svg" className="w-[392px]"/>
            <div className="flex space-x-6">
                 <a href="">

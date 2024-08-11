@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { FaEnvelope, FaEye, FaEyeSlash, FaLock } from 'react-icons/fa'; // Importing icons
 import axios from '../https/api'
 import { useRouter , useSearchParams } from 'next/navigation';
-import { AxiosError } from 'axios';
+// import { AxiosError } from 'axios';
 import ErrorBox from '../_components/ErrorBox';
 
 interface ApiError {

@@ -23,9 +23,9 @@ export default function Home() {
       <div>
 
       {/* <div className=""> */}
-      <div className="bg-gradient-to-b from-indigo-500 to-[#1d1d7a]">
-        <Image alt="" height={1200} width={800} src="/waves2.svg" className="absolute w-[100%]"></Image>
-      
+      <div className="bg-gradient-to-b from-indigo-600 to-[#1d1d7a]">
+        <img alt="" src="/homebg.svg" className="absolute -top-[20rem] w-[100%]"></img>
+        
         <Header></Header>
         <AboutSection/>
         {/* <Image alt="" height={500} width={500}

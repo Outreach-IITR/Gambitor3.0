@@ -15,16 +15,17 @@ const Categories = () => {
         <div className="text-white relative z-10 flex flex-col space-y-20 max-w-[1380px] mx-auto" id="CATEGORIES">
             <div className="mb-12 text-center">
                 <h1 className="text-[3rem] mb-[4rem] font-bold text-center leading-[60px] font-overpass">CATEGORIES</h1>
-                <div className="flex flex-wrap justify-between " onClick ={(event)=>{
-                //scroll to section
-                event.preventDefault();
-                const target = event.target as HTMLAnchorElement;
-                const id = target.getAttribute('href')?.replace('#','')
-                const element = document.getElementById(String(id))
-                element?.scrollIntoView({
-                    behavior: 'smooth'
-                })
-            }}>
+                <div className="flex flex-wrap justify-between " 
+                // onClick ={(event)=>{
+                // //scroll to section
+                // event.preventDefault();
+                // const target = event.target as HTMLAnchorElement;
+                // const id = target.getAttribute('href')?.replace('#','')
+                // const element = document.getElementById(String(id))
+                // element?.scrollIntoView({
+                //     behavior: 'smooth'
+                // })}}
+                >
                     <a href="#ARETEOX" onClick={()=>{setCat("ARETEOX")}}>
                     <div className={cat=="ARETEOX"?`cat1`: `cat2`} >
                         <h2 className="mb-4 text-2xl font-medium">Class XI</h2>
@@ -53,7 +54,7 @@ const Categories = () => {
 
             </div>
 
-            <div className="flex flex-wrap justify-between relative">
+            {/* <div className="flex flex-wrap justify-between relative">
                 <div className="w-full text-left  lg:w-6/12 rounded-[100%] bg-[#FFF8DB] text-black flex flex-col justify-center p-[6em]" id="ARETEOX">
                     <h2 className="text-[36px] font-semibold leading-[45px]">ARETEOX</h2>
                     <p className="text-[20px] font-overpass leading-[25px] font-medium ">
@@ -101,7 +102,7 @@ const Categories = () => {
                         posuere cubilia curae;pharetra, vel ultricies risus fringilla. Nullam vitae ex nibh. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices 
                         posuerecurae;pharetra, vel ultricies risus fringilla. Nullam vitae ex nibh. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; </p>
                 </div>
-            </div>
+            </div> */}
 
 
         </div>
