@@ -1,5 +1,4 @@
 "use client";
-
 import Image from "next/image";
 import { useState, ChangeEvent, FormEvent ,useEffect ,Suspense} from "react";
 import axios from '../https/api'
@@ -101,11 +100,12 @@ const PersonalInfoComponent = () => {
   const handleSubmit = async(e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(formData);
-    if(isVerified){
+    if(!isVerified){
     try{
         const name = formData.firstName+" " +formData.lastName
         const response = await axios.post(`/user/${id}/details`,{ formData ,name:name });
         console.log(response.data);
+        router.push('/dashboard')
     } catch(error)
     {
        console.log(error);
@@ -128,10 +128,10 @@ const PersonalInfoComponent = () => {
     }
   };
 
-
+  
   const handleVerify = async(e:any) => {
     e.preventDefault();
-    if(formData.contactNumber === '')  setErrors((prevErrors) => ({ ...prevErrors, contactNumber: 'Phone Number cannot be empty' }));
+    //if(formData.contactNumber === '')  setErrors((prevErrors) => ({ ...prevErrors, contactNumber: 'Phone Number cannot be empty' }));
     if(!isVerified){
     try{
       const response = await axios.post('/sendOtpPhone',{contactNumber:formData.contactNumber})
@@ -163,9 +163,9 @@ const PersonalInfoComponent = () => {
 
 // Previous Step functionality
 
-const handleClick = async(e:any) => {
-  router.push('/signup')
-}
+const handlePreviousStep = () => {
+  router.push('/signup'); // This navigates to the previous page in the history stack
+};
 
 
   return (
@@ -274,7 +274,7 @@ const handleClick = async(e:any) => {
                 onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded peer"
               />
-              <ErrorBox message={errors.category}/>
+              <ErrorBox message={errors?.category}/>
             </div>
             <div className="w-1/3 px-2 mb-4">
               <label
@@ -292,7 +292,7 @@ const handleClick = async(e:any) => {
                 required
                 className="w-full px-3 py-2 border border-gray-300 rounded peer"
               />
-              <ErrorBox message={errors.schoolName}/>
+              <ErrorBox message={errors?.schoolName}/>
             </div>
             <div className="w-1/3 px-2 mb-4">
               <label
@@ -318,7 +318,7 @@ const handleClick = async(e:any) => {
                   Verified
               </button>}
               </a>
-              <ErrorBox message={errors.contactNumber}/>
+              <ErrorBox message={errors?.contactNumber}/>
             </div>
           </div>
           <div className="w-1/4 mb-4">
@@ -337,7 +337,7 @@ const handleClick = async(e:any) => {
               required
               className="w-full px-3 py-2 border border-gray-300 rounded peer"
             />
-            <ErrorBox message={errors.state}/>
+            <ErrorBox message={errors?.state}/>
           </div>
           <div className="w-1/4 mb-4">
             <label
@@ -355,7 +355,7 @@ const handleClick = async(e:any) => {
               className="w-full px-3 py-2 border border-gray-300 rounded peer"
             />
           </div>
-          <div className="w-1/4 mb-6">
+          {/* <div className="w-1/4 mb-6">
             <label
               htmlFor="profilePhoto"
               className="block text-black text-sm mb-1 transition-colors duration-200 ease-in-out peer-focus:text-[#005EFE]"
@@ -379,13 +379,13 @@ const handleClick = async(e:any) => {
                 className="absolute inset-0 opacity-0 cursor-pointer"
               />
             </div>
-          </div>
+          </div> */}
 
           <div className="flex justify-between mb-6 mt-16">
             <button
               type="button"
               className="px-4 py-2 border border-black border-opacity-20 text-black text-opacity-60 text-sm rounded"
-              onClick={handleClick}
+              onClick={handlePreviousStep}
             >
               Previous Step
             </button>

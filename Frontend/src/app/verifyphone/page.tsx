@@ -39,6 +39,7 @@ const PhoneVerificationComponent = ()=>{
     try {
       const response = await axios.post<ResponseData>('/verifyOtpPhone', { contactNumber, otp: otpVal });
       setResponse(response.data?.data || '');
+      console.log(id);
       router.push(`/personalinfo?isVerified=true&firstName=${firstName}&&category=${category}&&lastName=${lastName}&&schoolName=${schoolName}&&contactNumber=${contactNumber}&&state=${state}&&referralCode=${referralCode}&&id=${id}`);
     } catch (error) {
       if (error instanceof AxiosError && error.response) {

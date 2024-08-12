@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
+import { asyncHandler } from "./asyncHandler.js";
 
-const generateTokenAndSetCookie = (payloadData, res) => {
+const generateTokenAndSetCookie = asyncHandler((payloadData, res) => {
   const token = jwt.sign({ payloadData }, process.env.ACCESS_TOKEN_SECRET, {
     expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
   });
@@ -12,6 +13,6 @@ const generateTokenAndSetCookie = (payloadData, res) => {
   });
 
   return token;
-};
+});
 
 export default generateTokenAndSetCookie;

@@ -6,7 +6,7 @@ const TWILIO_PHONE_NUMBER = process.env.TWILIO_PHONE_NUMBER;
 
 const sendOtp = (phoneNumber, otp) => {
   return client.messages.create({
-    body: `Your OTP for Gambitor3.0 is ${otp}`,
+    body: `Your OTP for phone number verification for Gambitor3.0 is ${otp}`,
     from: TWILIO_PHONE_NUMBER,
     to: phoneNumber,
   });

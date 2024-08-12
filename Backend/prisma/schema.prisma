@@ -42,7 +42,6 @@ model User {
   updatedAt     DateTime @updatedAt
   myReferral    String?    @unique
   referralCount Int      @default(0)
-
 }
 
 enum Category {

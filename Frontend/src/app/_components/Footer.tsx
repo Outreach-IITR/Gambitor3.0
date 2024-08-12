@@ -8,11 +8,9 @@ import twitter from "./assets/twitter.png";
 import logo from "./assets/footerImg.png";
 import Link from "next/link";
 // import mockPaper from "./assets/MOCKTEST.pdf";
-import Background from "../../../public/footerback.png"
-
+import Background from "../../../public/footerback.png";
 
 function Footer() {
-
   let backgroundImageStyle = {
     backgroundImage: `url("footerback.svg")`,
     backgroundSize: 'cover',
@@ -71,34 +69,19 @@ function Footer() {
           <div className="flex flex-col items-start gap-y-5 font-jost font-normal text-base leading-1.5 text-center tracking-wide text-white xl:text-left xl:gap-y-3 xl:text-[24px] xl:leading-normal">
             Download Paper:
             <Link
-              onClick={() =>
-                downloadPDF(
-                  "GambitoR - Apollox (1).pdf",
-                  "GambitoR - Apollox"
-                )
-              }
+              onClick={() => downloadPDF("GambitoR - Apollox (1).pdf", "GambitoR - Apollox")}
               href="/"
             >
               Apollox
             </Link>
             <Link
-              onClick={() =>
-                downloadPDF(
-                  "GambitoR - Athenox(1).pdf",
-                  "GambitoR - Athenox"
-                )
-              }
+              onClick={() => downloadPDF("GambitoR - Athenox(1).pdf", "GambitoR - Athenox")}
               href="/"
             >
               Athenox
             </Link>
             <Link
-              onClick={() =>
-                downloadPDF(
-                  "GambitoR - Metiox(1).pdf",
-                  "GambitoR - Metiox"
-                )
-              }
+              onClick={() => downloadPDF("GambitoR - Metiox(1).pdf", "GambitoR - Metiox")}
               href="/"
             >
               Metiox
@@ -126,7 +109,7 @@ function Footer() {
                 target={"_blank"}
                 className="w-8 xl:w-6 hover:translate-y-[-0.1em] hover:text-blue-500  "
               >
-                <Image src={insta} alt="instagram" className="w-full"/>
+                <Image src={insta} alt="instagram" className="w-full" />
               </a>
               {/* <a href="/about"  className="w-8xl:w-6 hover:translate-y-[-0.1em] hover:text-blue-500">
                 <img src={twitter} alt="twitter"className="w-full" />
