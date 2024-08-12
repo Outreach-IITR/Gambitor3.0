@@ -28,14 +28,14 @@ export default function Dashboard(){
                 
                 
             </div>
-            <div className="close lg:w-[calc(100%-250px)] z-0 lg:h-screen relative lg:left-[250px] w-full lg:min-w-[1140px]" >
+            <div className="close lg:w-[calc(100%-250px)] z-0 lg:h-screen relative lg:left-[250px] min-w-[650px] w-full lg:min-w-[1140px]" >
                 <div className="w-full sticky top-0">
 
                     <Navbar/>
                 </div>
             
 
-                <div className="grid max-w-[600px] text-white lg:grid-cols-[1.2fr_1fr] lg:grid-rows-[1fr_1fr_1fr] grid-cols-1 grid-rows-[1fr_1fr_1fr_1fr_1fr] 2xl:mx-auto lg:mx-10 mx-auto h-[calc(100%-100px)] lg:max-w-[1200px] ">
+                <div className="grid  max-w-[600px] text-white lg:grid-cols-[1.2fr_1fr] lg:grid-rows-[1fr_1fr_1fr] grid-cols-1 grid-rows-[1fr_1fr_1fr_1fr_1fr] 2xl:mx-auto lg:mx-10 mx-auto h-[calc(100%-100px)] lg:max-w-[1200px] ">
                     {/* 1st block */}
                     <div className="bg-[#0452D8] lg:mr-10 mb-10 rounded-[20px] pb-7 ">
                         <h1 className="text-center font-semibold text-[32px] leading-[24px] my-[1rem]">Updates</h1>
