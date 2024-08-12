@@ -12,7 +12,7 @@ export default function Navbar(){
                 <div className="flex">
                     
                     <div>
-                    <h1>Full Name</h1>
+                    <h1>Utkarsh Anand</h1>
                     <h1>Appolox</h1>
                     </div>
                 </div>

@@ -4,6 +4,10 @@
 @tailwind utilities;
 
 
+.close{
+  transition: all 0.5s ease;
+}
+
 .special{
     @apply  transition-colors duration-300
 }

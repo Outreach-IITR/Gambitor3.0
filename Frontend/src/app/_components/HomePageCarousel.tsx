@@ -52,7 +52,7 @@ const HomePageCarousel = () => {
   return (
     <div className="YTCarousel relative z-1" id="TESTIMONAL">
       <div className="">
-        <h3 className="text-[3rem] font-bold text-center leading-[60px] font-overpass text-white mb-10">IIT Roorkee at a Glance</h3>
+        <h3 className="text-[3rem] font-bold text-center leading-[60px] font-overpass text-white my-10">IIT Roorkee at a Glance</h3>
         {/* <p>Don't just take our word, see for yourself</p> */}
       </div>
 

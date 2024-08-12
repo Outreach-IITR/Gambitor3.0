@@ -13,19 +13,19 @@ export default function AboutSection(){
             </div>
             <div className=" pl-[10vw] flex relative order-1 flex-col items-center lg:it lg:w-[50%]  top-[2rem] justify-center">
                  
-                    <div className="relative -left-[10rem] top-2 ">
+                    {/* <div className="relative -left-[10rem] top-2 ">
 
                         <h1 className="text-[1.5rem] text-blue-900 ">Registrations</h1>
                         <h1 className="text-[2rem]">12000+</h1>
 
-                    </div>
+                    </div> */}
                     <div className="">
-                        <Image alt="" className="relative " width={350} height={250} src="/dolphine.svg"></Image>
+                        <Image alt="" className="relative " width={500} height={330} src="/aboutimg.svg"></Image>
                     </div>
-                    <div className="relative -top-[5rem] ">
+                    {/* <div className="relative -top-[5rem] ">
                         <h1 className="text-[1.5rem] text-blue-900 ">Cities</h1>
                         <h1 className="text-[2rem] ">900+</h1>
-                    </div>
+                    </div> */}
                 
             </div>
             

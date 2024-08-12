@@ -16,7 +16,7 @@ import Mobile from "./mobile/Mobile";
 
 
 export default function Home() {
-    const isMobile = useMediaQuery({query: '(max-width: 1200px)'})
+    const isMobile = useMediaQuery({query: '(max-width: 660px)'})
   return (
     <div>
       {isMobile? <Mobile/>:
@@ -39,9 +39,10 @@ export default function Home() {
         <RoundDescription />
         <Image src="/wave3.svg" alt="" height={500} width={500} className="w-full absolute z-1"/>
         <Categories/>
-        <Image src="/wave2.png" height={500} width={500} alt="" className='absolute z-1 w-full'/>
+        
         <Prizes/>
         <Syllabus/>
+        <Image src="/wave2.png" height={500} width={500} alt="" className='absolute z-1 w-full'/>
         <Timeline/>
         
         <HomePageCarousel/>
