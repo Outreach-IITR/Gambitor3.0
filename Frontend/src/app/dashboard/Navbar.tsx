@@ -6,7 +6,7 @@ export default function Navbar(){
     const [isToggler, setIsToggler] = useState(true);
     return(
         <div className="">
-            <div className="flex w-full justify-between items-center mt-5 lg:hidden px-[2rem]">
+            <div className="flex w-full justify-between items-center pt-5 lg:hidden px-[2rem]">
                 <div>
                     <img src="logo.svg" alt="" />
                 </div>
