@@ -1,18 +1,23 @@
 "use client"
 import { useState } from "react";
+import cross from "../../../public/cross.svg"
+import Toggler from "../../../public/toggler.svg"
+import Logo from  "../../../public/logo.svg"
+import Bell from  "../../../public/bell.svg"
+import Image from "next/image";
 
 
 export default function Navbar(){
     const [isToggler, setIsToggler] = useState(true);
     return(
-        <div className="">
+        <div className="sticky top-0">
             <div className="flex w-full justify-between items-center pt-5 lg:hidden px-[2rem]">
                 <div>
-                    <img src="logo.svg" alt="" />
+                    <Image src={Logo} alt="" />
                 </div>
                 <div onClick={()=>{setIsToggler(!isToggler)}}>
-                    {isToggler==true? <img src="toggler.svg" alt="" />:
-                        <img src="cross.svg" alt="" />
+                    {isToggler==true? <Image src={Toggler} alt="" />:
+                        <Image src={cross} alt="" />
 
                     }
                 </div>
@@ -23,7 +28,7 @@ export default function Navbar(){
                     <h1 className="text-[40px] font-bold leading-[47px]">Welcome, Utkarsh!</h1>
                 </div>
                 <div className="lg:flex space-x-5  hidden">
-                    <img src="bell.svg" alt="" />
+                    <Image src={Bell} alt="" />
                     <div className="flex">
                     
                         <div className="">

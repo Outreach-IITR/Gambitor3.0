@@ -1,5 +1,5 @@
 
-import Navbar from "./Navbar"
+
 
 
 export default function Home(){
@@ -18,19 +18,13 @@ const heading = "text-center font-semibold lg:text-[32px] lg:leading-[24px] my-[
 const desc = "font font-semibold lg:text-[24px] text-[16px] leading-[19px] w-[250px] lg:leading-[24px]"
 const button= "w-[144px] font-bold lg:text-[20px] text-[14px] leading-[16.45px] lg:leading-[23.5px] transition-colors duration-300 h-[36px] hover:bg-black text-black hover:text-white bg-white rounded-xl mt-7"
     return(
-        <div className="close lg:w-[calc(100%-300px)] z-0 lg:h-screen relative lg:left-[300px] min-w-[650px] w-full xl:min-w-[1140px]" >
-                <div className="w-full sticky top-0">
-
-                    <Navbar/>
-                </div>
-        
-
+        <div className="w-full h-[calc(100%-100px)]" >
+                
                 <div className="grid  max-w-[600px] text-white xl:grid-cols-[1.2fr_1fr] xl:grid-rows-[1fr_1fr_1fr] grid-cols-1 grid-rows-[1fr_1fr_1fr_1fr_1fr] 2xl:mx-auto xl:mx-10 mx-auto h-[calc(100%-100px)] xl:max-w-[1200px] lg:min-w-[600px] ">
                     {/* 1st block */}
                     <div className="bg-[#0452D8] xl:mr-10 mb-10 rounded-[20px] pb-7 ">
                         <h1 className={heading}>Updates</h1>
                         
-
                         <div className="overflow-y-scroll max-h-[200px] text-justify">
                         <ol className="flex flex-col">
                             {updates.map((updates, key)=>(
@@ -112,3 +106,4 @@ const button= "w-[144px] font-bold lg:text-[20px] text-[14px] leading-[16.45px] 
             </div>
     )
 }
+
