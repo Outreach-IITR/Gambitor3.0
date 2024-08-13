@@ -1,14 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import img2 from "../../../public/sharks.svg"
-import b1 from "../../../public/bubble1.svg"
-import b2 from "../../../public/bubble2.svg"
-import b3 from "../../../public/bubble3.svg"
-import b4 from "../../../public/bubble4.svg"
 import { useEffect } from 'react';
 
-import "aos/dist/aos.css";
 
 
 
@@ -73,7 +67,7 @@ export default function RoundDescription() {
             several exciting prizes in store for them.
             </p>
           </div>
-          <div className='flex justify-center items-center hidden lg:block'>
+          <div className='lg:flex justify-center items-center hidden'>
             <img alt='' src="/sharks.svg" className='pl-[5rem] w-[100%] '></img>
             <img alt='' className='ml-[10px]' src="bubble4.svg"/>
           </div>

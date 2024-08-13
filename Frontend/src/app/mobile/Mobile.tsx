@@ -2,7 +2,7 @@
 
 import About from './About'
 import Image from 'next/image'
-
+import HomePageCarousel from '../_components/HomePageCarousel'
 import Categories from './Categories'
 import Rounds from './Rounds'
 import Prize from './Prize'
@@ -43,6 +43,10 @@ const Mobile = () => {
       <Prize></Prize>
       
       <Syllabus></Syllabus>
+      <div className='bg-[#2445B5] relative z-20'>
+        <HomePageCarousel/>
+
+      </div>
       <NavBar></NavBar>
       
       

@@ -1,10 +1,12 @@
 "use client";
 
 
+interface content{
+    text: string;
+}
 
 
-
-function NavButton({text}:any){
+function NavButton({text}:content){
     return (
        
         

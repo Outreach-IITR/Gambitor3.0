@@ -17,7 +17,7 @@
 }
 
 .cat1 {
-  @apply flex-1 p-16 text-blue-900 transition-colors duration-300 bg-yellow-100 border border-yellow-300 cursor-pointer rounded-3xl pointer-events-none;
+  @apply   text-blue-900  bg-yellow-100 border border-yellow-300 ;
 }
 .cat2 {
   @apply flex-1 p-16 transition-colors duration-300 border border-white cursor-pointer rounded-3xl pointer-events-none;
@@ -138,4 +138,41 @@
   top: 1000;
   background: white;
   z-index: 1000;
+}
+
+@media (max-width: 1400px) {
+  .slider {
+    width: 98%;
+    height: 15rem;
+  }
+  .slide {
+    height: 15rem;
+  }
+  .img__descp {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .slide {
+    display: none;
+    overflow: hide;
+    height: 90%;
+  }
+  .slide.active {
+    display: block;
+    position: relative;
+    left: 0;
+    transform: translateX(0%);
+  }
+  #TESTIMONAL{
+    margin: 0;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    padding-inline: 20px;
+    
+  
+  }
+  
+
 }

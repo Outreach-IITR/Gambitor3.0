@@ -8,7 +8,7 @@ import twitter from "./assets/twitter.png";
 import logo from "./assets/footerImg.png";
 import Link from "next/link";
 // import mockPaper from "./assets/MOCKTEST.pdf";
-import Background from "../../../public/footerback.png";
+
 
 function Footer() {
   let backgroundImageStyle = {
@@ -36,11 +36,11 @@ function Footer() {
   };
 
   return (
-    <footer className="bg-gradient-to-b from-transparent to-[#1b1b3d]" style={backgroundImageStyle} >
+    <footer className="" style={backgroundImageStyle} >
       
-      <div className="flex justify-between mt-[12rem] px-[7rem] ">
+      <div className="flex justify-between mt-[12rem] py-[12rem] lg:px-[7rem] px-[4rem]">
         <div className="">
-          <Image className="w-[250px]"  src={logo} alt="Gambtor Logo" />
+          <Image className="lg:w-[250px] w-[200px]"  src={logo} alt="Gambtor Logo" />
           {/* <a href="Tel: 91-9558780555" className="" >
             +91-9558780555
           </a>
@@ -126,7 +126,7 @@ function Footer() {
           </div>
         </div>
       </div>
-      <p className="font-normal text-white text-base leading-relaxed text-center tracking-wide text-opacity-30 py-20">PRIVACY POLICY | COPYRIGHT | TERMS</p>
+      <p className="font-normal text-white text-base leading-relaxed text-center tracking-wide text-opacity-30 pb-20">PRIVACY POLICY | COPYRIGHT | TERMS</p>
       
     </footer>
   );

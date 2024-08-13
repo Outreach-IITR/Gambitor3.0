@@ -13,7 +13,7 @@ function Prizes(){
             <div className="flex">
                 <div className="mr-[5rem] flex flex-col items-center">
                     <a target="_blank" rel="noreferrer" className="flex flex-col items-center">
-                     <Image alt="img" src={thirdPrize} className="w-[15vw] " />
+                     <Image alt="img" src={thirdPrize} className="w-[15vw]" />
                      <h2 className="m-0 mt-1 text-white text-2xl font-semibold">3rd place</h2>
                      <h4 className="m-0 mt-1 text-white font-medium">Cash prize</h4>
                     </a>

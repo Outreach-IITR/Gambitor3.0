@@ -1,7 +1,4 @@
 "use client";
-import Image from "next/image";
-import sub from "../../../public/sub.svg"
-import light from "../../../public/light.svg"
 import { useState } from "react";
 
 
@@ -9,13 +6,14 @@ import { useState } from "react";
 
 const Categories = () => {
     const [cat, setCat] = useState("ARETEOX")
+    const buttoncss = "flex-1 p-16 transition-colors duration-300 border border-white cursor-pointer rounded-3xl hover:text-blue-900  hover:bg-yellow-100  hover:border-yellow-300";
 
 
     return (
         <div className="text-white relative z-10 flex flex-col space-y-20 max-w-[1380px] mx-auto" id="CATEGORIES">
             <div className="mb-12 text-center">
                 <h1 className="text-[3rem] mb-[4rem] font-bold text-center leading-[60px] font-overpass">CATEGORIES</h1>
-                <div className="flex flex-wrap justify-between " 
+                <div className="grid xl:grid-cols-[1fr_1fr_1fr_1fr] xl:grid-rows-[0fr] grid-cols-[1fr_1fr] grid-rows-[1fr_1fr] gap-4" 
                 // onClick ={(event)=>{
                 // //scroll to section
                 // event.preventDefault();
@@ -26,30 +24,30 @@ const Categories = () => {
                 //     behavior: 'smooth'
                 // })}}
                 >
-                    <a href="#ARETEOX" onClick={()=>{setCat("ARETEOX")}}>
-                    <div className={cat=="ARETEOX"?`cat1`: `cat2`} >
+                 
+                    <div className={buttoncss} >
                         <h2 className="mb-4 text-2xl font-medium">Class XI</h2>
                         <h3 className="text-3xl font-semibold">ARETEOX</h3>
                     </div>
-                    </a>
-                    <a href="#METIOX" onClick={()=>{setCat("METIOX")}}>                      
-                    <div className={cat=="METIOX"?`cat1`: `cat2`} >
+                    
+                                          
+                    <div className={buttoncss} >
                         <h2 className="mb-4 text-2xl font-medium">Class IX</h2>
                         <h3 className="text-3xl font-semibold">METIOX</h3>
                     </div>
-                    </a>
-                    <a href="#APOLLOX" onClick={()=>{setCat("APOLLOX")}}>                      
-                    <div className={cat=="APOLLOX"?`cat1`: `cat2`}  >
+                  
+                                       
+                    <div className={buttoncss}  >
                         <h2 className="mb-4 text-2xl font-medium">Class X</h2>
                         <h3 className="text-3xl font-semibold">APOLLOX</h3>
                     </div>
-                    </a>
-                    <a href="#ATHENOX" onClick={()=>{setCat("ATHENOX")}}>                    
-                    <div className={cat=="ATHENOX"?`cat1`: `cat2`} >
+                    
+                       
+                    <div className={buttoncss} >
                         <h2 className="mb-4 text-2xl font-medium">Class XII</h2>
                         <h3 className="text-3xl font-semibold">ATHENOX</h3>
                     </div>
-                    </a>
+                    
                 </div>
 
             </div>
