@@ -1,8 +1,8 @@
 "use client";
-import React, { useState,Suspense } from "react";
+import React, { useState, Suspense } from "react";
 import { FaEnvelope, FaEye, FaEyeSlash, FaLock } from "react-icons/fa"; // Importing icons
-import { useRouter , useSearchParams } from 'next/navigation'
-import axios from '../https/api'
+import { useRouter, useSearchParams } from "next/navigation";
+import axios from "../https/api";
 import dynamic from "next/dynamic";
 
 const LoginComponent = () => {
