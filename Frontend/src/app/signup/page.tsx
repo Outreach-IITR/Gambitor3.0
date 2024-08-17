@@ -1,11 +1,11 @@
 "use client";
 import React, { useState, useEffect, Suspense } from "react";
-import { FaEnvelope, FaEye, FaEyeSlash, FaLock } from "react-icons/fa"; // Importing icons
+import { FaEnvelope, FaEye, FaEyeSlash, FaLock } from "react-icons/fa";
 import axios from "../https/api";
 import { useRouter, useSearchParams } from "next/navigation";
 // import { AxiosError } from 'axios';
 import ErrorBox from "../_components/ErrorBox";
-import ResponseBox from "../_components/ResponseBox"; 
+import ResponseBox from "../_components/ResponseBox";
 import dynamic from "next/dynamic";
 
 interface ApiError {
@@ -77,7 +77,6 @@ function Home() {
   };
 
   // To verify email address
-
   const handleVerify = async (e: any) => {
     e.preventDefault();
     if (email === "")
