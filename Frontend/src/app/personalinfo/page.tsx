@@ -6,6 +6,7 @@ import { AxiosError } from "axios";
 import { useRouter,useSearchParams } from "next/navigation";
 import ErrorBox from "../_components/ErrorBox";
 import dynamic from 'next/dynamic';
+import PrivateRoute from "../_components/PrivateRoute";
 
 interface FormData {
   firstName: string;
@@ -414,7 +415,9 @@ const PersonalInfo = dynamic(() => Promise.resolve(PersonalInfoComponent), { ssr
 export default function Page() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <PersonalInfo />
+      <PrivateRoute>
+        <PersonalInfo />
+      </PrivateRoute>
     </Suspense>
   );
 }

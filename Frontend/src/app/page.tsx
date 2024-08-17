@@ -60,9 +60,7 @@ export default function Home() {
             <Prizes />
             <Syllabus />
             <Timeline />
-
             <HomePageCarousel />
-
             <Footer />
           </div>
         </div>
