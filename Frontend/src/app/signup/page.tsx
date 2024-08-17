@@ -7,6 +7,18 @@ import { useRouter, useSearchParams } from "next/navigation";
 import ErrorBox from "../_components/ErrorBox";
 import ResponseBox from "../_components/ResponseBox";
 import dynamic from "next/dynamic";
+import { signUpStart, signUpSuccess, signUpFailure } from "../../redux/user/userSlice.js";
+import { useDispatch, useSelector } from "react-redux";
+
+interface UserState {
+  currentUser: any;
+  loading: boolean;
+  error: boolean | string;
+}
+
+interface RootState {
+  user: UserState;
+}
 
 interface ApiError {
   statusCode: number;
@@ -25,6 +37,8 @@ function Home() {
   const [isVerified, setIsVerified] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [message, setMessage] = useState("");
+  const { loading, error } = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (flag === "true") {
@@ -48,14 +62,21 @@ function Home() {
     // Handle form submission logic here
     if (isVerified) {
       try {
+        dispatch(signUpStart());
         const response = await axios.post("/auth/register", { email: email, password: password });
         console.log(response.data);
         const userId = response.data.data.id;
+        if (response.data.success == false) {
+          dispatch(signUpFailure(response.data));
+          return;
+        }
         setMessage("User created successfully!");
         setErrors({});
         router.push(`/personalinfo?id=${userId}`);
+        dispatch(signUpSuccess(response.data));
       } catch (error) {
         console.log(error);
+        dispatch(signUpFailure(error));
         if (error && typeof error === "object" && "response" in error) {
           const axiosError = error as { response?: { data?: ApiError } };
           const apiError = axiosError.response?.data as ApiError;
@@ -197,7 +218,7 @@ function Home() {
             </div>
             <div className="mt-6">
               <button className="w-full py-3 text-sm font-medium tracking-wide text-white bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
-                Sign up
+              {loading ? "Loading..." : "Sign Up"}
               </button>
             </div>
           </form>
@@ -207,6 +228,9 @@ function Home() {
               <span className="text-blue-600 px-2 py-1 rounded">Click here to Login</span>
             </a>
           </div>
+          <p className='text-red-700 mt-5'>
+        {error ? error || 'Something went wrong!' : ''}
+      </p>
         </div>
       </div>
 
