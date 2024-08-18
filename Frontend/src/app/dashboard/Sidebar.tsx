@@ -4,6 +4,7 @@ import Link from "next/link";
 import 'boxicons/css/boxicons.min.css';
 import Image from "next/image"
 import Logo from "../../../public/logo.svg"
+import { usePathname } from "next/navigation";
 interface tabs{
     text:string,
     ico: string,
@@ -22,7 +23,7 @@ function Abc({text, ico, path}:tabs){
 
 export default function Sidebar(){
 
-
+    const pathname= usePathname();
     const [nav , setNav] = useState("Dashboard")
 
 
@@ -44,7 +45,7 @@ export default function Sidebar(){
                 </div>
                 <div className="lg:flex flex-col space-y-4 mt-[50px] ml-[3rem] text-[16px] font-medium  rounded-bl-xl rounded-tl-xl hidden">
                     {pages.map(({text,ico,path})=>(
-                    <div onClick={()=>{setNav(text)}} key={text} className={nav==text?"bg-white rounded-bl-xl rounded-tl-xl": "bg-transparent text-white"}>
+                    <div onClick={()=>{setNav(text); console.log(pathname)}} key={text} className={pathname==path?"bg-white rounded-bl-xl rounded-tl-xl": "bg-transparent text-white"}>
                         <Abc text={text} ico={ico} path={path}/>
 
                     </div>

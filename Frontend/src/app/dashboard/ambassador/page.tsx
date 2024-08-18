@@ -1,9 +1,18 @@
+"use client";
 import { Public_Sans } from "next/font/google"
 import school from "../../../../public/school.svg"
 import Image from "next/image"
+import { useMediaQuery } from "react-responsive";
+import Mobile from "./Moble"
+
 
 export default function Ambassador(){
+    const isMobile = useMediaQuery({query: '(max-width: 900px)'})
+    
     return(
+        <div>
+        {isMobile? <Mobile/> :
+
         <div className="h-[calc(100%-100px)] px-[100px] flex flex-col  pb-[20px]" >
             <div className="flex flex-col items-center">
                     <div className="w-[520px] h-[82px] rounded-[12px] bg-[#0452D8] text-center flex items-center justify-center">
@@ -13,15 +22,15 @@ export default function Ambassador(){
                     <p className="font-semibold text-[28px] leading-[32.9px] tracking-[0.5px] text-center mt-10">Share this referral code with your friends and get a chance to visite IIT roorkee</p>
 
                     </div>
-                    <div className="flex flex-col space-y-10">
+                    <div className="flex flex-col mt-10 space-y-10">
                         <h1 className="font-semibold text-[28px] leading-[32.9px] tracking-[0.5px]">Your referral count</h1>
                         <div className="w-[99px] h-[82px] text-[42px] leading-[50px] flex items-center justify-center text-white text-center font-bold mx-auto bg-[#676767] rounded-[12px]">24</div>
                     </div> 
                 
             </div>
-            <div className="flex justify-between mt-20">
-                <Image src={school} className="w-[410px]" alt="" />
-                <div className="bg-[#0452D8] rounded-[20px] w-[500px] mr-20 p-10">
+            <div className="flex justify-center gap-[10vw] mt-20">
+                <Image src={school} className="w-[410px] hidden xl:block" alt="" />
+                <div className="bg-[#0452D8] rounded-[20px] w-[500px]  p-10">
                     <h1 className="font-extrabold text-[32px] leading-[24px] tracking-[0.5px] text-white text-center mb-[25px]">Perks</h1>
                     <div className="text-[22px] tracking-[0.5px] leading-[24px] text-center text-white flex flex-col gap-5">
                         <h1>At 100 referrals you get certificate from IIT Roorkee</h1>
@@ -30,6 +39,9 @@ export default function Ambassador(){
                     </div>
                 </div>
             </div>
+        </div>
+        
+        }
         </div>
     )
 }
