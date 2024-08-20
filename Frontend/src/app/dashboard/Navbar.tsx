@@ -15,7 +15,7 @@ interface abc{
 
 function Buttons({text, ico , path}:abc){
     return(
-        <li className="w-[231px] h-[56px] py-[16px] pl-[28px] rounded-[12px] hover:bg-white text-white hover:text-[#222934]">
+        <li key={text} className="w-[231px] h-[56px] py-[16px] pl-[28px] rounded-[12px] hover:bg-white text-white hover:text-[#222934]">
                 <i className={`${ico}`}></i>
                 <Link href={path} className= "py-4 pl-3 cursor-pointer">{text}</Link>
         </li>
@@ -56,7 +56,7 @@ export default function Navbar(){
                     </div>
                         <ul onClick={()=>(setIsToggler(!isToggler))} className="mx-[10px]">
                             {pages.map(({text, ico, path})=>(
-                                <Buttons text={text} ico={ico} path={path}/>
+                                <Buttons key={text} text={text} ico={ico} path={path}/>
                             ))}
                         </ul>
                     
