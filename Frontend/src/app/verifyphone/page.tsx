@@ -3,11 +3,27 @@ import { useState,Suspense } from "react";
 import OTPInput from "../verify/otp";
 import axios from '../https/api'
 import { AxiosError } from "axios";
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import { useDispatch, useSelector } from "react-redux";
+import { setPhoneIsVerified,setPhoneNumber } from "@/redux/user/signUpSlice";
+
 interface ResponseData {
   message?: string;
   data?: string;
 }
+
+interface SignUpState {
+  email: string | null;
+  phoneNumber: string | null;
+  userId: string | null;
+  isVerified: boolean;
+  phoneIsVerified: boolean;
+}
+
+interface RootState {
+  signUp : SignUpState
+}
+
 import ErrorBox from "../_components/ErrorBox";
 import ResponseBox from "../_components/ResponseBox";
 import dynamic from "next/dynamic";
@@ -15,16 +31,9 @@ import dynamic from "next/dynamic";
 const PhoneVerificationComponent = ()=>{
 
     const [otp, setOtp] = useState(Array(4).fill(''));
-    const searchParams = useSearchParams();
     const router=useRouter()
-    const firstName = searchParams.get('firstName');
-    const id = searchParams.get('id');
-    const lastName = searchParams.get('lastName');
-    const state = searchParams.get('state');
-    const category = searchParams.get('category');
-    const schoolName = searchParams.get('schoolName');
-    const contactNumber = searchParams.get('contactNumber');
-    const referralCode = searchParams.get('referralCode');
+    const dispatch = useDispatch()
+    const contactNumber = useSelector((state:RootState) => state.signUp.phoneNumber);
     const [response, setResponse] = useState<string>('');
     const [error, setError] = useState<string>('');
     const handleInputChange = (e:any, index:any) => {
@@ -39,8 +48,8 @@ const PhoneVerificationComponent = ()=>{
     try {
       const response = await axios.post<ResponseData>('/verifyOtpPhone', { contactNumber, otp: otpVal });
       setResponse(response.data?.data || '');
-      console.log(id);
-      router.push(`/personalinfo?isVerified=true&firstName=${firstName}&&category=${category}&&lastName=${lastName}&&schoolName=${schoolName}&&contactNumber=${contactNumber}&&state=${state}&&referralCode=${referralCode}&&id=${id}`);
+      dispatch(setPhoneIsVerified(true))
+      router.push('/personalinfo');
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         const errorMessage = (error.response.data as ResponseData)?.message || 'An error occurred';
@@ -52,7 +61,8 @@ const PhoneVerificationComponent = ()=>{
   const handleCancel = () => {
     setError('');
     setResponse('Account not verified');
-    router.push(`/personalinfo?isVerified=false&firstName=${firstName}&&category=${category}&&lastName=${lastName}&&schoolName=${schoolName}&&contactNumber=${contactNumber}&&state=${state}&&referralCode=${referralCode}&&id=${id}`);
+    dispatch(setPhoneIsVerified(false))
+    router.push('/personalinfo');
   };
 
   const handleResend = async () => {

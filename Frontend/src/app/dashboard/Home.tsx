@@ -1,11 +1,22 @@
+import { useRouter} from "next/navigation";
 
+import axios from "../https/api"
+import {useDispatch, useSelector } from "react-redux";
+import { ambassadorStart,ambassadorSuccess,ambassadorFailure } from "@/redux/user/userSlice";
 
-
+interface UserState {
+  currentUser: any;
+  loading: boolean;
+  error: boolean | string;
+}
+interface RootState {
+  user: UserState
+}
 
 export default function Home(){
 
 
-
+   const router = useRouter();
     const updates = ["Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quasi",
         "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quasi,",
         "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quasi, helu my frnd",
@@ -14,6 +25,25 @@ export default function Home(){
         "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quasi,",
          
 ]
+const user = useSelector(((state:RootState) => state.user.currentUser.data))
+console.log(user)
+const dispatch = useDispatch()
+const handleClick = async (e: any) => {
+    try {
+        dispatch(ambassadorStart())
+      const response = await axios.get(`user/school-ambassador/${user.id}`)
+      console.log(response.data);
+      dispatch(ambassadorSuccess(response.data))
+      router.push('/dashboard/ambassador')
+
+    } catch (error) {
+      console.log(error);
+      //error to be handled in a better way
+      dispatch(ambassadorFailure('Error occured'))
+};
+}
+
+
 const heading = "text-center font-semibold lg:text-[32px] lg:leading-[24px] my-[1rem] text-[20px] leading-[17px]"
 const desc = "font font-semibold lg:text-[24px] text-[16px] leading-[19px] w-[250px] lg:leading-[24px]"
 const button= "w-[144px] font-bold lg:text-[20px] text-[14px] leading-[16.45px] lg:leading-[23.5px] transition-colors duration-300 h-[36px] hover:bg-black text-black hover:text-white bg-white rounded-xl mt-7"
@@ -93,7 +123,7 @@ const button= "w-[144px] font-bold lg:text-[20px] text-[14px] leading-[16.45px] 
                         <div className="flex justify-between h-full">
                             <div className="w-[635px] flex flex-col justify-between">
                                 <p className='font font-semibold text-[16px]  lg:text-[24px] lg:leading-[24px]'>Become a School Ambassador and get a chance to win a free trip to IIT Roorkee</p>
-                                <button className={button}>Try Now</button> 
+                                <button className={button} onClick={handleClick}>Try Now</button> 
                             </div>
                             <img src="school.svg" alt="" className="w-[160px]" />
                         </div>

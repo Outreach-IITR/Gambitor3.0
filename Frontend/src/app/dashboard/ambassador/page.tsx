@@ -4,10 +4,22 @@ import school from "../../../../public/school.svg"
 import Image from "next/image"
 import { useMediaQuery } from "react-responsive";
 import Mobile from "./Moble"
+import { useSelector } from "react-redux";
 
+interface UserState {
+    currentUser: any;
+    loading: boolean;
+    error: boolean | string;
+  }
+  interface RootState {
+    user: UserState
+  }
 
 export default function Ambassador(){
     const isMobile = useMediaQuery({query: '(max-width: 900px)'})
+    const user = useSelector(((state:RootState) => state.user.currentUser.data))
+    console.log(user)
+    console.log(user.myReferral)
     
     return(
         <div>
@@ -16,7 +28,7 @@ export default function Ambassador(){
         <div className="h-[calc(100%-100px)] px-[100px] flex flex-col  pb-[20px]" >
             <div className="flex flex-col items-center">
                     <div className="w-[520px] h-[82px] rounded-[12px] bg-[#0452D8] text-center flex items-center justify-center">
-                        <h1 className="font-bold text-[42px] leading-[50px] text-white">GMBT20001</h1>
+                        <h1 className="font-bold text-[42px] leading-[50px] text-white">{user.myReferral}</h1>
                     </div>
                     <div className="w-[726px]">
                     <p className="font-semibold text-[28px] leading-[32.9px] tracking-[0.5px] text-center mt-10">Share this referral code with your friends and get a chance to visite IIT roorkee</p>
@@ -24,7 +36,7 @@ export default function Ambassador(){
                     </div>
                     <div className="flex flex-col mt-10 space-y-10">
                         <h1 className="font-semibold text-[28px] leading-[32.9px] tracking-[0.5px]">Your referral count</h1>
-                        <div className="w-[99px] h-[82px] text-[42px] leading-[50px] flex items-center justify-center text-white text-center font-bold mx-auto bg-[#676767] rounded-[12px]">24</div>
+                        <div className="w-[99px] h-[82px] text-[42px] leading-[50px] flex items-center justify-center text-white text-center font-bold mx-auto bg-[#676767] rounded-[12px]">{user.referralCount}</div>
                     </div> 
                 
             </div>

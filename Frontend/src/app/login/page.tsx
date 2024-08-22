@@ -1,15 +1,29 @@
 "use client";
-import React, { useState,Suspense } from "react";
+import React, { useState, Suspense } from "react";
 import { FaEnvelope, FaEye, FaEyeSlash, FaLock } from "react-icons/fa"; // Importing icons
-import { useRouter , useSearchParams } from 'next/navigation'
-import axios from '../https/api'
+import { useRouter, useSearchParams } from "next/navigation";
+import axios from "../https/api";
 import dynamic from "next/dynamic";
+import { signInStart, signInSuccess, signInFailure } from "../../redux/user/userSlice.js";
+import { useDispatch, useSelector } from "react-redux";
+
+interface UserState {
+  currentUser: any;
+  loading: boolean;
+  error: boolean | string;
+}
+
+interface RootState {
+  user: UserState;
+}
 
 const LoginComponent = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const { loading, error } = useSelector((state: RootState) => state.user);
   const router = useRouter();
+  const dispatch = useDispatch();
   // Function to toggle password visibility
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -21,18 +35,58 @@ const LoginComponent = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+  
+    // Input validation
+    if (!email || !password) {
+      const validationError = "Please provide both email and password.";
+      dispatch(signInFailure(validationError));
+      return;
+    }
+  
     try {
+      // Start sign-in process
+      dispatch(signInStart());
+  
       let payLoad = {
         email: email,
         password: password,
       };
+  
+      // API call to login
       const response = await axios.post("/auth/login", payLoad);
-      console.log(response.data);
-      router.push("/dashboard");
-    } catch (error) {
-      console.log(error);
+      const data = response.data;
+  
+      if (data.success === false) {
+        // Handle unsuccessful login from the server
+        dispatch(signInFailure(data.message || "Login failed. Please try again."));
+        return;
+      }
+  
+      // On successful login, push to the dashboard
+      const userId = data.data.id;
+      dispatch(signInSuccess(data));
+      router.push(`/dashboard`);
+  
+    } catch (error: any) {
+      // Handle different types of errors
+      let errorMessage = "An unknown error occurred.";
+  
+      if (error.response) {
+        // The request was made, but the server responded with an error
+        errorMessage = error.response.data.message || "Login failed. Please try again.";
+      } else if (error.request) {
+        // The request was made, but no response was received
+        errorMessage = "No response from the server. Please check your internet connection.";
+      } else {
+        // Something else happened while making the request
+        errorMessage = error.message || "An unexpected error occurred.";
+      }
+  
+      console.log(errorMessage);
+      dispatch(signInFailure(errorMessage));
     }
   };
+  
 
   return (
     <div className="flex w-full h-screen font-[Public Sans]">
@@ -109,7 +163,7 @@ const LoginComponent = () => {
               onClick={handleSubmit}
               className="w-full py-3 text-sm font-medium tracking-wide text-white bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50"
             >
-              Log in
+              {loading ? "Loading..." : "Log In"}
             </button>
           </div>
 
@@ -119,6 +173,9 @@ const LoginComponent = () => {
               <span className="text-blue-600 px-2 py-1 rounded">Create an account</span>
             </a>
           </div>
+          <p className='text-red-700 mt-5'>
+        {error ? error.toString() || 'Something went wrong!' : ''}
+      </p>
         </div>
       </div>
 

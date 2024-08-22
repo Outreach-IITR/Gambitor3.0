@@ -1,6 +1,6 @@
-"use client"
+"use client";
 import Image from "next/image";
-import Header from "./_components/Header"
+import Header from "./_components/Header";
 import AboutSection from "./_components/AboutSection";
 import RoundDescription from "./_components/RoundDescription";
 import NavButtons from "./_components/Navbuttons";
@@ -12,8 +12,6 @@ import HomePageCarousel from "./_components/HomePageCarousel";
 import Timeline from "./_components/Timeline";
 import { useMediaQuery } from "react-responsive";
 import Mobile from "./mobile/Mobile";
-
-
 
 export default function Home() {
   let backgroundImageStyle = {

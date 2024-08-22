@@ -3,7 +3,22 @@ import { useState ,Suspense} from "react";
 import OTPInput from "./otp";
 import axios from '../https/api'
 import { AxiosError } from "axios";
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import { useDispatch, useSelector } from "react-redux";
+import { setEmail,setIsVerified,setUserId } from "@/redux/user/signUpSlice";
+
+interface SignUpState {
+  email: string | null;
+  phoneNumber: string | null;
+  userId: string | null;
+  isVerified: boolean;
+  phoneIsVerified: boolean;
+}
+
+interface RootState {
+  signUp : SignUpState
+}
+
 interface ResponseData {
   message?: string;
   data?: string;
@@ -16,11 +31,11 @@ const VerificationComponent = () =>{
 
 
     const [otp, setOtp] = useState(Array(4).fill(''));
-    const searchParams = useSearchParams();
     const router=useRouter()
-    const email = searchParams.get('email');
+    const email = useSelector((state:RootState) => state.signUp.email) || '';
     const [response, setResponse] = useState<string>('');
     const [error, setError] = useState<string>('');
+    const dispatch = useDispatch()
     const handleInputChange = (e:any, index:any) => {
     const newOtp = [...otp];
     newOtp[index] = e.target.value;
@@ -33,7 +48,8 @@ const VerificationComponent = () =>{
     try {
       const response = await axios.post<ResponseData>('/verifyOtp', { email, otp: otpVal });
       setResponse(response.data?.data || '');
-      router.push(`/signup?isVerified=true&email=${email}`);
+      dispatch(setIsVerified(true))
+      router.push(`/signup`);
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         const errorMessage = (error.response.data as ResponseData)?.message || 'An error occurred';
@@ -45,7 +61,8 @@ const VerificationComponent = () =>{
   const handleCancel = () => {
     setError('');
     setResponse('Account not verified');
-    router.push(`/signup?isVerified=false`);
+    dispatch(setIsVerified(false))
+    router.push(`/signup`);
   };
 
   const handleResend = async () => {

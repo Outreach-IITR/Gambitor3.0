@@ -90,59 +90,6 @@ class AuthController {
     }
   });
 
-  // static login = asyncHandler(async (req, res, next) => {
-  //   try {
-  //     const body = req.body;
-  //     const validator = vine.compile(loginSchema);
-  //     const payload = await validator.validate(body);
-
-  //     // Find user with email
-  //     const findUser = await prisma.user.findUnique({
-  //       where: {
-  //         email: payload.email,
-  //       },
-  //     });
-
-  //     if (!findUser) {
-  //       throw new ApiError(400, "No user found with this email.");
-  //     }
-  //     if (findUser) {
-  //       if (!bcrypt.compareSync(payload.password, findUser.password)) {
-  //         throw new ApiError(400, "Incorrect Password.");
-  //       }
-
-  //       // * Issue token to user
-  //       const payloadData = {
-  //         id: findUser.id,
-  //         name: findUser.name,
-  //         email: findUser.email,
-  //         // add role and other req payload
-  //       };
-  //       const token = jwt.sign(payloadData, process.env.ACCESS_TOKEN_SECRET, {
-  //         expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
-  //       });
-
-  //       const response = new ApiResponse(
-  //         200,
-  //         { access_token: `Bearer ${token}` },
-  //         "Logged in successfully"
-  //       );
-  //       return res.status(200).json(response);
-  //     }
-  //     throw new ApiError(400, "No user found with this email.");
-  //   } catch (error) {
-  //     if (error instanceof errors.E_VALIDATION_ERROR) {
-  //       throw new ApiError(400, "Validation Error", error.messages);
-  //     }
-
-  //     if (error instanceof ApiError) {
-  //       throw error;
-  //     } else {
-  //       throw new ApiError(500, "Internal Server Error");
-  //     }
-  //   }
-  // });
-
   static failureGoogleLogin = (req, res) => {
     res.status(400).json({ message: "Google login failed" });
   };
@@ -152,9 +99,11 @@ class AuthController {
       // Validate input data
       console.log(req.body);
       const name=req.body.name;
+      const contactNumber = req.body.contactNumber
       const formdata= {
         ...req.body.formData,
-        name
+        name,
+        contactNumber,
       }
       console.log(formdata)
       const validator = vine.compile(infoSchema);
@@ -321,6 +270,10 @@ class AuthController {
       throw error;
     }
   });
+
+  static logout = (req, res) => {
+    res.clearCookie('jwt').status(200).json('Signout success!');
+  };
 }
 
 export default AuthController;

@@ -1,7 +1,5 @@
 import { Router } from "express";
 import AuthController from "../controllers/authController.js";
-import authMiddleware from "../middlewares/authenticate.js";
-import ProfileController from "../controllers/profileController.js";
 import passport from "passport";
 import "../utils/passportConfig.js";
 
@@ -34,6 +32,8 @@ router.get(
 // failure
 router.get("/auth/failure", AuthController.failureGoogleLogin);
 
+router.get('/logout', AuthController.logout);
+
 //mail verification
 
 router.post("/sendOtp", AuthController.sendOtp);
@@ -45,11 +45,6 @@ router.post("/sendOtpPhone", AuthController.sendOtpPhone);
 router.post("/verifyOtpPhone", AuthController.verifyOtpPhone);
 
 //info
-
 router.post('/user/:id/details', AuthController.updateAdditionalDetails);
-
-// user routes to update profile
-router.put('/user/:id/update',authMiddleware,ProfileController.updateUser);
-router.get('/school-ambassador/:id',ProfileController.schoolAmbassador);
 
 export { router };

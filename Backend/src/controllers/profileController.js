@@ -28,14 +28,14 @@ class ProfileController {
   static updateUser = asyncHandler(async (req, res) => {
     try {
       const userId = parseInt(req.params.id);
-      const updateData = req.body; // Get all fields to update from the request body
+      const updateData = req.body.formData; // Get all fields to update from the request body
 
       // Update the user profile in the database
       const user = await prisma.user.update({
         where: { id: userId },
         data: updateData,
       });
-      const response = new ApiResponse(200, { user }, "User profile updated successfully");
+      const response = new ApiResponse(200, { ...user }, "User profile updated successfully");
       return res.status(200).json(response);
     } catch (error) {
       if (error instanceof ApiError) {
@@ -56,7 +56,7 @@ class ProfileController {
   
       if (user.myReferral) {
         // User already has a referral code, just return user data
-        const response = new ApiResponse(200, { user }, "SA profile obtained successfully");
+        const response = new ApiResponse(200, { ...user }, "SA profile obtained successfully");
         return res.status(200).json(response);
       }
   
@@ -65,7 +65,7 @@ class ProfileController {
       const lastUserWithReferral = await prisma.user.findFirst({
         where: {
           myReferral: {
-            startsWith: "GMB24",
+            startsWith: "GMBT2",
           },
         },
         orderBy: {
@@ -83,7 +83,7 @@ class ProfileController {
       }
   
       // Format the next referral number with leading zeros
-      const nextReferralCode = `GMB24${nextReferralNumber.toString().padStart(5, '0')}`;
+      const nextReferralCode = `GMBT2${nextReferralNumber.toString().padStart(5, '0')}`;
       console.log(nextReferralCode);
       //console.log(userReferralCode);
   
@@ -92,8 +92,8 @@ class ProfileController {
         where: { id: userId },
         data: { myReferral: nextReferralCode },
       });
-  
-      const response = new ApiResponse(200, { updatedUser }, "SA profile obtained successfully");
+      
+      const response = new ApiResponse(200, {...updatedUser }, "SA profile obtained successfully");
       return res.status(200).json(response);
   
     } catch (error) {

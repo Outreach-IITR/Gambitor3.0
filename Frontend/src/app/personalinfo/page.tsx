@@ -6,17 +6,26 @@ import { AxiosError } from "axios";
 import { useRouter,useSearchParams } from "next/navigation";
 import ErrorBox from "../_components/ErrorBox";
 import dynamic from 'next/dynamic';
+import PrivateRoute from "../_components/PrivateRoute";
+import { useDispatch, useSelector } from "react-redux";
+import { signInSuccess } from "@/redux/user/userSlice";
+import { resetSignUpState, setPhoneIsVerified,setPhoneNumber, startPhoneIsVerified } from "@/redux/user/signUpSlice";
 
 interface FormData {
   firstName: string;
   lastName: string;
   category: string;
   schoolName: string;
-  contactNumber: string;
   state: string;
   referralCode: string;
-  profilePhoto: File | null;
 }
+
+interface UserState {
+  currentUser: any;
+  loading: boolean;
+  error: boolean | string;
+}
+
 interface ApiError {
   statusCode: number;
   message: string;
@@ -24,88 +33,65 @@ interface ApiError {
   success: boolean;
 }
 
+interface SignUpState {
+  email: string | null;
+  phoneNumber: string | null;
+  userId: string | null;
+  isVerified: boolean;
+  phoneIsVerified: boolean;
+  loading:boolean
+}
+
+interface RootState {
+  user:UserState;
+  signUp : SignUpState
+}
+
 const PersonalInfoComponent = () => {
 
-  const [id,setId] =useState('-1');
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [message, setMessage] = useState('');  
-  
+  const dispatch = useDispatch()
+  const router = useRouter()
+  const contactNumber = useSelector((state:RootState) => state.signUp.phoneNumber) || '';
+  const id = useSelector((state:RootState) => state.signUp.userId) ;
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
     lastName: "",
     category: "",
     schoolName: "",
-    contactNumber: "",
     state: "",
     referralCode: "",
-    profilePhoto: null,
   });
-  const searchParams = useSearchParams();
-  const flag = searchParams.get('isVerified'); 
-  const router = useRouter();
-  useEffect(() => {
-    const id = searchParams.get('id') || '-1';
-    setId(
-      id
-    );
-  }, [searchParams]);
-
-  useEffect(() => {
-    if (flag === 'true') {
-      setIsVerified(true);
-    } else {
-      setIsVerified(false);
-    }
-  }, [flag]);
-
-
-  useEffect(() => {
-    const firstName = searchParams.get('firstName') || '';
-    const lastName = searchParams.get('lastName') || '';
-    const category = searchParams.get('category') || '';
-    const schoolName = searchParams.get('schoolName') || '';
-    const contactNumber = searchParams.get('contactNumber') || '';
-    const state = searchParams.get('state') || '';
-    const referralCode = searchParams.get('referralCode') || '';
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      firstName,
-      lastName,
-      category ,
-      schoolName,
-      contactNumber,
-      state,
-      referralCode
-    }));
-  }, [searchParams]);
-
-
-  const [isVerified, setIsVerified] = useState(false);
+  
+  const isVerified = useSelector((state: RootState) => state.signUp.phoneIsVerified);
+  const phoneNumber = useSelector((state: RootState) => state.signUp.phoneNumber);
+  const Isloading = useSelector((state: RootState) => state.signUp.loading);
   const [response, setResponse] = useState('');
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = e.target;
-    if (name === "profilePhoto") {
-      setFormData((prevData) => ({
-        ...prevData,
-        profilePhoto: files ? files[0] : null,
-      }));
-    } else {
       setFormData((prevData) => ({
         ...prevData,
         [name]: value,
       }));
-    }
   };
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setPhoneNumber(e.target.value));
+  };
+
+
    
   const handleSubmit = async(e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(formData);
-    if(!isVerified){
+    if(isVerified){
     try{
         const name = formData.firstName+" " +formData.lastName
-        const response = await axios.post(`/user/${id}/details`,{ formData ,name:name });
+        const response = await axios.post(`/user/${id}/details`,{ formData ,name:name,contactNumber:contactNumber });
         console.log(response.data);
-        router.push('/dashboard')
+        dispatch(resetSignUpState());
+        router.push('/login')
     } catch(error)
     {
        console.log(error);
@@ -134,10 +120,11 @@ const PersonalInfoComponent = () => {
     //if(formData.contactNumber === '')  setErrors((prevErrors) => ({ ...prevErrors, contactNumber: 'Phone Number cannot be empty' }));
     if(!isVerified){
     try{
-      const response = await axios.post('/sendOtpPhone',{contactNumber:formData.contactNumber})
+      dispatch(startPhoneIsVerified())
+      const response = await axios.post('/sendOtpPhone',{contactNumber:contactNumber})
       console.log(response.data);
       setResponse(response.data?.data);
-      router.push(`/verifyphone?firstName=${formData.firstName}&&category=${formData.category}&&lastName=${formData.lastName}&&schoolName=${formData.schoolName}&&contactNumber=${formData.contactNumber}&&state=${formData.state}&&referralCode=${formData.referralCode}&&id=${id}`);
+      router.push(`/verifyphone`);
     }catch(error)
     {
       console.log(error);
@@ -305,14 +292,14 @@ const handlePreviousStep = () => {
                 type="text"
                 id="contactNumber"
                 name="contactNumber"
-                value={formData.contactNumber}
-                onChange={handleChange}
+                value={contactNumber}
+                onChange={handlePhoneChange}
                 disabled={isVerified}
                 className="w-full px-3 py-2 border border-gray-300 rounded peer"
               />
               <a href="/verifyPhone">
               {!isVerified && <button onClick={handleVerify} className="w-[30%] py-1 mt-3 text-sm font-medium tracking-wide text-white bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
-                  Verify
+              {Isloading ? "Loading..." : "Verify"}
               </button>}
               {isVerified && <button className="w-[30%] py-1 mt-3 text-sm font-medium tracking-wide text-white bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
                   Verified
@@ -414,7 +401,9 @@ const PersonalInfo = dynamic(() => Promise.resolve(PersonalInfoComponent), { ssr
 export default function Page() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <PersonalInfo />
+      <PrivateRoute>
+        <PersonalInfo />
+      </PrivateRoute>
     </Suspense>
   );
 }

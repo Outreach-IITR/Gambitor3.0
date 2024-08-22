@@ -6,23 +6,49 @@ import React, { useState } from "react";
 
 
 // import upload from "./assets/Personalinfo/upload.svg";
+import axios from "../../https/api"
+import {useDispatch, useSelector } from "react-redux";
+import { updateUserStart,updateUserSuccess,updateUserFailure } from "@/redux/user/userSlice";
+
+interface UserState {
+  currentUser: any;
+  loading: boolean;
+  error: boolean | string;
+}
+interface RootState {
+  user: UserState
+}
+
 
 const Personal = () => {
+  const user = useSelector(((state:RootState) => state.user.currentUser.data))
+  console.log(user)
   const [formData, setFormData] = useState({
-    class: "",
-    schoolname: "",
-    state: "",
-    profile: "",
+    category: user.category,
+    schoolName: user.schoolName,
+    state: user.state,
+    contactNumber : user.contactNumber
   });
-
+  const dispatch = useDispatch()
   const handleChange = (e:any) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  const handleSubmit = (e:any) => {
+  const handleSubmit = async(e:any) => {
     e.preventDefault();
     console.log("Form Data: ", formData);
+    try{
+     dispatch(updateUserStart())
+     const response = await axios.put(`/user/${user.id}/update`,{formData})
+     console.log(response.data)
+     dispatch(updateUserSuccess(response.data))
+    }catch(error)
+    {
+      console.log(error)
+    }
   };
+  const fletter = user.name.charAt(0).toLowerCase()
+  console.log(fletter);
 
   return (
     <div className="w-full bg-[#FFFFFF] h-[724px] flex flex-col items-start ml-4 ">
@@ -30,12 +56,12 @@ const Personal = () => {
 
       <div className="flex mt-6  ">
         <div className=" text-4xl text-[#ffffff] font-bold rounded-full w-[50px] h-[50px] bg-[#FF00C7]  ">
-            <p className="text-center flex justify-center items-center">s</p>
+            <p className="text-center flex justify-center items-center">{fletter}</p>
         </div>
 
         <div className="ml-2 flex flex-col justify-center">
-            <h1 className="text-lg leading-none font-semibold  ">Shashvat Papne</h1>
-            <h3 className="text-sm leading-none font-normal  ">Appolox</h3>
+            <h1 className="text-lg leading-none font-semibold  ">{user.name}</h1>
+            <h3 className="text-sm leading-none font-normal  ">{user.category}</h3>
         </div>
       </div>
 
@@ -54,8 +80,8 @@ const Personal = () => {
             <label htmlFor="class " className="font-semibold">Class</label>
             <input
               type="text"
-              id="class"
-              value={formData.class}
+              id="category"
+              value={formData.category}
               onChange={handleChange}
               className="border-[#00000033] border-[1.5px] rounded-t-[4px] w-[93%]  h-[35px] px-2"
             />
@@ -65,8 +91,8 @@ const Personal = () => {
             <label htmlFor="schoolname " className="font-semibold">School Name</label>
             <input
               type="text"
-              id="schoolname"
-              value={formData.schoolname}
+              id="schoolName"
+              value={formData.schoolName}
               onChange={handleChange}
               className="border-[#00000033] border-[1.5px] rounded-t-[4px] w-[93%]  h-[35px] px-2"
             />
@@ -86,27 +112,23 @@ const Personal = () => {
           />
         </div>
 
-        
-        <div className="mx-[1%] flex flex-col w-full mb-2">
-          <label htmlFor="profile" className="font-semibold">Profile Photo (Optional)</label>
+        <div className="mx-[1%] flex flex-col w-full mb-6">
+          <label htmlFor="state" className="font-semibold">Phone Number(Whatsapp Active)</label>
           <input
-            type="file"
-            id="profile"
-            accept="image/*"
+            type="text"
+            id="state"
+            value={formData.contactNumber}
             onChange={handleChange}
-            className="hidden" // This hides the file input completely
+            className="border-[#00000033] border-[1.5px] rounded-t-[4px] w-[95%] h-[35px] px-2"
           />
-
-          <label
-              htmlFor="profile"
-              className="cursor-pointer border-[#00000033] border-[1.5px] rounded-[4px] w-[95%] h-[35px] flex items-center justify-center mb-2 "
-            >
-              {/* <img src={upload} alt="Upload Icon" className="w-5 h-5 ml-[90%] " /> */}
-              
-            </label>
-
-          
         </div>
+
+        <button
+          type="submit"
+          className="bg-[#0452D8] text-white rounded-[4px] w-[25%] h-[35px] flex items-center justify-center"
+        >
+          Save Changes
+        </button>
 
       </form>
 

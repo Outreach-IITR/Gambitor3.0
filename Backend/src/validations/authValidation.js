@@ -6,7 +6,7 @@ vine.errorReporter = () => new CustomErrorReporter();
 
 export const registerSchema = vine.object({
   email: vine.string().email(),
-  password: vine.string().minLength(6).maxLength(100).regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/, 'Password must include uppercase, lowercase, digit, and special character'),
+  password: vine.string().minLength(6).maxLength(100),
 });
 
 export const loginSchema = vine.object({
