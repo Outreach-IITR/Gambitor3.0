@@ -27,14 +27,17 @@ class ProfileController {
 
   static updateUser = asyncHandler(async (req, res) => {
     try {
+      console.log('hi')
       const userId = parseInt(req.params.id);
+      console.log(userId)
       const updateData = req.body.formData; // Get all fields to update from the request body
-
+      //console.log(updateData)
       // Update the user profile in the database
       const user = await prisma.user.update({
         where: { id: userId },
         data: updateData,
       });
+      //console.log(user)
       const response = new ApiResponse(200, { ...user }, "User profile updated successfully");
       return res.status(200).json(response);
     } catch (error) {

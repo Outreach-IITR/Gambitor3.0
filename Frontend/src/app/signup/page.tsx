@@ -9,7 +9,7 @@ import ResponseBox from "../_components/ResponseBox";
 import dynamic from "next/dynamic";
 import { signUpStart, signUpSuccess, signUpFailure } from "../../redux/user/userSlice.js";
 import { useDispatch, useSelector } from "react-redux";
-import { setEmail,setIsVerified,setUserId,startIsVerified } from "@/redux/user/signUpSlice";
+import { setEmail,setIsVerified,setUserId,startIsVerified,endVerify } from "@/redux/user/signUpSlice";
 import Load from '../_components/load'
 
 interface UserState {
@@ -53,6 +53,7 @@ function Home() {
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setEmail(e.target.value));
+    dispatch(endVerify())
   };
 
   const loginwithgoogle = () => {
@@ -109,7 +110,7 @@ function Home() {
       setErrors((prevErrors) => ({ ...prevErrors, email: "Email address cannot be empty" }));
     else if (!isVerified) {
       try {
-        dispatch(startIsVerified())
+       dispatch(startIsVerified())
         const response = await axios.post("/sendOtp", { email: email });
         console.log(response.data);
         router.push(`/verify`);
@@ -118,9 +119,11 @@ function Home() {
         if (error && typeof error === "object" && "response" in error) {
           const axiosError = error as { response?: { data?: ApiError } };
           const apiError = axiosError.response?.data as ApiError;
+          //console.log(axiosError.response?.data)
           if (apiError) {
+            //console.log(apiError)
             setMessage(apiError.message);
-            console.log(apiError.errors)
+            //console.log(apiError.errors)
             setErrors(apiError.errors);
           } else {
             setMessage("An unexpected error occurred.");
