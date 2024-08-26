@@ -33,7 +33,7 @@ export default function Home() {
         <div className="bg-gradient-to-b from-indigo-600 to-[#1d1d7a] overflow-hidden ">
           
 
-          <img alt="" src="/homebg.svg" className="absolute -top-[20rem] w-[100%]"></img>
+          <img alt="" src="/homebg.svg" className="absolute -top-[15vw] w-[100%]"></img>
           <div className="px-10">
             <Header></Header>
             <AboutSection/>
