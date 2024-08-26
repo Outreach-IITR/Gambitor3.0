@@ -6,6 +6,7 @@ import axios from "../https/api";
 import dynamic from "next/dynamic";
 import { signInStart, signInSuccess, signInFailure } from "../../redux/user/userSlice.js";
 import { useDispatch, useSelector } from "react-redux";
+import Load from "../_components/load";
 
 interface UserState {
   currentUser: any;
@@ -64,8 +65,8 @@ const LoginComponent = () => {
   
       // On successful login, push to the dashboard
       const userId = data.data.id;
-      dispatch(signInSuccess(data));
       router.push(`/dashboard`);
+      dispatch(signInSuccess(data));
   
     } catch (error: any) {
       // Handle different types of errors
@@ -91,7 +92,7 @@ const LoginComponent = () => {
   return (
     <div className="flex w-full h-screen font-[Public Sans]">
       {/* Left side: Form section */}
-      <div className="flex items-center justify-center w-full lg:w-1/2 bg-white">
+     { loading ? <Load /> : (<div className="flex items-center justify-center w-full lg:w-1/2 bg-white">
         <div className="w-full max-w-md px-8 py-10">
           <div className="flex">
             <img className="w-40 h-auto" src="logo.svg" alt="Logo" />
@@ -152,18 +153,20 @@ const LoginComponent = () => {
             )}
           </div>
 
-          <div className="mt-4 text-right">
+          {/* <div className="mt-4 text-right">
             <a href="#" className="text-xs text-blue-600">
               Forgot Password?
             </a>
-          </div>
-
+          </div> */}
+          <p className='text-red-700 mt-5'>
+        {error ? error.toString() || 'Something went wrong!' : ''}
+      </p>
           <div className="mt-6">
             <button
               onClick={handleSubmit}
               className="w-full py-3 text-sm font-medium tracking-wide text-white bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50"
             >
-              {loading ? "Loading..." : "Log In"}
+             Log In
             </button>
           </div>
 
@@ -173,11 +176,9 @@ const LoginComponent = () => {
               <span className="text-blue-600 px-2 py-1 rounded">Create an account</span>
             </a>
           </div>
-          <p className='text-red-700 mt-5'>
-        {error ? error.toString() || 'Something went wrong!' : ''}
-      </p>
+          
         </div>
-      </div>
+      </div>)}
 
       {/* Right side: Image section */}
       <div className="hidden lg:flex lg:w-1/2 items-center justify-center bg-blue-600">
@@ -189,7 +190,7 @@ const LoginComponent = () => {
         >
           {/* Add any additional content or styling specific to the image section here */}
         </div>
-      </div>
+      </div> 
     </div>
   );
 };

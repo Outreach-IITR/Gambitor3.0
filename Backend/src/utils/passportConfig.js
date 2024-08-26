@@ -27,12 +27,14 @@ passport.use(
     },
     async (req, accessToken, refreshToken, profile, done) => {
       try {
-        const user = await findOrCreateUser(profile);
+        const {user,isNew} = await findOrCreateUser(profile);
+        user.isNew = isNew;
         const payloadData = {
           id: user.id,
           email: user.email,
         };
         generateTokenAndSetCookie(payloadData, req.res);
+        console.log(user.isNew);
         return done(null, user);
       } catch (err) {
         return done(err, null);
@@ -43,7 +45,7 @@ passport.use(
 
 async function findOrCreateUser(profile) {
   let user = await prisma.user.findUnique({ where: { email: profile.email } });
-
+  let isNew = false;
   if (!user) {
     user = await prisma.user.create({
       data: {
@@ -52,12 +54,17 @@ async function findOrCreateUser(profile) {
         email: profile.email,
       },
     });
+    isNew=true;
   } else if (!user.googleId) {
     user = await prisma.user.update({
       where: { email: profile.email },
       data: { googleId: profile.id },
     });
+    isNew=true;
+  }
+  else{
+    isNew = false;
   }
 
-  return user;
+  return {user,isNew};
 }

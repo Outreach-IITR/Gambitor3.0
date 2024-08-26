@@ -46,7 +46,8 @@ class AuthController {
       }
     } catch (error) {
       if (error instanceof errors.E_VALIDATION_ERROR) {
-        throw new ApiError(400, "Validation Error", error.message);
+        console.log(error)
+        throw new ApiError(400, "Validation Error", error.messages);
       }
       // Pass other errors to the global error handler
       throw error;

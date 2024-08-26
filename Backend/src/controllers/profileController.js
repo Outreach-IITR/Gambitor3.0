@@ -107,6 +107,41 @@ class ProfileController {
     }
   });
 
+  static deleteUser = asyncHandler(async (req, res) => {
+    try {
+      console.log('hi')
+      const userId = parseInt(req.params.id);
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+      });
+      console.log(user)
+      if (!user) {
+        throw new ApiError(404, "User not found");
+      }
+  
+      // Decrement referralCount for the user whose referralCode was used
+      if (user.referralCode) {
+        await prisma.user.updateMany({
+          where: { myReferral: user.referralCode },
+          data: { referralCount: { decrement: 1 } },
+        });
+      }
+  
+      // Delete the user
+      await prisma.user.delete({
+        where: { id: userId },
+      });
+
+      const response = new ApiResponse(200, { ...user }, "User profile deleted successfully");
+      return res.status(200).json(response);
+    } catch (error) {
+      if (error instanceof ApiError) {
+        throw error;
+      }
+      throw new ApiError(500, "Something went wrong with the server while deleting profile");
+    }
+  });
+
   static async destroy() {}
 }
 

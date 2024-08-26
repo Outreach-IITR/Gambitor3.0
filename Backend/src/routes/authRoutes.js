@@ -2,6 +2,7 @@ import { Router } from "express";
 import AuthController from "../controllers/authController.js";
 import passport from "passport";
 import "../utils/passportConfig.js";
+import errorHandler from "../controllers/errorController.js";
 
 const router = Router();
 
@@ -21,12 +22,43 @@ router.post("/auth/login",AuthController.login);
 router.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
 // Google OAuth2 callback route
+// router.get(
+//   "/auth/google/callback",
+//   passport.authenticate("google", {
+//     failureRedirect: "http://localhost:3000/login"
+//   }),
+//   (req, res) => {
+//     const redirectUrl = req.user.isNew
+//       ? "http://localhost:3000/personalinfo"
+//       : "http://localhost:3000/dashboard";
+//     res.redirect(redirectUrl);
+//     console.log(req.user.isNew);
+//     console.log(redirectUrl)
+//   }
+// );
+
 router.get(
   "/auth/google/callback",
   passport.authenticate("google", {
-    successRedirect: "http://localhost:3000/personalinfo",
     failureRedirect: "http://localhost:3000/login",
-  })
+  }),
+  (req, res) => {
+    console.log("Authenticated user:", req.user); // Log the authenticated user
+    console.log("Session ID:", req.sessionID); // Log session ID
+    console.log("Session data:", req.session); // Log session data
+
+    if (!req.user) {
+      console.log("User is not authenticated, redirecting to login");
+      return res.redirect("http://localhost:3000/login");
+    }
+
+    const redirectUrl = req.user.isNew
+      ? "http://localhost:3000/personalinfo"
+      : "http://localhost:3000/dashboard";
+
+    console.log("Redirecting to:", redirectUrl);
+    res.redirect(redirectUrl);
+  }
 );
 
 // failure

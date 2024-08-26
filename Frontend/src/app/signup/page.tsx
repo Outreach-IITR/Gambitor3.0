@@ -9,7 +9,7 @@ import ResponseBox from "../_components/ResponseBox";
 import dynamic from "next/dynamic";
 import { signUpStart, signUpSuccess, signUpFailure } from "../../redux/user/userSlice.js";
 import { useDispatch, useSelector } from "react-redux";
-import { setEmail,setIsVerified,setUserId,startIsVerified,endVerify } from "@/redux/user/signUpSlice";
+import { setEmail,setIsVerified,setUserId,startSubmit,endSubmit } from "@/redux/user/signUpSlice";
 import Load from '../_components/load'
 
 interface UserState {
@@ -47,17 +47,16 @@ function Home() {
   const email = useSelector((state:RootState) => state.signUp.email) || '';
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [message, setMessage] = useState("");
-  const { loading, error } = useSelector((state: RootState) => state.user);
-  const Isloading = useSelector((state: RootState) => state.signUp.loading);
+  //const { loading, error } = useSelector((state: RootState) => state.user);
+  const loading = useSelector((state: RootState) => state.signUp.loading);
   const dispatch = useDispatch();
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setEmail(e.target.value));
-    dispatch(endVerify())
   };
 
   const loginwithgoogle = () => {
-    window.open("http://localhost:8000/api/v1/auth/google/callback", "_self");
+    window.open("http://localhost:8000/api/v1/auth/google", "_self");
   };
 
   const handleSubmit = async (e: any) => {
@@ -66,6 +65,7 @@ function Home() {
     if (isVerified) {
       try {
         dispatch(signUpStart());
+        dispatch(startSubmit())
         const response = await axios.post("/auth/register", { email: email, password: password });
         console.log(response.data);
         const userId = response.data.data.id;
@@ -73,13 +73,14 @@ function Home() {
           dispatch(signUpFailure(response.data));
           return;
         }
-        setMessage("User created successfully!");
+       // setMessage("User created successfully!");
         setErrors({});
         dispatch(setUserId(userId));
+        dispatch(endSubmit())
         router.push(`/personalinfo`);
         dispatch(signUpSuccess(response.data));
       } catch (error) {
-        console.log(error);
+        dispatch(endSubmit())
         var errorMsg = 'An unexpected error occured'
         if (error && typeof error === "object" && "response" in error) {
           const axiosError = error as { response?: { data?: ApiError } };
@@ -110,21 +111,22 @@ function Home() {
       setErrors((prevErrors) => ({ ...prevErrors, email: "Email address cannot be empty" }));
     else if (!isVerified) {
       try {
-       dispatch(startIsVerified())
+        dispatch(startSubmit())
         const response = await axios.post("/sendOtp", { email: email });
         console.log(response.data);
+        //dispatch(endSubmit())
         router.push(`/verify`);
       } catch (error) {
         console.log(error);
+        dispatch(endSubmit())
         if (error && typeof error === "object" && "response" in error) {
           const axiosError = error as { response?: { data?: ApiError } };
           const apiError = axiosError.response?.data as ApiError;
           //console.log(axiosError.response?.data)
           if (apiError) {
-            //console.log(apiError)
+            console.log(apiError)
             setMessage(apiError.message);
-            //console.log(apiError.errors)
-            setErrors(apiError.errors);
+            setErrors(apiError.errors)
           } else {
             setMessage("An unexpected error occurred.");
           }
@@ -140,7 +142,7 @@ function Home() {
   return (
     <div className="flex w-full h-screen font-[Public Sans]">
       {/* Left side: Form section */}
-      <div className="flex items-center justify-center w-full lg:w-1/2 bg-white">
+      {loading ? <Load /> : (<div className="flex items-center justify-center w-full lg:w-1/2 bg-white">
         <div className="w-full max-w-md px-8 py-10">
           <div className="flex">
             <img className="w-40 h-auto" src="logo.svg" alt="Logo" />
@@ -158,12 +160,13 @@ function Home() {
             <img src="google-icon.svg" alt="Google Icon" className="w-6 h-6 mr-2" />
             <span className="text-sm font-medium text-gray-700">Google</span>
           </a>
-
+          
           <div className="flex items-center my-4">
             <hr className="flex-grow border-gray-300" />
             <span className="mx-2 text-xs text-gray-500">or continue with email</span>
             <hr className="flex-grow border-gray-300" />
           </div>
+          
           <form onSubmit={handleSubmit}>
             <div className="relative mt-6">
               <FaEnvelope className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -183,7 +186,7 @@ function Home() {
                   onClick={handleVerify}
                   className="w-[20%] py-1 mt-3 text-sm font-medium tracking-wide text-white bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50"
                 >
-                 {Isloading ? "Loading..." : "Verify"}
+                 {loading ? "Loading..." : "Verify"}
                 </button>
               )}
               {isVerified && (
@@ -216,17 +219,20 @@ function Home() {
               )}
             </div>
             <ErrorBox message={errors?.password} />
-            <div className="mt-4 text-right">
+            {/* <div className="mt-4 text-right">
               <a href="#" className="text-xs text-blue-600">
                 Forgot Password?
               </a>
-            </div>
-            <div className="text-center">
+            </div> */}
+              {/* <p className='text-red-700 mt-5 '>
+        {error ? error || 'Something went wrong!' : ''}
+      </p> */}
+            <div className="mt-2">
               <ErrorBox message={message} />
             </div>
             <div className="mt-6">
               <button className="w-full py-3 text-sm font-medium tracking-wide text-white bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
-              {loading ? "Loading..." : "Sign Up"}
+              Sign Up
               </button>
             </div>
           </form>
@@ -236,11 +242,8 @@ function Home() {
               <span className="text-blue-600 px-2 py-1 rounded">Click here to Login</span>
             </a>
           </div>
-          <p className='text-red-700 mt-5'>
-        {error ? error || 'Something went wrong!' : ''}
-      </p>
         </div>
-      </div>
+      </div>)}
 
       {/* Right side: Image section */}
       <div className="hidden lg:flex lg:w-1/2 items-center justify-center bg-blue-600">

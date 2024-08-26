@@ -8,8 +8,9 @@ import ErrorBox from "../_components/ErrorBox";
 import dynamic from 'next/dynamic';
 import PrivateRoute from "../_components/PrivateRoute";
 import { useDispatch, useSelector } from "react-redux";
+import Load from "../_components/load";
 import { signInSuccess } from "@/redux/user/userSlice";
-import { resetSignUpState, setPhoneIsVerified,setPhoneNumber, startPhoneIsVerified ,endVerify} from "@/redux/user/signUpSlice";
+import { resetSignUpState, setPhoneIsVerified,setPhoneNumber, startSubmit ,endSubmit} from "@/redux/user/signUpSlice";
 
 interface FormData {
   firstName: string;
@@ -66,7 +67,7 @@ const PersonalInfoComponent = () => {
   
   const isVerified = useSelector((state: RootState) => state.signUp.phoneIsVerified);
   const phoneNumber = useSelector((state: RootState) => state.signUp.phoneNumber);
-  const Isloading = useSelector((state: RootState) => state.signUp.loading);
+  const loading = useSelector((state: RootState) => state.signUp.loading);
   const [response, setResponse] = useState('');
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = e.target;
@@ -78,7 +79,6 @@ const PersonalInfoComponent = () => {
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setPhoneNumber(e.target.value));
-    dispatch(endVerify())
   };
 
 
@@ -88,6 +88,7 @@ const PersonalInfoComponent = () => {
     console.log(formData);
     if(isVerified){
     try{
+      dispatch(startSubmit())
         const name = formData.firstName+" " +formData.lastName
         const response = await axios.post(`/user/${id}/details`,{ formData ,name:name,contactNumber:contactNumber });
         console.log(response.data);
@@ -96,6 +97,7 @@ const PersonalInfoComponent = () => {
     } catch(error)
     {
        console.log(error);
+       dispatch(endSubmit())
        if (error && typeof error === 'object' && 'response' in error) {
         const axiosError = error as { response?: { data?: ApiError } };
         const apiError = axiosError.response?.data as ApiError;
@@ -121,14 +123,16 @@ const PersonalInfoComponent = () => {
     if(contactNumber === '')  setErrors((prevErrors) => ({ ...prevErrors, contactNumber: 'Phone Number cannot be empty' }));
     if(!isVerified){
     try{
-      dispatch(startPhoneIsVerified())
+      dispatch(startSubmit())
       const response = await axios.post('/sendOtpPhone',{contactNumber:contactNumber})
       console.log(response.data);
       setResponse(response.data?.data);
+     // dispatch(endSubmit())
       router.push(`/verifyphone`);
     }catch(error)
     {
       console.log(error);
+      dispatch(endSubmit())
       if (error && typeof error === 'object' && 'response' in error) {
         const axiosError = error as { response?: { data?: ApiError } };
         const apiError = axiosError.response?.data as ApiError;
@@ -154,6 +158,10 @@ const PersonalInfoComponent = () => {
 const handlePreviousStep = () => {
   router.push('/signup'); // This navigates to the previous page in the history stack
 };
+
+const handleClick = () => {
+  dispatch(resetSignUpState())
+}
 
 
   return (
@@ -195,7 +203,7 @@ const handlePreviousStep = () => {
             height={32}
             className="rounded-full mr-2"
           />
-          <a href='/signup'><button className="px-4 py-2 border border-black border-opacity-20 text-black text-opacity-60 text-sm items-center justify-center flex rounded">
+          <a href='/signup'><button className="px-4 py-2 border border-black border-opacity-20 text-black text-opacity-60 text-sm items-center justify-center flex rounded" onClick={handleClick}>
             Sign Out
             <Image
               src="/exit.png"
@@ -206,7 +214,7 @@ const handlePreviousStep = () => {
             />
           </button></a>
         </div>
-        <h1 className="text-3xl font-bold">Personal Info</h1>
+        {loading ? <Load /> : (<div><h1 className="text-3xl font-bold">Personal Info</h1>
         <p className="mb-6">
           Fill out your personal information so that we can get to know you
           better.
@@ -300,7 +308,7 @@ const handlePreviousStep = () => {
               />
               <a href="/verifyPhone">
               {!isVerified && <button onClick={handleVerify} className="w-[30%] py-1 mt-3 text-sm font-medium tracking-wide text-white bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
-              {Isloading ? "Loading..." : "Verify"}
+                  Verify
               </button>}
               {isVerified && <button className="w-[30%] py-1 mt-3 text-sm font-medium tracking-wide text-white bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
                   Verified
@@ -377,6 +385,7 @@ const handlePreviousStep = () => {
             >
               Previous Step
             </button>
+            <div className="py-4 text-center"> <ErrorBox message={message}/></div>
             <button
               type="submit"
               className="px-8 py-2 bg-[#005EFE] text-white rounded"
@@ -390,8 +399,7 @@ const handlePreviousStep = () => {
               Get help
             </a>
           </div>
-          <ErrorBox message={message}/>
-        </form>
+        </form></div>)}
       </div>
     </div>
   );

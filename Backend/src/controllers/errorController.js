@@ -1,10 +1,12 @@
 import { ApiError } from "../utils/ApiError.js";
 
 const devErrors = (res, error) => {
+    console.log(error)
     res.status(error.statusCode).json({
         statusCode: error.statusCode,
         message: error.message,
         stackTrace: error.stack,
+        errors:error.errors,
         error: error
     });
 }
@@ -25,7 +27,7 @@ const validationErrorHandler = (err) => {
     const errors = Object.values(err.errors).map(val => val.message);
     const errorMessages = errors.join('. ');
     const msg = `Invalid input data: ${errorMessages}`;
-
+    console.log(msg)
     return new ApiError(400,msg);
 }
 
@@ -49,11 +51,10 @@ const errorHandler = (error, req, res, next) => {
 
     if(process.env.NODE_ENV === 'development'){
         devErrors(res, error);
-    } else if(process.env.NODE_ENV === 'production'){
+    }else if(process.env.NODE_ENV === 'production'){
         if(error.name === 'CastError') error = castErrorHandler(error);
         if(error.code === 11000) error = duplicateKeyErrorHandler(error);
-        if(error.name === 'ValidationError') error = validationErrorHandler(error);
-
+        if(error.name === 'Validation Error') error = validationErrorHandler(error);
         prodErrors(res, error);
     }
 }
