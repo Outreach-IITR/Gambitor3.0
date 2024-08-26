@@ -9,7 +9,7 @@ import dynamic from 'next/dynamic';
 import PrivateRoute from "../_components/PrivateRoute";
 import { useDispatch, useSelector } from "react-redux";
 import { signInSuccess } from "@/redux/user/userSlice";
-import { resetSignUpState, setPhoneIsVerified,setPhoneNumber, startPhoneIsVerified } from "@/redux/user/signUpSlice";
+import { resetSignUpState, setPhoneIsVerified,setPhoneNumber, startPhoneIsVerified ,endVerify} from "@/redux/user/signUpSlice";
 
 interface FormData {
   firstName: string;
@@ -78,6 +78,7 @@ const PersonalInfoComponent = () => {
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setPhoneNumber(e.target.value));
+    dispatch(endVerify())
   };
 
 
@@ -117,7 +118,7 @@ const PersonalInfoComponent = () => {
   
   const handleVerify = async(e:any) => {
     e.preventDefault();
-    //if(formData.contactNumber === '')  setErrors((prevErrors) => ({ ...prevErrors, contactNumber: 'Phone Number cannot be empty' }));
+    if(contactNumber === '')  setErrors((prevErrors) => ({ ...prevErrors, contactNumber: 'Phone Number cannot be empty' }));
     if(!isVerified){
     try{
       dispatch(startPhoneIsVerified())

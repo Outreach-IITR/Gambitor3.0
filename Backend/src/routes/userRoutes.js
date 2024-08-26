@@ -5,6 +5,6 @@ import protectRoute from "../middlewares/protectRoute.js"
 const userRouter = express.Router();
 // user routes to update profile
 userRouter.put("/:id/update",protectRoute, ProfileController.updateUser);
-userRouter.get("/school-ambassador/:id", ProfileController.schoolAmbassador);
+userRouter.get("/school-ambassador/:id",protectRoute, ProfileController.schoolAmbassador);
 
 export { userRouter };

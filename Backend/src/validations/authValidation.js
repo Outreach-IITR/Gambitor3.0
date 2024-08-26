@@ -21,3 +21,8 @@ export const infoSchema = vine.object({
   contactNumber:vine.string().minLength(10, 'Mobile number must be exactly 10 digits long').maxLength(10, 'Mobile number must be exactly 10 digits long').regex(/^\d+$/, 'Mobile number must contain only numbers'),
   state:vine.string(),
 });
+
+export const verifySchema = vine.object({
+  email:vine.string().email(),
+});
+

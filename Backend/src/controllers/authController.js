@@ -3,7 +3,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { prisma } from "../db/index.js";
 import vine, { errors } from "@vinejs/vine";
-import { registerSchema, loginSchema, infoSchema } from "../validations/authValidation.js";
+import { registerSchema, loginSchema, infoSchema ,verifySchema} from "../validations/authValidation.js";
 import bcrypt from "bcryptjs";
 import { createOTP, verifyOTP } from "../utils/otpGenerator.js";
 import mailService from "../utils/mailService.js";
@@ -154,14 +154,17 @@ class AuthController {
   });
 
   static sendOtp = asyncHandler(async (req, res, next) => {
+    const validator = vine.compile(verifySchema);
     try {
-      const email = req.body.email;
+      const validatedData = await validator.validate(req.body);
+      const { email } = validatedData;
       // Check if the email already exists in the database
+      console.log(email)
       const existingUser = await prisma.user.findUnique({
         where: { email: email },
       });
       if (existingUser) {
-        throw new ApiError(400, "Email already in use");
+        return next(new ApiError(400, "Email already in use"));
       }
       const otpCode = await createOTP(email);
       //console.log(otpCode);
@@ -173,8 +176,8 @@ class AuthController {
       };
       mailService.sendMail(mailOptions, function (err) {
         if (err) {
-          next(new ApiError(500, err.message, [], err.stack));
-          console.log(err);
+          return next(new ApiError(500, err.message, [], err.stack));
+          //console.log(err);
         } else {
           res.status(200).json({
             status: "success",
@@ -183,7 +186,14 @@ class AuthController {
         }
       });
     } catch (error) {
-      throw error;
+      console.log(error)
+      if (error instanceof errors.E_VALIDATION_ERROR) {
+        throw new ApiError(400, "Validation Error", error.messages);
+      }
+      if (error instanceof ApiError) {
+        next(error);
+      }
+      return next(new(ApiError(500, "Email cannot be sent", [], error.stack)));
     }
   });
 
@@ -233,7 +243,7 @@ class AuthController {
       console.error("Error sending verification code:", error);
       res.status(500).json({
         status: "error",
-        message: "Failed to send SMS.",
+        message: "Failed to send SMS.Check your phone Number",
       });
     }
   });

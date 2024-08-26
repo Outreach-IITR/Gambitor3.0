@@ -33,6 +33,9 @@ const signUpSlice = createSlice({
     startPhoneIsVerified:(state) =>{
       state.loading=true;
     },
+    endVerify:(state)=>{
+      state.loading=false;
+    },
     setPhoneIsVerified: (state, action) => {
       state.phoneIsVerified = action.payload;
       state.loading=false;
@@ -56,6 +59,7 @@ export const {
   startPhoneIsVerified,
   setPhoneIsVerified,
   resetSignUpState,
+  endVerify,
 } = signUpSlice.actions;
 
 export default signUpSlice.reducer;
