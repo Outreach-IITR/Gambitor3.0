@@ -3,6 +3,7 @@ import AuthController from "../controllers/authController.js";
 import passport from "passport";
 import "../utils/passportConfig.js";
 import errorHandler from "../controllers/errorController.js";
+import { ApiResponse } from "../utils/ApiResponse.js";
 
 const router = Router();
 
@@ -43,26 +44,28 @@ router.get(
     failureRedirect: "http://localhost:3000/login",
   }),
   (req, res) => {
-    console.log("Authenticated user:", req.user); // Log the authenticated user
-    console.log("Session ID:", req.sessionID); // Log session ID
-    console.log("Session data:", req.session); // Log session data
-
     if (!req.user) {
       console.log("User is not authenticated, redirecting to login");
       return res.redirect("http://localhost:3000/login");
     }
 
+    req.user.success=true
+    req.user.statusCode =200
+    req.user.message = "Authenticated successfully"
+
+    const response = req.user
+
+    // Determine redirect URL
     const redirectUrl = req.user.isNew
       ? "http://localhost:3000/personalinfo"
       : "http://localhost:3000/dashboard";
 
     console.log("Redirecting to:", redirectUrl);
-    res.redirect(redirectUrl);
+
+    // Send the JSON response
+    res.status(200).json(response);
   }
 );
-
-// failure
-router.get("/auth/failure", AuthController.failureGoogleLogin);
 
 router.get('/logout', AuthController.logout);
 

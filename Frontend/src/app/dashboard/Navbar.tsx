@@ -77,6 +77,7 @@ export default function Navbar(){
         {text:"Help Section", ico:"bx bxs-help-circle", path:"/dashboard/help"}, 
         {text:"Settings", ico:"bx bxs-cog", path:"/dashboard/settings"}]
     const [isToggler, setIsToggler] = useState(true);
+    console.log(useSelector(((state:RootState) => state.user)))
     const user = useSelector(((state:RootState) => state.user.currentUser.data))
     console.log(user)
     const firstName = getFirstName(user.name);

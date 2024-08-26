@@ -30,9 +30,65 @@ const LoginComponent = () => {
     setPasswordVisible(!passwordVisible);
   };
 
-  const loginwithgoogle = () => {
-    window.open("http://localhost:8000/api/v1/auth/google/callback", "_self");
+  const loginwithgoogle = async () => {
+    try {
+      dispatch(signInStart());
+  
+      // Step 1: Redirect the user to Google login
+      window.location.href = "http://localhost:8000/api/v1/auth/google";
+  
+      // Step 2: Poll for the callback response or set up an event listener
+      // This assumes you have a way to capture the response after redirection
+      // You might need to handle this part differently based on how your app is set up
+  
+      // Here we simulate checking for the result after redirect
+      const checkLoginStatus = async () => {
+        try {
+          const response = await fetch("/api/v1/auth/google/callback", {
+            method: "GET",
+            credentials: "include",
+          });
+          const data = await response.json();
+  
+          if (!data.success) {
+            dispatch(signInFailure(data.message || "Google login failed. Please try again."));
+            return;
+          }
+  
+          // Dispatch success action with user data
+          dispatch(signInSuccess(data.user));
+  
+          // Determine redirect URL based on user information
+          const redirectUrl = data.user.isNew ? "/personalinfo" : "/dashboard";
+          router.push(redirectUrl);
+          
+        } catch (error) {
+          console.error("Error during Google login:", error);
+          dispatch(signInFailure("An unexpected error occurred."));
+        }
+      };
+  
+      // Poll or handle response after some delay or set up a way to receive the response
+      setTimeout(checkLoginStatus, 1000); // Adjust timeout as needed
+  
+    } catch (error: any) {
+      let errorMessage = "An unknown error occurred.";
+  
+      if (error.response) {
+        errorMessage = error.response.data.message || "Google login failed. Please try again.";
+      } else if (error.request) {
+        errorMessage = "No response from the server. Please check your internet connection.";
+      } else {
+        errorMessage = error.message || "An unexpected error occurred.";
+      }
+  
+      console.log(errorMessage);
+      dispatch(signInFailure(errorMessage));
+    }
   };
+  
+  
+  
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -63,7 +119,6 @@ const LoginComponent = () => {
         return;
       }
   
-      // On successful login, push to the dashboard
       const userId = data.data.id;
       router.push(`/dashboard`);
       dispatch(signInSuccess(data));

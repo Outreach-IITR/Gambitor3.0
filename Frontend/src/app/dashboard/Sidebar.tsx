@@ -40,7 +40,7 @@ function Abc({text, ico, path,onClick}:tabs){
 
 export default function Sidebar(){
     const dispatch = useDispatch()
-    const user = useSelector(((state:RootState) => state.user.currentUser.data))
+    const user = useSelector(((state:RootState) => state.user.currentUser?.data))
     const pathname= usePathname();
     const [nav , setNav] = useState("Dashboard")
     const handleAmbassadorClick = async (e: any) => {
