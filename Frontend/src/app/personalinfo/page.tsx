@@ -127,7 +127,7 @@ const PersonalInfoComponent = () => {
       const response = await axios.post('/sendOtpPhone',{contactNumber:contactNumber})
       console.log(response.data);
       setResponse(response.data?.data);
-     // dispatch(endSubmit())
+      dispatch(endSubmit())
       router.push(`/verifyphone`);
     }catch(error)
     {

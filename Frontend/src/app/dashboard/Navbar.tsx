@@ -84,9 +84,9 @@ export default function Navbar(){
     return(
         <div className="sticky top-0">
             <div className="flex w-full justify-between items-center pt-5 lg:hidden lg:px-[2rem]">
-                <div>
+                <a href="/">
                     <Image src={Logo} alt="" />
-                </div>
+                </a>
                 <div className="relative z-10" onClick={()=>{setIsToggler(!isToggler)}}>
                     {isToggler==true? <Image src={Toggler} alt="" />:
                         <Image src={cross} alt="" />

@@ -114,7 +114,7 @@ function Home() {
         dispatch(startSubmit())
         const response = await axios.post("/sendOtp", { email: email });
         console.log(response.data);
-        //dispatch(endSubmit())
+        dispatch(endSubmit())
         router.push(`/verify`);
       } catch (error) {
         console.log(error);
