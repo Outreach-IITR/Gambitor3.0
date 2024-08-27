@@ -34,7 +34,7 @@ export default function Header(){
         }
       };
     return(
-        <div className="py-[2rem] pb-[4rem] relative z-1 max-w-[1380px] pt-[6rem] mx-auto flex justify-between items-center">
+        <div className="py-[2rem] pb-[4rem] relative z-1 max-w-[1380px] pt-[3rem] mx-auto flex justify-between items-center">
            <img alt="" src="/logo.svg" className="w-[392px]"/>
            <div className="flex space-x-6">
             {currentUser?(<a href="/dashboard">

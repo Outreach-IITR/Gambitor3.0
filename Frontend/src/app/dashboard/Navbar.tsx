@@ -111,9 +111,11 @@ export default function Navbar(){
                     
             </div>
             }
-            <div className="flex justify-between lg:px-[2rem] h-[100px] items-center w-full">
+            <div className="lg:flex justify-between lg:px-[2rem] h-[100px] items-center w-full hidden">
                 <div className="">
-                    <h1 className="text-[40px] font-bold leading-[47px]">Welcome, {firstName}!</h1>
+                    <h1 className="text-[40px] font-bold leading-[47px]">Welcome, 
+                        {firstName}!
+                        </h1>
                 </div>
                 <div className="lg:flex space-x-5 hidden">
                     <Image src={Bell} alt="" />

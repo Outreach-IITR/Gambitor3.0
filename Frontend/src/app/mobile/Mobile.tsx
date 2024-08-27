@@ -13,6 +13,7 @@ import bottomgp from './assets/bottomgp.svg';
 
 import NavBar1 from './NavBar1'
 import NavBar from './NavBar'
+import Footer from '../_components/Footer'
 
 import OpenPage from './OpenPage'
 
@@ -45,9 +46,11 @@ const Mobile = () => {
       <Syllabus></Syllabus>
       <div className='bg-[#2445B5] relative z-20'>
         <HomePageCarousel/>
+       <Footer></Footer>
 
       </div>
       <NavBar></NavBar>
+
       
       
       

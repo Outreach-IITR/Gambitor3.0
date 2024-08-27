@@ -30,7 +30,9 @@ export default function Papers(){
             <div className="w-full h-full">
                 <ol>
                     {papers.map(({desc,download}, index)=>(
-                        <List desc={desc} download={download} index={index}/>
+                        <div key={index}>
+                            <List desc={desc} download={download} index={index}/>
+                        </div>
                     ))}
                 </ol>
             </div>

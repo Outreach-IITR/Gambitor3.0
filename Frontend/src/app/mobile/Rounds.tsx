@@ -11,6 +11,7 @@ import fish1 from './assets/Navbar/fish1.svg'
 import fish2 from './assets/Navbar/fish2.svg'
 import Sharks from './assets/Navbar/Sharks.svg'
 import bottomgp from './assets/bottomgp.svg';
+import Footer from "../_components/Footer";
 
 
 export default function Rounds() {
@@ -31,7 +32,7 @@ export default function Rounds() {
             <Image src={Vector} alt="" className="w-full"/>
             <div className="">
                 <h2 className="font-overpass italic absolute text-2xl top-[226px] right-[5%] ">INCEPTION</h2>
-                <p className="font-overpass text-right absolute text-base top-[293px] right-[5%] h-[240px] w-[259px] ">Lorem ipsum dolor sit am, consectetur adipiscing elit. Praesent porta magna sed eleifend commodo. Maecenas eu tristique nulla. Nam vulputate, arcu euismod accumsan sodales, turpis dui auctor libero, vitae finibus metus ipsum quis tellus. Duis fermentum justo erat, eu porttitor lorem suscipit in. Sed pellentesque porta nunc eu facilisis. Praesent eu augue magna. </p>
+                <p className="font-overpass absolute text-base top-[293px] right-[5%] h-[240px] w-[259px] text-justify ">Lorem ipsum dolor sit am, consectetur adipiscing elit. Praesent porta magna sed eleifend commodo. Maecenas eu tristique nulla. Nam vulputate, arcu euismod accumsan sodales, turpis dui auctor libero, vitae finibus metus ipsum quis tellus. Duis fermentum justo erat, eu porttitor lorem suscipit in. Sed pellentesque porta nunc eu facilisis. Praesent eu augue magna. </p>
 
             </div> 
           
@@ -42,7 +43,7 @@ export default function Rounds() {
             <div>
                 <h2 className="font-overpass italic absolute text-2xl top-[685px] left-[5%] ">PINNACLE</h2>
                 
-                <p className="font-overpass absolute text-base top-[752px] left-[5%] w-[259px] h-[240px] ">Lorem ipsum dolor sit am, consectetur adipiscing elit. Praesent porta magna sed eleifend commodo. Maecenas eu tristique nulla. Nam vulputate, arcu euismod accumsan sodales, turpis dui auctor libero, vitae finibus metus ipsum quis tellus. Duis fermentum justo erat, eu porttitor lorem suscipit in. Sed pellentesque porta nunc eu facilisis. Praesent eu augue magna. </p>
+                <p className="font-overpass absolute text-base top-[752px] left-[5%] w-[259px] h-[240px] text-justify">Lorem ipsum dolor sit am, consectetur adipiscing elit. Praesent porta magna sed eleifend commodo. Maecenas eu tristique nulla. Nam vulputate, arcu euismod accumsan sodales, turpis dui auctor libero, vitae finibus metus ipsum quis tellus. Duis fermentum justo erat, eu porttitor lorem suscipit in. Sed pellentesque porta nunc eu facilisis. Praesent eu augue magna. </p>
                 
             </div>
             </div>

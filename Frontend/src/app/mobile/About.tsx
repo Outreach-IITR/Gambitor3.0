@@ -11,8 +11,8 @@ export default function Res() {
         <div className="relative h-[900px] w-full bg-[#E5F2FF] flex flex-col m-0 pr-0 justify-between">
            
             <div className="mt-[00px] ml-6 w-[65%] relative left-[20px] top-[40px] ">
-                <h1 className="text-[32px] w-[276px] h-[37px] mb-4">About GambitoR</h1>
-                <p className="sm:text-[20px] text-[15px]">
+                <h1 className="text-[32px] w-[276px] h-[37px] mb-4 text-[#073266]" style={{fontFamily:'Cooper Black'}}>About GambitoR</h1>
+                <p className="sm:text-[20px] text-[15px] leading-[24px] text-justify">
                     GambitoR is a prestigious national-level exam tailored specifically for students from classes 
                     9th to 12th who strive for excellence and have a passion for tackling and conquering challenges.
                     This unique competition evaluates students' logical and analytical skills through questions
