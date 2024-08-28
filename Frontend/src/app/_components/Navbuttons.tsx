@@ -10,7 +10,7 @@ function NavButton({text}:content){
     return (
        
         
-           <button id={`b${text}`} className="text-[20px] font-overpass leading-[25px] font-medium pointer-events-none border border-blue-500 rounded bg-white w-[166px]  text-black  h-[60px] active:bg-blue-700">{text}</button>
+           <button id={`b${text}`} className="text-[20px] font-overpass leading-[25px] font-medium pointer-events-none border border-blue-500 rounded bg-white w-[150px]  text-black  h-[60px] active:bg-blue-700">{text}</button>
        
     );
 }

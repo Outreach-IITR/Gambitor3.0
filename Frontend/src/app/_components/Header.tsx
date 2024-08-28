@@ -38,7 +38,7 @@ export default function Header(){
            <img alt="" src="/logo.svg" className="w-[392px]"/>
            <div className="flex space-x-6">
             {currentUser?(<a href="/dashboard">
-                    <button className="text-[20px] font-overpass leading-[25px] font-medium  border border-slate-200 rounded-xl bg-white w-[100px]  text-black  h-[45px] active:bg-slate-200 cursor-pointer">Dashboard</button>
+                    <button className="text-[20px] font-overpass leading-[25px] font-medium  border border-slate-200 rounded-xl bg-white w-[120px]  text-black  h-[45px] active:bg-slate-200 cursor-pointer">Dashboard</button>
                 </a>):(null)}
                 <a href="/signup">
                 <button className="text-[20px] font-overpass leading-[25px] font-medium  border border-blue-500 rounded-xl bg-white w-[100px]  text-black  h-[45px] active:bg-slate-200 cursor-pointer">Sign up</button>
@@ -46,7 +46,7 @@ export default function Header(){
                 {!currentUser?(<a href="/login">
                 <button className="text-[20px] font-overpass leading-[25px] font-medium  border border-blue-500 rounded-xl bg-white w-[100px]  text-black  h-[45px] active:bg-slate-200 cursor-pointer">Log in</button>
                 </a>):(<a href="#">
-                <button className="text-[20px] font-overpass leading-[25px] font-medium  border border-blue-500 rounded-xl bg-white w-[100px]  text-black  h-[45px] active:bg-slate-200 cursor-pointer"  onClick={() => setShowLogoutConfirm(true)}>LogOut</button>
+                <button className="text-[20px] font-overpass leading-[25px] font-medium  border border-blue-500 rounded-xl bg-white w-[100px]  text-black  h-[45px] active:bg-slate-200 cursor-pointer"  onClick={() => setShowLogoutConfirm(true)}>Logout</button>
                 {showLogoutConfirm && (
                             <div className="fixed inset-x-0 top-0 mt-16 bg-black bg-opacity-50 flex justify-center items-start ">
                                 <div className="bg-gray p-6 rounded-lg">
@@ -62,7 +62,7 @@ export default function Header(){
                                             className="bg-red-500 text-white px-4 py-2 rounded-lg"
                                             onClick={handleClick}
                                         >
-                                            Log Out
+                                            Logout
                                         </button>
                                     </div>
                                 </div>

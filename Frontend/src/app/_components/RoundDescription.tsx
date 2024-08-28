@@ -33,7 +33,7 @@ export default function RoundDescription() {
               <img alt='' className='ml-[10px]' src="bubble1.svg"/>
             </div>
             
-            <p className="text-[20px] font-overpass leading-[25px] font-medium">
+            <p className="text-[20px] font-overpass leading-[25px] font-medium text-justify">
             The first round of GambitoR 3.0, where you will set your ships to 
             sail alongside other pirates online. You’ll need your logical skills 
             and grit in a 2-3 hours question paper consisting of math, puzzles,
@@ -55,7 +55,7 @@ export default function RoundDescription() {
               <h1 className="text-[36px] font-semibold leading-[45px]">PINNACLE</h1>
               <img alt='' className='ml-[10px]' src="bubble3.svg"/>
             </div>
-            <p className="text-[20px] font-overpass leading-[25px] font-medium">
+            <p className="text-[20px] font-overpass leading-[25px] font-medium text-justify">
             When you have cleared the depths for the Inception round, we 
             eagerly await your visit to the campus of IIT Roorkee. Considering 
             the alluring beauty and extravagance of this campus and the exciting 

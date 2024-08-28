@@ -7,7 +7,6 @@ const userRouter = express.Router();
 // Define routes
 userRouter.put("/:id/update", protectRoute, ProfileController.updateUser);
 userRouter.get("/school-ambassador/:id", protectRoute, ProfileController.schoolAmbassador);
-userRouter.delete('/:id/delete', ProfileController.deleteUser);
 userRouter.get("/getUser", protectRoute, ProfileController.getUserByEmail);
 
 export { userRouter };

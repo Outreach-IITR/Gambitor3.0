@@ -72,7 +72,7 @@ const PersonalInfoComponent = () => {
     referralCode: "",
   });
 
-  const isVerified = useSelector((state: RootState) => state.signUp.phoneIsVerified);
+  //const isVerified = useSelector((state: RootState) => state.signUp.phoneIsVerified);
   const phoneNumber = useSelector((state: RootState) => state.signUp.phoneNumber);
   const loading = useSelector((state: RootState) => state.signUp.loading);
   const [response, setResponse] = useState("");
@@ -91,7 +91,7 @@ const PersonalInfoComponent = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(formData);
-    if (isVerified) {
+    //if (isVerified) {
       try {
         dispatch(startSubmit());
         const name = formData.firstName + " " + formData.lastName;
@@ -121,43 +121,43 @@ const PersonalInfoComponent = () => {
           setMessage("An unexpected error occurred.");
         }
       }
-    } else {
-      setMessage("Verify your phone number");
-    }
+    // } else {
+    //   setMessage("Verify your phone number");
+    // }
   };
 
-  const handleVerify = async (e: any) => {
-    e.preventDefault();
-    if (contactNumber === "")
-      setErrors((prevErrors) => ({ ...prevErrors, contactNumber: "Phone Number cannot be empty" }));
-    if (!isVerified) {
-      try {
-        dispatch(startSubmit());
-        const response = await axios.post("/sendOtpPhone", { contactNumber: contactNumber });
-        console.log(response.data);
-        setResponse(response.data?.data);
-        dispatch(endSubmit());
-        router.push(`/verifyphone`);
-      } catch (error) {
-        console.log(error);
-        dispatch(endSubmit());
-        if (error && typeof error === "object" && "response" in error) {
-          const axiosError = error as { response?: { data?: ApiError } };
-          const apiError = axiosError.response?.data as ApiError;
-          if (apiError) {
-            setMessage(apiError.message);
-            setErrors(apiError.errors);
-          } else {
-            setMessage("An unexpected error occurred.");
-          }
-        } else {
-          setMessage("An unexpected error occurred.");
-        }
-      }
-    } else {
-      setMessage("Mobile Number already verified");
-    }
-  };
+  // const handleVerify = async (e: any) => {
+  //   e.preventDefault();
+  //   if (contactNumber === "")
+  //     setErrors((prevErrors) => ({ ...prevErrors, contactNumber: "Phone Number cannot be empty" }));
+  //   if (!isVerified) {
+  //     try {
+  //       dispatch(startSubmit());
+  //       const response = await axios.post("/sendOtpPhone", { contactNumber: contactNumber });
+  //       console.log(response.data);
+  //       setResponse(response.data?.data);
+  //       dispatch(endSubmit());
+  //       router.push(`/verifyphone`);
+  //     } catch (error) {
+  //       console.log(error);
+  //       dispatch(endSubmit());
+  //       if (error && typeof error === "object" && "response" in error) {
+  //         const axiosError = error as { response?: { data?: ApiError } };
+  //         const apiError = axiosError.response?.data as ApiError;
+  //         if (apiError) {
+  //           setMessage(apiError.message);
+  //           setErrors(apiError.errors);
+  //         } else {
+  //           setMessage("An unexpected error occurred.");
+  //         }
+  //       } else {
+  //         setMessage("An unexpected error occurred.");
+  //       }
+  //     }
+  //   } else {
+  //     setMessage("Mobile Number already verified");
+  //   }
+  // };
 
   // Previous Step functionality
 
@@ -194,20 +194,20 @@ const PersonalInfoComponent = () => {
               height={80}
               className="absolute top-8 left-6"
             />
-            <Image
+            {/* <Image
               src="/profile.png"
               alt="profile"
               width={32}
               height={32}
               className="rounded-full mr-2 rmd:hidden"
-            />
+            /> */}
             <a href="/signup" className="absolute top-8 right-6">
               <button
                 className="px-4 py-2 border border-black border-opacity-20 text-black text-opacity-60 text-sm items-center justify-center flex rounded"
                 onClick={handleClick}
               >
                 Sign Out
-                <Image src="/exit.png" alt="profile" width={16} height={16} className="ml-2" />
+                {/* <Image src="/exit.png" alt="profile" width={16} height={16} className="ml-2" /> */}
               </button>
             </a>
           </div>
@@ -215,9 +215,9 @@ const PersonalInfoComponent = () => {
         {loading ? (
           <Load />
         ) : (
-          <div className="rmd:px-2">
+          <div className="rmd:px-2 rmd:py-5">
             <div className="flex-col justify-center">
-              <h1 className="text-3xl font-bold">Personal Info</h1>
+              <h1 className="text-3xl font-bold rmd:text-2xl">Personal Info</h1>
               <p className="mb-6">
                 Fill out your personal information so that we can get to know you better.
               </p>
@@ -306,10 +306,10 @@ const PersonalInfoComponent = () => {
                     name="contactNumber"
                     value={contactNumber}
                     onChange={handlePhoneChange}
-                    disabled={isVerified}
+                    //disabled={isVerified}
                     className="w-full px-3 py-2 border border-gray-300 rounded peer"
                   />
-                  <a href="/verifyPhone">
+                  {/* <a href="/verifyPhone">
                     {!isVerified && (
                       <button
                         onClick={handleVerify}
@@ -323,7 +323,7 @@ const PersonalInfoComponent = () => {
                         Verified
                       </button>
                     )}
-                  </a>
+                  </a> */}
                   <ErrorBox message={errors?.contactNumber} />
                 </div>
               </div>
