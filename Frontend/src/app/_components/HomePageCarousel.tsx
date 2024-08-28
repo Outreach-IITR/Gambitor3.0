@@ -91,6 +91,7 @@ const HomePageCarousel = () => {
           onClick={nextSlide}
         />
       </section>
+      <div className="h-[10rem]">
       {slides.map((img, indx) => {
         return (
           indx === current && (
@@ -100,6 +101,8 @@ const HomePageCarousel = () => {
           )
         );
       })}
+
+      </div>
     </div>
   );
 };
