@@ -33,47 +33,17 @@ const LoginComponent = () => {
   const loginwithgoogle = async () => {
     try {
       dispatch(signInStart());
-  
+
       // Step 1: Redirect the user to Google login
       window.location.href = "http://localhost:8000/api/v1/auth/google";
-  
-      // Step 2: Poll for the callback response or set up an event listener
-      // This assumes you have a way to capture the response after redirection
-      // You might need to handle this part differently based on how your app is set up
-  
-      // Here we simulate checking for the result after redirect
-      const checkLoginStatus = async () => {
-        try {
-          const response = await fetch("/api/v1/auth/google/callback", {
-            method: "GET",
-            credentials: "include",
-          });
-          const data = await response.json();
-  
-          if (!data.success) {
-            dispatch(signInFailure(data.message || "Google login failed. Please try again."));
-            return;
-          }
-  
-          // Dispatch success action with user data
-          dispatch(signInSuccess(data.user));
-  
-          // Determine redirect URL based on user information
-          const redirectUrl = data.user.isNew ? "/personalinfo" : "/dashboard";
-          router.push(redirectUrl);
-          
-        } catch (error) {
-          console.error("Error during Google login:", error);
-          dispatch(signInFailure("An unexpected error occurred."));
-        }
-      };
-  
-      // Poll or handle response after some delay or set up a way to receive the response
-      setTimeout(checkLoginStatus, 1000); // Adjust timeout as needed
-  
+
+      // Step 2: The redirection will be handled by your backend
+      // Since OAuth redirection is handled server-side and browser-based redirection to handle tokens might not be possible,
+      // you should instead handle the redirection in the callback route as shown in the backend.
+      // No need to poll or check login status manually in the frontend.
     } catch (error: any) {
       let errorMessage = "An unknown error occurred.";
-  
+
       if (error.response) {
         errorMessage = error.response.data.message || "Google login failed. Please try again.";
       } else if (error.request) {
@@ -81,52 +51,48 @@ const LoginComponent = () => {
       } else {
         errorMessage = error.message || "An unexpected error occurred.";
       }
-  
+
       console.log(errorMessage);
       dispatch(signInFailure(errorMessage));
     }
   };
-  
-  
-  
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-  
+
     // Input validation
     if (!email || !password) {
       const validationError = "Please provide both email and password.";
       dispatch(signInFailure(validationError));
       return;
     }
-  
+
     try {
       // Start sign-in process
       dispatch(signInStart());
-  
+
       let payLoad = {
         email: email,
         password: password,
       };
-  
+
       // API call to login
       const response = await axios.post("/auth/login", payLoad);
       const data = response.data;
-  
+
       if (data.success === false) {
         // Handle unsuccessful login from the server
         dispatch(signInFailure(data.message || "Login failed. Please try again."));
         return;
       }
-  
+
       const userId = data.data.id;
       router.push(`/dashboard`);
       dispatch(signInSuccess(data));
-  
     } catch (error: any) {
       // Handle different types of errors
       let errorMessage = "An unknown error occurred.";
-  
+
       if (error.response) {
         // The request was made, but the server responded with an error
         errorMessage = error.response.data.message || "Login failed. Please try again.";
@@ -137,103 +103,105 @@ const LoginComponent = () => {
         // Something else happened while making the request
         errorMessage = error.message || "An unexpected error occurred.";
       }
-  
+
       console.log(errorMessage);
       dispatch(signInFailure(errorMessage));
     }
   };
-  
 
   return (
     <div className="flex w-full h-screen font-[Public Sans]">
       {/* Left side: Form section */}
-     { loading ? <Load /> : (<div className="flex items-center justify-center w-full lg:w-1/2 bg-white">
-        <div className="w-full max-w-md px-8 py-10">
-          <div className="flex">
-            <img className="w-40 h-auto" src="logo.svg" alt="Logo" />
-          </div>
+      {loading ? (
+        <Load />
+      ) : (
+        <div className="flex items-center justify-center w-full lg:w-1/2 bg-white">
+          <div className="w-full max-w-md px-8 py-10">
+            <div className="flex">
+              <img className="w-40 h-auto" src="logo.svg" alt="Logo" />
+            </div>
 
-          <p className="mt-6 text-2xl font-semibold text-center text-black">
-            Log in to your account
-          </p>
-          <p className="mt-2 text-xs text-center text-gray-600">
-            Welcome back! Select a method to register
-          </p>
-          <a
-            onClick={loginwithgoogle}
-            className="flex items-center cursor-pointer justify-center mt-8 py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50"
-          >
-            <img src="google-icon.svg" alt="Google Icon" className="w-6 h-6 mr-2" />
-            <span className="text-sm font-medium text-gray-700">Google</span>
-          </a>
+            <p className="mt-6 text-2xl font-semibold text-center text-black">
+              Log in to your account
+            </p>
+            <p className="mt-2 text-xs text-center text-gray-600">
+              Welcome back! Select a method to register
+            </p>
+            <a
+              onClick={loginwithgoogle}
+              className="flex items-center cursor-pointer justify-center mt-8 py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50"
+            >
+              <img src="google-icon.svg" alt="Google Icon" className="w-6 h-6 mr-2" />
+              <span className="text-sm font-medium text-gray-700">Google</span>
+            </a>
 
-          <div className="flex items-center my-4">
-            <hr className="flex-grow border-gray-300" />
-            <span className="mx-2 text-xs text-gray-500">or continue with email</span>
-            <hr className="flex-grow border-gray-300" />
-          </div>
+            <div className="flex items-center my-4">
+              <hr className="flex-grow border-gray-300" />
+              <span className="mx-2 text-xs text-gray-500">or continue with email</span>
+              <hr className="flex-grow border-gray-300" />
+            </div>
 
-          <div className="relative mt-6">
-            <FaEnvelope className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-            <input
-              id="LoggingEmailAddress"
-              className="block w-full pl-10 pr-4 py-3 text-gray-700 bg-white border border-gray-300 rounded-lg focus:border-blue-400 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300"
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-
-          <div className="relative mt-4">
-            <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-            <input
-              id="loggingPassword"
-              className="block w-full pl-10 pr-4 py-3 text-gray-700 bg-white border border-gray-300 rounded-lg focus:border-blue-400 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300"
-              type={passwordVisible ? "text" : "password"} // Toggle between "text" and "password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            {passwordVisible ? (
-              <FaEyeSlash
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 cursor-pointer"
-                onClick={togglePasswordVisibility}
+            <div className="relative mt-6">
+              <FaEnvelope className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <input
+                id="LoggingEmailAddress"
+                className="block w-full pl-10 pr-4 py-3 text-gray-700 bg-white border border-gray-300 rounded-lg focus:border-blue-400 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300"
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
-            ) : (
-              <FaEye
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 cursor-pointer"
-                onClick={togglePasswordVisibility}
-              />
-            )}
-          </div>
+            </div>
 
-          {/* <div className="mt-4 text-right">
+            <div className="relative mt-4">
+              <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <input
+                id="loggingPassword"
+                className="block w-full pl-10 pr-4 py-3 text-gray-700 bg-white border border-gray-300 rounded-lg focus:border-blue-400 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300"
+                type={passwordVisible ? "text" : "password"} // Toggle between "text" and "password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              {passwordVisible ? (
+                <FaEyeSlash
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 cursor-pointer"
+                  onClick={togglePasswordVisibility}
+                />
+              ) : (
+                <FaEye
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 cursor-pointer"
+                  onClick={togglePasswordVisibility}
+                />
+              )}
+            </div>
+
+            {/* <div className="mt-4 text-right">
             <a href="#" className="text-xs text-blue-600">
               Forgot Password?
             </a>
           </div> */}
-          <p className='text-red-700 mt-5'>
-        {error ? error.toString() || 'Something went wrong!' : ''}
-      </p>
-          <div className="mt-6">
-            <button
-              onClick={handleSubmit}
-              className="w-full py-3 text-sm font-medium tracking-wide text-white bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50"
-            >
-             Log In
-            </button>
-          </div>
+            <p className="text-red-700 mt-5">
+              {error ? error.toString() || "Something went wrong!" : ""}
+            </p>
+            <div className="mt-6">
+              <button
+                onClick={handleSubmit}
+                className="w-full py-3 text-sm font-medium tracking-wide text-white bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50"
+              >
+                Log In
+              </button>
+            </div>
 
-          <div className="mt-6 text-center">
-            <a href="/signup" className="text-xs text-gray-500 no-underline">
-              Don't have an account?
-              <span className="text-blue-600 px-2 py-1 rounded">Create an account</span>
-            </a>
+            <div className="mt-6 text-center">
+              <a href="/signup" className="text-xs text-gray-500 no-underline">
+                Don't have an account?
+                <span className="text-blue-600 px-2 py-1 rounded">Create an account</span>
+              </a>
+            </div>
           </div>
-          
         </div>
-      </div>)}
+      )}
 
       {/* Right side: Image section */}
       <div className="hidden lg:flex lg:w-1/2 items-center justify-center bg-blue-600">
@@ -245,7 +213,7 @@ const LoginComponent = () => {
         >
           {/* Add any additional content or styling specific to the image section here */}
         </div>
-      </div> 
+      </div>
     </div>
   );
 };

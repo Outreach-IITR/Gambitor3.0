@@ -19,51 +19,14 @@ router.post("/auth/login",AuthController.login);
 // * Profile routes
 //router.get("/profile", authMiddleware, ProfileController.index); //Private route
 
-// Route to initiate Google OAuth2 login
-router.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
-
-// Google OAuth2 callback route
-// router.get(
-//   "/auth/google/callback",
-//   passport.authenticate("google", {
-//     failureRedirect: "http://localhost:3000/login"
-//   }),
-//   (req, res) => {
-//     const redirectUrl = req.user.isNew
-//       ? "http://localhost:3000/personalinfo"
-//       : "http://localhost:3000/dashboard";
-//     res.redirect(redirectUrl);
-//     console.log(req.user.isNew);
-//     console.log(redirectUrl)
-//   }
-// );
+router.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email", "openid"] }));
 
 router.get(
   "/auth/google/callback",
-  passport.authenticate("google", {
-    failureRedirect: "http://localhost:3000/login",
-  }),
+  passport.authenticate("google", { failureRedirect: "http://localhost:3000/login" }),
   (req, res) => {
-    if (!req.user) {
-      console.log("User is not authenticated, redirecting to login");
-      return res.redirect("http://localhost:3000/login");
-    }
-
-    req.user.success=true
-    req.user.statusCode =200
-    req.user.message = "Authenticated successfully"
-
-    const response = req.user
-
-    // Determine redirect URL
-    const redirectUrl = req.user.isNew
-      ? "http://localhost:3000/personalinfo"
-      : "http://localhost:3000/dashboard";
-
-    console.log("Redirecting to:", redirectUrl);
-
-    // Send the JSON response
-    res.status(200).json(response);
+    const email = req.user.email;
+    res.redirect(`http://localhost:3000/auth/google/callback?email=${encodeURIComponent(email)}`);
   }
 );
 

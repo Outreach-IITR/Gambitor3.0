@@ -58,47 +58,17 @@ function Home() {
   const loginwithgoogle = async () => {
     try {
       dispatch(signUpStart());
-  
+
       // Step 1: Redirect the user to Google login
       window.location.href = "http://localhost:8000/api/v1/auth/google";
-  
-      // Step 2: Poll for the callback response or set up an event listener
-      // This assumes you have a way to capture the response after redirection
-      // You might need to handle this part differently based on how your app is set up
-  
-      // Here we simulate checking for the result after redirect
-      const checkLoginStatus = async () => {
-        try {
-          const response = await fetch("/api/v1/auth/google/callback", {
-            method: "GET",
-            credentials: "include",
-          });
-          const data = await response.json();
-  
-          if (!data.success) {
-            dispatch(signUpFailure(data.message || "Google login failed. Please try again."));
-            return;
-          }
-  
-          // Dispatch success action with user data
-          dispatch(signUpSuccess(data.user));
-  
-          // Determine redirect URL based on user information
-          const redirectUrl = data.user.isNew ? "/personalinfo" : "/dashboard";
-          router.push(redirectUrl);
-          
-        } catch (error) {
-          console.error("Error during Google login:", error);
-          dispatch(signUpFailure("An unexpected error occurred."));
-        }
-      };
-  
-      // Poll or handle response after some delay or set up a way to receive the response
-      setTimeout(checkLoginStatus, 1000); // Adjust timeout as needed
-  
+
+      // Step 2: The redirection will be handled by your backend
+      // Since OAuth redirection is handled server-side and browser-based redirection to handle tokens might not be possible,
+      // you should instead handle the redirection in the callback route as shown in the backend.
+      // No need to poll or check login status manually in the frontend.
     } catch (error: any) {
       let errorMessage = "An unknown error occurred.";
-  
+
       if (error.response) {
         errorMessage = error.response.data.message || "Google login failed. Please try again.";
       } else if (error.request) {
@@ -106,11 +76,12 @@ function Home() {
       } else {
         errorMessage = error.message || "An unexpected error occurred.";
       }
-  
+
       console.log(errorMessage);
       dispatch(signUpFailure(errorMessage));
     }
   };
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     // Handle form submission logic here
