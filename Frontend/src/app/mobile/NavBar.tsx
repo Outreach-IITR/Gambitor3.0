@@ -7,6 +7,19 @@ import Cross from './assets/Navbar/cross.svg'
 import Box from './assets/Navbar/box.svg'
 import Toggler from './assets/Navbar/toggler.svg'
 import Link from 'next/link';
+import { useDispatch,useSelector} from "react-redux";
+import axios from "../https/api"
+import {useRouter} from 'next/navigation'
+import { deleteUserFailure,deleteUserStart,deleteUserSuccess } from "@/redux/user/userSlice";
+
+interface UserState {
+  currentUser: any;
+  loading: boolean;
+  error: boolean | string;
+}
+interface RootState {
+  user: UserState
+}
 
 interface abc{
     text:string,
@@ -35,10 +48,24 @@ function Buttons({text, ico , path,onClick }:abc){
 export default function Navbar() {
     const [isTogglerVisible, setIsTogglerVisible] = useState(Toggler);
     const [modal, setModal] = useState(false);
-
-    const handleLogoutClick = ()=>{
-        
-    }
+    const dispatch = useDispatch();
+    const router = useRouter();
+    const user = useSelector(((state:RootState) => state.user.currentUser))
+    console.log(user)
+    const handleLogoutClick = async (e: any) => {
+        try{
+            dispatch(deleteUserStart())
+            const response = axios.get('/logout');
+            console.log(response)
+            console.log('User Logged Out Successfully');
+            dispatch(deleteUserSuccess());
+            console.log('User Logged Out Successfully');
+            router.push('/');
+        }catch(error)
+        {
+            deleteUserFailure(error);
+        }
+      };
 
     function childClick(event:any) {
         event.stopPropagation();
@@ -93,7 +120,7 @@ export default function Navbar() {
                 <Image src="/chest.svg" alt="" height={250} width={347} onClick={childClick}></Image>
             </div>
             }
-            {isTogglerVisible==Cross &&
+            {isTogglerVisible==Cross && user &&
                 <div className="lg:hidden fixed top-0 right-0 w-[250px] h-[213px] rounded-bl-[8px] border-[1px] z-[20] border-[#222934] bg-[#222934]">
                     <div className="w-full h-[10vh] bg-white rounded-br-[8px] mb-[10px] rounded-bl-[8px] relative flex justify-end px-5 items-center">
                     <Image  src={Box} alt="Box" className="mr-1 h-16 w-16  " onClick={toggleModal} />    
@@ -104,8 +131,8 @@ export default function Navbar() {
                         </div> */}
                     </div>
                         <ul onClick={()=>(setIsTogglerVisible(Toggler))} className="mx-[10px]">
-                            {pages.map(({text, ico, path})=>(
-                                <Buttons key={text} text={text} ico={ico} path={path}/>
+                            {pages.map(({text, ico, path,onClick})=>(
+                                <Buttons key={text} text={text} ico={ico} path={path} onClick={onClick}/>
                             ))}
                         </ul>
                     

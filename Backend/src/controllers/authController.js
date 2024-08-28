@@ -142,7 +142,8 @@ class AuthController {
         where: { id: userId },
         data: data,
       });
-     res.json(updatedUser);
+      const response = new ApiResponse(200, {...updatedUser }, "User updated successfully");
+      return res.status(200).json(response);
     } catch (error) {
       if (error instanceof errors.E_VALIDATION_ERROR) {
         throw new ApiError(400, "Validation Error", error.messages);

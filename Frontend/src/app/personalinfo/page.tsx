@@ -55,7 +55,9 @@ const PersonalInfoComponent = () => {
   const dispatch = useDispatch()
   const router = useRouter()
   const contactNumber = useSelector((state:RootState) => state.signUp.phoneNumber) || '';
-  const id = useSelector((state:RootState) => state.signUp.userId) ;
+  const user = useSelector((state:RootState) => state.user.currentUser.data) ;
+  console.log(user);
+  const id = useSelector((state:RootState) => state.signUp.userId) || user.id;
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
     lastName: "",
@@ -92,8 +94,9 @@ const PersonalInfoComponent = () => {
         const name = formData.firstName+" " +formData.lastName
         const response = await axios.post(`/user/${id}/details`,{ formData ,name:name,contactNumber:contactNumber });
         console.log(response.data);
+        dispatch(signInSuccess(response.data))
         dispatch(resetSignUpState());
-        router.push('/login')
+        router.push('/dashboard')
     } catch(error)
     {
        console.log(error);
