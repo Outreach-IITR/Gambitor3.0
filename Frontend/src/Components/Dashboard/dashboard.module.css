@@ -1,0 +1,31 @@
+.buttonsContainer {
+    display: flex;
+    justify-content: center;
+    margin: 1rem; /* Space below buttons */
+  }
+  
+  .tableButton {
+    background-color: #4a90e2; /* Blue background */
+    border: none; /* Remove default border */
+    color: white; /* White text color */
+    padding: 0.5rem 1rem; /* Padding for the button */
+    border-radius: 0.5rem; /* Rounded corners */
+    font-size: 1rem; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    margin: 0 0.5rem; /* Space between buttons */
+    transition: background-color 0.3s ease; /* Smooth background color transition */
+  }
+  
+  .tableButton:hover {
+    background-color: #357abd; /* Darker blue on hover */
+  }
+  
+  .tableButton:active {
+    background-color: #2a5c8c; /* Even darker blue on active */
+  }
+  
+  .tableButton:focus {
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.5); /* Custom focus outline */
+  }
+  

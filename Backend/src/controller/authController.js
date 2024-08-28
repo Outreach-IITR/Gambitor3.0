@@ -67,12 +67,13 @@ const login = asyncHandler(async (req, res, next) => {
         const user = await prisma.user.findUnique({
           where: { email },
         });
+        console.log(user)
         if (!user) {
             throw new ApiError(401,'Incorrect email or password');
         }
 
         // Comparing passwords
-        const passwordMatch = await bcrypt.compare(password, user.password);
+        const passwordMatch =bcrypt.compare(password, user.password);
         console.log(passwordMatch)
 
         if (!passwordMatch) {

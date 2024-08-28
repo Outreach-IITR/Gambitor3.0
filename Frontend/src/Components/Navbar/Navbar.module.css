@@ -9,3 +9,23 @@
   flex-direction: row;
   justify-content: space-between;
 }
+
+.Navbar button {
+  background-color: #4b5d73;
+  color: #dde2ff;
+  border: none;
+  padding: 0.5em 1em;
+  margin: 0.75em 0.5em;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.Navbar button:hover {
+  background-color: #596d84;
+}
+
+.Navbar button h1 {
+  margin: 0;
+  font-size: 1em;
+}

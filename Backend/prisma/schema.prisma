@@ -15,21 +15,33 @@ model Otpvalue {
   expiresAt DateTime
 }
 
+model Phoneotp {
+  id          Int       @id @default(autoincrement())
+  phoneNumber String
+  otp         String
+  createdAt   DateTime  @default(now())
+  expiresAt   DateTime  
+}
+
+
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model User {
   id            Int      @id @default(autoincrement())
   email         String   @unique @db.VarChar(191)
   password      String?
-  name          String
-  contactNumber String
-  category      Category
+  name          String?
+  contactNumber String?
+  category      Category?
   referralCode  String?
-  schoolName    String
+  schoolName    String?
+  state         String?  
   role          Role     @default(PARTICIPANT)
   profile       String?
   googleId      String?  @unique
   createdAt     DateTime @default(now())
-  updatedAt     DateTime
+  updatedAt     DateTime @updatedAt
+  myReferral    String?  @unique
+  referralCount Int      @default(0)
 }
 
 enum Category {
@@ -42,4 +54,5 @@ enum Category {
 enum Role {
   PARTICIPANT
   SCHOOL_AMBASSADOR
+  ADMIN
 }
