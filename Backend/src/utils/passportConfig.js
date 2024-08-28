@@ -118,7 +118,7 @@ async function findOrCreateUser(profile) {
       where: { email: profile.emails[0].value },
       data: { googleId: profile.id },
     });
-    isNew = true;
+    isNew =false;
   } else {
     isNew = false;
   }

@@ -21,14 +21,20 @@ const GoogleCallback = () => {
       }
 
       try {
-        // Make GET request to fetch user details using email
         const response = await axios.get(`/user/getUSer?email=${encodeURIComponent(email)}`);
         const data = response.data;
         console.log("here issssssssssssssss the data", data)
 
         if (data.success) {
-          dispatch(signInSuccess(data)); // Assuming `data.user` contains user details
-          router.push("/dashboard"); // Redirect to the dashboard or any other page
+          dispatch(signInSuccess(data)); 
+          //redirect to the required page
+          if(data.data?.contactNumber) {
+            router.push("/dashboard");
+          }
+          else{
+            router.push("/personalinfo")
+          }
+          
         } else {
           dispatch(signInFailure(data.message || "Failed to fetch user details."));
           router.push("/login");
