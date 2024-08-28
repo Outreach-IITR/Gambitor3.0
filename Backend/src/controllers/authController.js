@@ -138,12 +138,39 @@ class AuthController {
       console.log(data)
       const userId = parseInt(req.params.id);
       console.log(userId);
+      const user = await prisma.user.findUnique({where :{id:userId}});
       const updatedUser = await prisma.user.update({
         where: { id: userId },
         data: data,
       });
       const response = new ApiResponse(200, {...updatedUser }, "User updated successfully");
+      const mailOptions = {
+        from: process.env.your_gmail,
+        to: user.email,
+        subject: "Registration for GambitoR Successful.",
+        text: `Hello ${req.body.name}, \n
+        Team GambitoR is delighted to inform you that you have successfully registered for GambitoR 3.0! \n  
+        Follow us on our social media handles to stay connected! \n
+        Further updates will be sent to your registered email address. \n
+        \n
+        With regards,
+        Team GambitoR.
+        `,
+      };
+
+      mailService.sendMail(mailOptions, function (err) {
+        if (err) {
+          next(new ApiError(500, err.message, [], err.stack));
+        } else {
+          res.status(201).json({
+            status: "success",
+            data: "Registration Completed Successfully!",
+          });
+        }
+      });
+
       return res.status(200).json(response);
+  
     } catch (error) {
       if (error instanceof errors.E_VALIDATION_ERROR) {
         throw new ApiError(400, "Validation Error", error.messages);

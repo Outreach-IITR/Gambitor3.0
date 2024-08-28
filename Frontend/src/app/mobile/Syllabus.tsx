@@ -26,8 +26,8 @@ export default function Syllabus() {
                 <h1 className="font-cooper w-screen absolute text-[32px] text-center top-[120px] text-white font-normal leading-[36.7px]">SYLLABUS</h1>
                 <div>
                     <div className="absolute top-[200px] left-[10%] flex flex-row justify-between w-[80%]">
-                        <div onClick={() => showPara('IX')} className="cursor-pointer w-[70px]  text-center h-[36px] flex flex-row justify-center items-center border-[3px] rounded-[12px] border-[#013369] hover:border-[#FFE909] hover:bg-[#FFF8DD] hover:text-[#003874]">IX & X</div>
-                        <div onClick={() => showPara('X')} className="cursor-pointer w-[70px]  text-center h-[36px] flex flex-row justify-center items-center border-[3px] rounded-[12px] border-[#013369] hover:border-[#FFE909] hover:bg-[#FFF8DD] hover:text-[#003874]">IX & X</div>
+                        <div onClick={() => showPara('IX')} className="cursor-pointer w-[70px]  text-center h-[36px] flex flex-row justify-center items-center border-[3px] rounded-[12px] border-[#013369] hover:border-[#FFE909] hover:bg-[#FFF8DD] hover:text-[#003874]">IX</div>
+                        <div onClick={() => showPara('X')} className="cursor-pointer w-[70px]  text-center h-[36px] flex flex-row justify-center items-center border-[3px] rounded-[12px] border-[#013369] hover:border-[#FFE909] hover:bg-[#FFF8DD] hover:text-[#003874]">X</div>
                         <div onClick={() => showPara('XI')} className="cursor-pointer w-[70px]  text-center h-[36px] flex flex-row justify-center items-center border-[3px] rounded-[12px] border-[#013369] hover:border-[#FFE909] hover:bg-[#FFF8DD] hover:text-[#003874]">XI</div>
                         <div onClick={() => showPara('XII')} className="cursor-pointer w-[70px]  text-center h-[36px] flex flex-row justify-center items-center border-[3px] rounded-[12px] border-[#013369] hover:border-[#FFE909] hover:bg-[#FFF8DD] hover:text-[#003874]">XII</div>
                     </div>

@@ -93,7 +93,7 @@ function Footer() {
 
           {/* column 2 */}
           <div className="flex flex-col items-start gap-y-5 xl:gap-y-3 ">
-            <Link href="/dashboard/papers">RESOURCES</Link>
+            <Link href="/">RESOURCES</Link>
             <Link href="/about">SYLLABUS</Link>
             {/* <a href={mockPaper} target="_blank" className="hover:translate-y-[-0.1em] hover:text-blue-500">
               MOCK PAPERS

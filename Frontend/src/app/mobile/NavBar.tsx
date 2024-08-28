@@ -104,14 +104,14 @@ export default function Navbar() {
                 
                     <Image  src={Box} alt="Box" className="mr-1 h-16 w-16 relative z-50" onClick={toggleModal} />
                 
-                <Image src={isTogglerVisible} alt="Toggle Icon" onClick={toggleIcons} className="relative w-8 z-50" />
+                {user && <Image src={isTogglerVisible} alt="Toggle Icon" onClick={toggleIcons} className="relative w-8 z-50" />}
             </div>
             </div>
             {modal &&  
             <div className='fixed z-50 top-0 w-[100%] h-[100vh] bg-transparent backdrop-blur-sm  flex justify-center items-center flex-col' onClick={toggleModal}>
                 <div className="max-w-[360px] h-[370px] p-[2rem] flex flex-col justify-center items-center space-y-5" style={backgroundImageStyle} onClick={childClick}>
                     <h1 style={{fontFamily:'Cooper Black'}} className='text-[32px] leading-[37px] text-[#4C2D04] font-normal'>Register Now</h1>
-                    <p className='text-center font-overpass font-normal leading-[25.32px] text-[20px]'>Unlock 20+ mock paper and 10+ previous year papers. Get weekly questions and leaderboard and compete with your friends</p>
+                    <p className='text-center font-overpass font-normal leading-[25.32px] text-[20px]'></p>
                     <a href="/signup">
                     <button className="w-[144px] h-[36px] rounded-[12px] bg-[#4C2D04] text-[20px] leading-[23px] text-[#FEFEFE] text-center " style={{fontFamily:'Cooper Black'}}>Register</button>
                     </a>
@@ -125,10 +125,10 @@ export default function Navbar() {
                     <div className="w-full h-[10vh] bg-white rounded-br-[8px] mb-[10px] rounded-bl-[8px] relative flex justify-end px-5 items-center">
                     <Image  src={Box} alt="Box" className="mr-1 h-16 w-16  " onClick={toggleModal} />    
                     <Image src={isTogglerVisible} alt="Toggle Icon" onClick={toggleIcons} className="relative w-8 z-50" />
-                        {/* <div>
+                      <div>
                             <h1 className="font-medium leading-normal text-[14px]">{user.name}</h1>
                             <p className="font-normal text-[12px] opacity-60">{user.category}</p>
-                        </div> */}
+                    </div>
                     </div>
                         <ul onClick={()=>(setIsTogglerVisible(Toggler))} className="mx-[10px]">
                             {pages.map(({text, ico, path,onClick})=>(

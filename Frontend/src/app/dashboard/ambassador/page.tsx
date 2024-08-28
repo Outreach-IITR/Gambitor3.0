@@ -27,7 +27,7 @@ export default function Ambassador(){
 
         <div className="h-[calc(100%-100px)] px-[100px] flex flex-col  pb-[20px]" >
             <div className="flex flex-col items-center">
-                    <div className="w-[520px] h-[82px] rounded-[12px] bg-[#0452D8] text-center flex items-center justify-center">
+                    <div className="w-[370px] h-[82px] rounded-[12px] bg-[#0452D8] text-center flex items-center justify-center">
                         <h1 className="font-bold text-[42px] leading-[50px] text-white">{user.myReferral}</h1>
                     </div>
                     <div className="w-[726px]">
