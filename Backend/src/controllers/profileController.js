@@ -142,6 +142,36 @@ class ProfileController {
     }
   });
 
+  static getUserByEmail= asyncHandler(async (req, res) => {
+    try {
+      console.log('Handling getUserByEmail request');
+      const { email } = req.query;
+
+      if (!email) {
+        throw new ApiError(400, "Email query parameter is required.");
+      }
+
+      // Find user by email
+      const user = await prisma.user.findUnique({
+        where: { email: email },
+      });
+
+      if (!user) {
+        throw new ApiError(404, "User not found.");
+      }
+
+      // Respond with user details
+      const response = new ApiResponse(200, { ...user }, "User fetched successfully.");
+      return res.status(200).json(response);
+    } catch (error) {
+      if (error instanceof ApiError) {
+        return res.status(error.statusCode).json(new ApiResponse(error.statusCode, null, error.message));
+      }
+      console.error("Error fetching user by email:", error);
+      return res.status(500).json(new ApiResponse(500, null, "Something went wrong while fetching user."));
+    }
+  })
+
   static async destroy() {}
 }
 
