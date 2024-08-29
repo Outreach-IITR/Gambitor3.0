@@ -8,33 +8,35 @@ function NavButton({text}:any){
     return (
        
         
-        <button id={`b${text}`}  className="border border-blue-500 rounded xl:w-[261px] w-[20vw] text-[20px] leading-[25px] text-white font-bold h-[60px] cursor-pointer">{text}</button>
+        <button id={`b${text}`}  className="border border-blue-500 rounded xl:w-[261px] w-[20vw] text-[20px] leading-[25px] text-white font-bold h-[60px] cursor-pointer hover:bg-[#2B40B0]">{text}</button>
        
     );
 }
 
 
 export default function Syllabus(){
-  const [nav, setNav] = useState("bCLASS 9");
-  useEffect(()=>{
-      document.querySelector('.special2')?.classList.remove('special2');
-      document.getElementById(nav)?.classList.add('special2')
-  },[nav])
-    const buttons = ['CLASS 9','CLASS 10','CLASS 11','CLASS 12']
-    const [std, setStd] = useState("CLASS 9")
+  
+  
+    const buttons = [{class:'CLASS 9',pdf:"class9.pdf"},
+                    {class:'CLASS 10',pdf:"class10.pdf"},
+                    {class:'CLASS 11',pdf:"class11.pdf"},
+                    {class:'CLASS 12',pdf:"class12.pdf"}]
+    
     return(
-        <section className="text-white relative z-[1] my-[3rem] mb-[5rem] flex flex-col text-center max-w-[1380px] mx-auto" id="SYLLABUS">
+        <section className="text-white relative z-[1] my-[3rem] mb-[10vw] flex flex-col text-center max-w-[1380px] mx-auto" id="SYLLABUS">
             <h1 className ="text-[3rem] my-[4rem] font-bold text-center leading-[60px] font-overpass" >SYLLABUS</h1>
             <div>
               <ul className="flex flex-row justify-between">
-                {buttons.map((text)=>(
-                    <li onClick={()=>{setStd(text); setNav(`b${text}`)}}  key={text}><NavButton text={text}/></li>
+                {buttons.map((object, index)=>(
+                  <a href={object.pdf} download >
+                    <li  key={index}><NavButton text={object.class}/></li>
+                  </a>
                 ))}
              </ul>
 
             </div>
             
-            {std === 'CLASS 9' && (
+            {/* {std === 'CLASS 9' && (
         <div className="mt-4 px-[15vw] pt-[2vw] text-white text-2 rounded text-[20px] font-overpass leading-[25px] font-medium   ">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis tempora, vitae harum amet voluptas quisquam perspiciatis ipsam eligendi, soluta fugiat asperiores reiciendis, mollitia tenetur quasi maiores reprehenderit adipisci vel delectus accusamus atque pariatur culpa necessitatibus obcaecati. Saepe fuga rem ea cum recusandae neque soluta molestiae, reiciendis tempora amet non dolore impedit iusto distinctio sapiente ut molestias eveniet ipsum harum? Porro ex tempora cumque alias? Labore voluptatibus quae, aliquid atque, harum debitis dolore voluptate ea odio, maiores laboriosam laborum aspernatur tenetur eaque laudantium dolor a impedit provident magni accusamus? Consequatur, nostrum ratione praesentium distinctio iste saepe illum officiis voluptates mollitia fuga.
         </div>
@@ -53,7 +55,7 @@ export default function Syllabus(){
         <div className="mt-4 px-[15vw] pt-[2vw] text-white text-2 rounded text-[20px] font-overpass leading-[25px] font-medium">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos perspiciatis facilis, sunt cum perferendis, vitae corporis veritatis eius non hic quas consequuntur repellat amet dolores dignissimos, facere temporibus blanditiis eaque ipsa laboriosam. Aliquid, cupiditate, molestias quibusdam ut dicta optio voluptate sed delectus labore culpa voluptatibus nisi neque quo nam dolores eius? Pariatur, qui molestiae totam optio exercitationem a eaque. Esse fuga praesentium quaerat, cupiditate eveniet illo error. Odio expedita sunt deserunt atque vel velit nostrum qui dolorem. Illo reiciendis, delectus, enim qui tempora eligendi neque eius pariatur vitae aliquid atque, sunt ipsum similique laborum asperiores perspiciatis? Repellendus consectetur eaque sint.
         </div>
-      )}
+      )} */}
             
         </section>
     )

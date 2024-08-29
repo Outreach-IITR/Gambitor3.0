@@ -10,7 +10,7 @@ const Categories = () => {
 
 
     return (
-        <div className="text-white relative z-10 flex flex-col space-y-20 max-w-[1380px] mx-auto" id="CATEGORIES">
+        <div className="text-white relative z-10 flex flex-col py-[10vw] space-y-20 max-w-[1380px] mx-auto" id="CATEGORIES">
             <div className="mb-12 text-center">
                 <h1 className="text-[3rem] mb-[4rem] font-bold text-center leading-[60px] font-overpass">CATEGORIES</h1>
                 <div className="grid xl:grid-cols-[1fr_1fr_1fr_1fr] xl:grid-rows-[0fr] grid-cols-[1fr_1fr] grid-rows-[1fr_1fr] gap-4" 

@@ -33,7 +33,7 @@ export default function Home() {
         <div className="bg-gradient-to-b from-indigo-600 to-[#1d1d7a] overflow-hidden ">
           
 
-          <img alt="" src="/homebg.svg" className="absolute xl:-top-[15vw] w-[100%]"></img>
+          <Image alt="" src="/homebg.svg" height={200} width={200} className="absolute  2xl:-top-[15vw] w-[100%]"></Image>
           <div className="px-10">
             <Header></Header>
             <AboutSection/>
@@ -55,7 +55,7 @@ export default function Home() {
             <Syllabus/>
             <Image src="/wave2.png" height={500} width={500} alt="" className="absolute z-1 left-0 w-full"/>
             <Timeline/>
-        
+            <Image src="/wave1.svg" height={500} width={500} alt="" className="w-full absolute left-0 z-1 mt-[20rem]"/>
             <HomePageCarousel/>
             </div>
         

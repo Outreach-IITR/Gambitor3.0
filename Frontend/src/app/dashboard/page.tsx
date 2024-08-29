@@ -18,13 +18,13 @@ export default function Dashboard(){
             
                 
                 
-        <PrivateRoute>        
+        // <PrivateRoute>        
             <div className="">
              
                <Home/>
        
             </div>
-        </PrivateRoute>    
+        
      
     )
 }

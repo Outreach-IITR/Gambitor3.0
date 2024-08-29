@@ -41,7 +41,7 @@ function Footer() {
     <footer className="" style={backgroundImageStyle} >
       
       <div className="flex justify-between flex-col sm:flex-row lg:mt-[12rem] py-[12rem] space-y-20 md:space-y-0 lg:px-[7rem] px-4 md:px-[4rem]">
-          <div className="flex items-center justify-center text-white space-x-10">
+          <div className="flex relative top-10 sm:top-0 items-center justify-center text-white space-x-10">
             <Image className="w-[150px] lg:w-[250px]" width={250} height={250}  src="logo2.svg" alt="Gambtor Logo" />
             <div className="flex flex-col sm:hidden items-start gap-y-5  xl:gap-y-3 xl:text-[24px] ">
             <Link href="/about">FOLLOW US</Link>
@@ -82,7 +82,7 @@ function Footer() {
           </div>
           </div>
         
-        <div className="flex flex-row justify-center items-center gap-6 lg:gap-[6rem] font-jost font-normal  lg:text-base leading-1.5 text-center tracking-wide text-white xl:text-left xl:text-[24px] xl:leading-normal">
+        <div className="flex flex-row relative top-10 sm:top-0 justify-center items-center gap-6 lg:gap-[6rem] font-jost font-normal  lg:text-base leading-1.5 text-center tracking-wide text-white xl:text-left xl:text-[24px] xl:leading-normal">
           {/* column 1 */}
           <div className="flex flex-col items-start gap-y-5 xl:gap-y-3 ">
             <Link href="/about">ABOUT</Link>
@@ -94,12 +94,12 @@ function Footer() {
           {/* column 2 */}
           <div className="flex flex-col items-start gap-y-5 xl:gap-y-3 ">
             <Link href="/">RESOURCES</Link>
-            <Link href="/about">SYLLABUS</Link>
+            <Link href="#SYLLABUS">SYLLABUS</Link>
             {/* <a href={mockPaper} target="_blank" className="hover:translate-y-[-0.1em] hover:text-blue-500">
               MOCK PAPERS
             </a> */}
             <Link href="/dashboard/papers">PRACTICE PAPERS</Link>
-            <Link href="/about">FAQs</Link>
+            <a href="FAQs.pdf" download>FAQs</a>
           </div>
 
           {/* column 2 */}

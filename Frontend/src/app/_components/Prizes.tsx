@@ -8,7 +8,7 @@ import thirdPrize from "../../../public/thirdPrize.svg";
 function Prizes(){
 
     return (
-        <section id='PRIZES' className=" relative z-[2] flex flex-col items-center justify-center pt-[5rem]">
+        <section id='PRIZES' className=" relative z-[2] flex flex-col items-center justify-center py-[5vw]">
             <h1 className="text-[3rem] text-white my-[4rem] font-bold text-center leading-[60px] font-overpass">PRIZES</h1>
             <div className="flex">
                 <div className="mr-[5rem] flex flex-col items-center">
