@@ -58,10 +58,10 @@ export default function Sidebar(){
   }
 
     const pages = [{text:"Dashboard", ico:'bx bxs-home-alt-2', path:"/dashboard"}, 
-                   {text:"Updates", ico:"bx bxs-bell", path:"/dashboard/updates"}, 
+                   {text:"Updates", ico:"bx bxs-bell", path:"/dashboard/"}, 
                    {text:"Practice Papers", ico:"bx bx-file", path:"/dashboard/papers"}, 
                    {text:"School Ambassador",ico:"bx bx-medal", path:"/dashboard/ambassador",onClick: handleAmbassadorClick}, 
-                   {text:"Help Section", ico:"bx bxs-help-circle", path:"/dashboard/help"}, 
+                   {text:"Help Section", ico:"bx bxs-help-circle", path:"/dashboard/"}, 
                    {text:"Settings", ico:"bx bxs-cog", path:"/dashboard/settings"}]
 
     return(

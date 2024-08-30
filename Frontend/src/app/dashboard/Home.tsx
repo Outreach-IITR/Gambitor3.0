@@ -19,28 +19,24 @@ export default function Home(){
    const router = useRouter();
     const updates = ["Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quasi",
         "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quasi,",
-        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quasi, helu my frnd",
-        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quasi, ",
-        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quasi,",
-        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quasi,",
          
 ]
-// const user = useSelector(((state:RootState) => state.user.currentUser.data))
-// console.log(user)
-// const dispatch = useDispatch()
+const user = useSelector(((state:RootState) => state.user.currentUser.data))
+console.log(user)
+const dispatch = useDispatch()
 const handleClick = async (e: any) => {
-//     try {
-//         dispatch(ambassadorStart())
-//       const response = await axios.get(`user/school-ambassador/${user.id}`)
-//       console.log(response.data);
-//       dispatch(ambassadorSuccess(response.data))
-//       router.push('/dashboard/ambassador')
+    try {
+        dispatch(ambassadorStart())
+      const response = await axios.get(`user/school-ambassador/${user.id}`)
+      console.log(response.data);
+      dispatch(ambassadorSuccess(response.data))
+      router.push('/dashboard/ambassador')
 
-//     } catch (error) {
-//       console.log(error);
-//       //error to be handled in a better way
-//       dispatch(ambassadorFailure('Error occured'))
-// };
+    } catch (error) {
+      console.log(error);
+      //error to be handled in a better way
+      dispatch(ambassadorFailure('Error occured'))
+};
 }
 
 
@@ -55,7 +51,7 @@ const button= "w-[144px] font-bold sm:text-[20px] text-[14px] leading-[16.45px] 
                     <div className="bg-[#0452D8] xl:mr-10 mb-10 rounded-[20px] h-[232px] sm:h-[320px] pb-7 ">
                         <h1 className={heading}>Updates</h1>
                         
-                        <div className="overflow-y-scroll h-[80%] text-justify custom-scrollbar">
+                        <div className="h-[80%] text-justify custom-scrollbar">
                         <ul className="flex flex-col list-inside list-disc">
                             {updates.map((updates, key)=>(
                                 <li key={key} className={key%2==0?'bg-blue-600 sm:py-4 py-1 px-5 sm:px-10 h-[7rem]':'bg-blue-500 h-[7rem] px-5 py-1 sm:py-4 sm:px-10'}>{updates}</li>
@@ -73,7 +69,7 @@ const button= "w-[144px] font-bold sm:text-[20px] text-[14px] leading-[16.45px] 
                         <div className="flex justify-between sm:pt-4 h-[calc(100%-33px-28px)]">
                             <div className="flex flex-col justify-between">
                                 <p className={desc}>Practice more than 10 mock papers and become number 1 among more than 20000 students</p>
-                                <button className={button}>Practice Now</button>
+                                <a href="/dashboard/papers"><button className={button}>Practice Now</button></a>
                             </div>
                             
 

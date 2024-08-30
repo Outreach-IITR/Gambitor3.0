@@ -58,16 +58,6 @@ export default function Home() {
             <Image src="/wave1.svg" height={500} width={500} alt="" className="w-full absolute left-0 z-1 mt-[20rem]"/>
             <HomePageCarousel/>
             </div>
-        
-     
-     
-    
-      
-      
-      
-      
-      
-        
 
       
             <Footer/>
