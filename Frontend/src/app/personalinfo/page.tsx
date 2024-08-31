@@ -70,8 +70,7 @@ const PersonalInfoComponent = () => {
     schoolName: "",
     state: "",
     referralCode: "",
-  });
-
+  });  
   //const isVerified = useSelector((state: RootState) => state.signUp.phoneIsVerified);
   const phoneNumber = useSelector((state: RootState) => state.signUp.phoneNumber);
   const loading = useSelector((state: RootState) => state.signUp.loading);
@@ -408,7 +407,7 @@ const PersonalInfoComponent = () => {
               </div>
               <div className="text-gray-600 flex justify-end">
                 <span className="mr-1">Having troubles? </span>
-                <a href="#" className="text-[#005EFE]">
+                <a href="https://chat.whatsapp.com/FrpleRIKfO1AYEXJ807MDL" className="text-[#005EFE]">
                   Get help
                 </a>
               </div>
