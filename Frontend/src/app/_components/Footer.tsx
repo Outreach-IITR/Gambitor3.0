@@ -86,7 +86,7 @@ function Footer() {
           {/* column 1 */}
           <div className="flex flex-col items-start gap-y-5 xl:gap-y-3 ">
             <Link href="/">ABOUT</Link>
-            <Link href="/events">EVENTS</Link>
+            <Link href="/">EVENTS</Link>
             <div className="relative group inline-block">
               <Link href="tel:+918130109526" className="text-white">
                 CONTACTS
@@ -96,17 +96,17 @@ function Footer() {
               </div>
             </div>
 
-            <Link href="/">INITATORS</Link>
+            {/* <Link href="/">INITATORS</Link> */}
           </div>
 
           {/* column 2 */}
           <div className="flex flex-col items-start gap-y-5 xl:gap-y-3 ">
-            <Link href="/">RESOURCES</Link>
+            <Link href="#SYLLABUS">RESOURCES</Link>
             <Link href="#SYLLABUS">SYLLABUS</Link>
             {/* <a href={mockPaper} target="_blank" className="hover:translate-y-[-0.1em] hover:text-blue-500">
               MOCK PAPERS
             </a> */}
-            <Link href="">PRACTICE PAPERS</Link>
+            {/* <Link href="">PRACTICE PAPERS</Link> */}
             <a href="FAQs.pdf" download>FAQs</a>
           </div>
 

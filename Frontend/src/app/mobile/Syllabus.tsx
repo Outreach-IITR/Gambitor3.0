@@ -23,7 +23,7 @@ export default function Syllabus() {
             <Image src={V1} alt="" className="absolute left-0 top-[12%] w-full "/>
             <Image src={W1} alt="" className="absolute left-[3%] top-[40%] " />
             <div className="flex flex-col items-center">
-                <h1 className="font-cooper my-10 text-[32px] text-center text-white font-normal leading-[36.7px]">SYLLABUS</h1>
+                <h1 className="font-cooper my-10 text-[32px] text-center text-white font-normal leading-[36.7px]" style={{fontFamily:'Cooper Black'}}>SYLLABUS</h1>
                 <div className='w-[80%]'>
                     <div className=" w-full relative z-20 my-10  flex flex-row justify-between">
                         <a href="class9.pdf" download>
@@ -56,7 +56,7 @@ export default function Syllabus() {
                     )}
                 </div> */}
             </div>
-            <h1 className="font-cooper my-10 mt-20 w-full  text-[32px] text-center top-[720px] text-white font-normal leading-[36.7px]">TIMELINE MAP</h1>
+            <h1 className="font-cooper my-10 mt-20 w-full  text-[32px] text-center top-[720px] text-white font-normal leading-[36.7px]" style={{fontFamily:'Cooper Black'}}>TIMELINE MAP</h1>
             <div className=" w-full flex justify-center items-center">
             <Image src={Timemap} alt="" className="h-[324.99px] my-10 w-[329px] "/>   
 

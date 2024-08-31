@@ -98,7 +98,7 @@ export default function Navbar() {
             <div>
             <div className="bg-transparent backdrop-blur-md h-[10vh] w-[100%] flex justify-between z-20 items-center pl-4 fixed top-0">
             <div>
-                <Image src={Logo} alt="Logo" className="h-12" />
+                <a href="/"><Image src={Logo} alt="Logo" className="h-12" /></a>
             </div>
             <div className="flex flex-row mr-6 mt-1 relative z-[50]">
                 

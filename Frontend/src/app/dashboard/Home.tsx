@@ -51,12 +51,11 @@ const button= "w-[144px] font-bold sm:text-[20px] text-[14px] leading-[16.45px] 
                     <div className="bg-[#0452D8] xl:mr-10 mb-10 rounded-[20px] h-[232px] sm:h-[320px] pb-7 ">
                         <h1 className={heading}>Updates</h1>
                         
-                        <div className="h-[80%] text-justify custom-scrollbar">
+                        <div className="h-[calc(100%-33px-28px)] text-justify flex ">
                         <ul className="flex flex-col list-inside list-disc">
                             {updates.map((updates, key)=>(
                                 <li key={key} className={key%2==0?'bg-blue-600 sm:py-4 py-1 px-5 sm:px-10 h-[7rem]':'bg-blue-500 h-[7rem] px-5 py-1 sm:py-4 sm:px-10'}>{updates}</li>
                             )
-
                             )}
                         </ul>
                        
@@ -101,7 +100,7 @@ const button= "w-[144px] font-bold sm:text-[20px] text-[14px] leading-[16.45px] 
                     <div className="flex justify-between sm:pt-4 h-[calc(100%-33px-28px)]">
                             <div className="flex flex-col justify-between">
                                 <p className={desc}>Get in contact with the team GambitoR and get all your doubts cleared</p>
-                                <button className={button}>Join now</button>
+                                <a href="https://whatsapp.com/channel/0029VaUzMHl5fM5bRmJVk02e"><button className={button}>Join now</button></a>
                             </div>
                             
 
@@ -116,7 +115,7 @@ const button= "w-[144px] font-bold sm:text-[20px] text-[14px] leading-[16.45px] 
                         <div className="flex flex-col justify-between h-full">                  
                         <div className="flex justify-between h-full">
                             <div className="w-[635px] flex flex-col justify-between">
-                                <p className={"font-semibold sm:text-[32px] sm:leading-[34px] my-[1rem] text-[20px] leading-[17px]"}>Become a School Ambassador and get a chance to win a free trip to IIT Roorkee</p>
+                                <p className={"font-semibold  sm:text-[24px] sm:leading-[24px] my-[1rem] text-[20px] leading-[17px]"}>Become a School Ambassador and get a chance to win a free trip to IIT Roorkee</p>
                                 <button className={button} onClick={handleClick}>Try Now</button> 
                             </div>
                             <img src="school.svg" alt="" className="relative lg:w-[250px] w-[170px]"/>

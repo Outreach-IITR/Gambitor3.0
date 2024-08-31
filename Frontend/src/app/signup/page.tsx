@@ -168,7 +168,7 @@ function Home() {
       {loading ? <Load /> : (<div className="flex items-center justify-center w-full lg:w-1/2 bg-white">
         <div className="w-full max-w-md px-8 py-10">
           <div className="flex">
-            <img className="w-40 h-auto" src="logo.svg" alt="Logo" />
+            <a href="/"><img className="w-40 h-auto" src="logo.svg" alt="Logo" /></a>
           </div>
 
           <p className="mt-6 text-2xl font-semibold text-center text-black">Create a new account</p>

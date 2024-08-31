@@ -14,7 +14,7 @@ export default function RoundDescription() {
     
     
     return (
-      <section  id="ROUNDS" className="text-white relative z-[1] mt-[10rem] max-w-[1380px] mx-auto ">
+      <section  id="ROUNDS" className="text-white relative z-[1] mt-[12rem] max-w-[1380px] mx-auto ">
 
         <div className='flex justify-center'>
 

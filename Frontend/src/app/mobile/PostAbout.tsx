@@ -16,7 +16,7 @@ function PostAbout() {
         alignItems: 'center', 
         marginTop: '10vh' 
       }}>
-        <Buttongp text="Rounds" />
+        <Buttongp text="Rounds"  />
         <Buttongp text="Categories" />
         <Buttongp text="Prizes" />
         <Buttongp text="Syllabus" />

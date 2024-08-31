@@ -24,7 +24,7 @@ export default function Prize() {
         <div className="relative bg-[#2445B5]  h-[1550px] w-full text-white mb-0 pb-0">
             {/* <Navbar></Navbar> */}
             <div className="flex flex-col items-center">
-                <h1 className="font-cooper w-screen absolute text-[32px] text-center top-[100px]  text-white font-normal leading-[36.7px] ">PRIZES</h1>
+                <h1 className="font-cooper w-screen absolute text-[32px] text-center top-[100px]  text-white font-normal leading-[36.7px] " style={{fontFamily:'Cooper Black'}}>PRIZES</h1>
                 
                 
                 <Image src={W1} alt=""  className="absolute top-[90px] left-[15%]"/>
