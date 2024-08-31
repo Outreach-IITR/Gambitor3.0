@@ -17,8 +17,9 @@ export default function Home(){
 
 
    const router = useRouter();
-    const updates = ["Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quasi",
-        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quasi,",
+    const updates = ["Exam will be conducted on 13th October." ,
+"Students registered for Areteox category kindly refer to previous year papers from the Metiox category.",
+"You can enroll as a School Ambassador now!!"
          
 ]
 const user = useSelector(((state:RootState) => state.user.currentUser.data))
