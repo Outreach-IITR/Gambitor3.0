@@ -68,7 +68,7 @@ class ProfileController {
       const lastUserWithReferral = await prisma.user.findFirst({
         where: {
           myReferral: {
-            startsWith: "GMBT2",
+            startsWith: "GMB24",
           },
         },
         orderBy: {
@@ -81,12 +81,12 @@ class ProfileController {
       if (lastUserWithReferral && lastUserWithReferral.myReferral) {
         // Extract the numeric part and increment it
         const lastReferralCode = lastUserWithReferral.myReferral;
-        const lastReferralNumber = parseInt(lastReferralCode.slice(5)); // Extract the last 5 digits
+        const lastReferralNumber = parseInt(lastReferralCode.slice(4)); // Extract the last 5 digits
         nextReferralNumber = lastReferralNumber + 1;
       }
   
       // Format the next referral number with leading zeros
-      const nextReferralCode = `GMBT2${nextReferralNumber.toString().padStart(5, '0')}`;
+      const nextReferralCode = `GMB24${nextReferralNumber.toString().padStart(4, '0')}`;
       console.log(nextReferralCode);
       //console.log(userReferralCode);
   
