@@ -119,7 +119,7 @@ const button= "w-[144px] font-bold sm:text-[20px] text-[14px] leading-[16.45px] 
                                 <p className={"font-semibold  sm:text-[24px] sm:leading-[24px] my-[1rem] text-[20px] leading-[17px]"}>Become a School Ambassador and get a chance to win a free trip to IIT Roorkee</p>
                                 <button className={button} onClick={handleClick}>Try Now</button> 
                             </div>
-                            <img src="school.svg" alt="" className="relative lg:w-[250px] w-[170px]"/>
+                            <Image  width="249" height="211" src="school.svg" alt="" className="relative lg:w-[250px] w-[170px]"/>
                         </div>
                         </div>
                     </div>

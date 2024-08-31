@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import React, { useState, Suspense } from "react";
 import { FaEnvelope, FaEye, FaEyeSlash, FaLock } from "react-icons/fa"; // Importing icons
 import { useRouter, useSearchParams } from "next/navigation";
@@ -118,7 +119,7 @@ const LoginComponent = () => {
         <div className="flex items-center justify-center w-full lg:w-1/2 bg-white">
           <div className="w-full max-w-md px-8 py-10">
             <div className="flex">
-              <a href="/"><img className="w-40 h-auto" src="logo.svg" alt="Logo" /></a>
+              <a href="/"><Image className="w-40 h-auto" src="logo.svg" alt="Logo" /></a>
             </div>
 
             <p className="mt-6 text-2xl font-semibold text-center text-black">
@@ -131,7 +132,7 @@ const LoginComponent = () => {
               onClick={loginwithgoogle}
               className="flex items-center cursor-pointer justify-center mt-8 py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50"
             >
-              <img src="google-icon.svg" alt="Google Icon" className="w-6 h-6 mr-2" />
+              <Image src="google-icon.svg" alt="Google Icon" className="w-6 h-6 mr-2" />
               <span className="text-sm font-medium text-gray-700">Google</span>
             </a>
 

@@ -19,18 +19,19 @@ export default function RoundDescription() {
         <div className='flex justify-center'>
 
          <h1 className="text-[3rem] mt-[4rem] font-bold text-center leading-[60px] font-overpass">ROUNDS</h1>
-         <img alt='' src="bubble3"/>
+         <Image  width={34} height={60} alt='' src="bubble3.svg"/>
         </div>
         <div >
 
           <div className="flex justify-between items-center">
             <div className="hidden lg:block">
-              <img alt='' src="whale.svg" className='w-[100%] relative right-[20rem]'></img>
+              <Image alt='' src="whale.svg" className='w-[100%] relative right-[20rem]' width={577} // Width from SVG dimensions
+        height={501} ></Image>
             </div>
           <div className="w-[100%] lg:w-1/2">
             <div className='flex'>
               <h1 className="text-[36px] my-2 font-semibold leading-[45px]">INCEPTION</h1>
-              <img alt='' className='ml-[10px]' src="bubble1.svg"/>
+              <Image alt=''  className='ml-[10px]' width={44} height={45} src="bubble1.svg"/>
             </div>
             
             <p className="text-[20px] font-overpass leading-[25px] font-medium text-justify">
@@ -53,7 +54,7 @@ export default function RoundDescription() {
           <div className="w-full lg:w-1/2 pt-[10rem]">
             <div className="flex">
               <h1 className="text-[36px] font-semibold leading-[45px]">PINNACLE</h1>
-              <img alt='' className='ml-[10px]' src="bubble3.svg"/>
+              <Image alt='' width={34} height={60} className='ml-[10px]' src="bubble3.svg"/>
             </div>
             <p className="text-[20px] font-overpass leading-[25px] font-medium text-justify">
             When you have cleared the depths for the Inception round, we 
@@ -68,8 +69,8 @@ export default function RoundDescription() {
             </p>
           </div>
           <div className='lg:flex justify-center items-center hidden'>
-            <img alt='' src="/sharks.svg" className='pl-[5rem] w-[100%] '></img>
-            <img alt='' className='ml-[10px]' src="bubble4.svg"/>
+            <Image alt='' width="616" height="701" src="/sharks.svg" className='pl-[5rem] w-[100%] '></Image>
+            <Image alt='' width="44" height="119" className='ml-[10px]' src="bubble4.svg"/>
           </div>
         </div>
         </div>

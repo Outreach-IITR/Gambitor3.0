@@ -28,9 +28,11 @@ export default function Syllabus(){
             <div>
               <ul className="flex flex-row justify-between">
                 {buttons.map((object, index)=>(
-                  <a href={object.pdf} download >
-                    <li  key={index}><NavButton text={object.class}/></li>
-                  </a>
+                  <li key={index}> {/* Add key prop here */}
+                    <a href={object.pdf} download>
+                      <NavButton text={object.class} />
+                    </a>
+                  </li>
                 ))}
              </ul>
 
