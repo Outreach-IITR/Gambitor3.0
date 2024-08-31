@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function AboutSection(){
     return(
-        <div className="flex flex-col lg:justify-between lg:text-black text-white lg:flex-row relative z-[1] max-w-[1380px] mx-auto">
+        <section id="ABOUT" className="flex flex-col lg:justify-between lg:text-black text-white lg:flex-row relative z-[1] max-w-[1380px] mx-auto">
             <div className="lg:w-[50%] order-2 lg:order-1 flex flex-col justify-center lg:mt-0 mt-[12rem]">
                 <h1 className="text-[36px] leading-[45px] my-2 font-medium font-overpass">ABOUT US</h1>
                 <p className="text-[20px] font-overpass leading-[25px]  font-medium text-justify">
@@ -30,6 +30,6 @@ export default function AboutSection(){
             </div>
             
 
-        </div>
+        </section>
     )
 }

@@ -85,7 +85,7 @@ function Footer() {
         <div className="flex flex-row relative top-10 sm:top-0 justify-center items-center gap-6 lg:gap-[6rem] font-jost font-normal  lg:text-base leading-1.5 text-center tracking-wide text-white xl:text-left xl:text-[24px] xl:leading-normal">
           {/* column 1 */}
           <div className="flex flex-col items-start gap-y-5 xl:gap-y-3 ">
-            <Link href="/about">ABOUT</Link>
+            <Link href="#ABOUT">ABOUT</Link>
             <Link href="/events">EVENTS</Link>
             <Link href="/contacts">CONTACTS</Link>
             <Link href="/contacts">INITATORS</Link>
