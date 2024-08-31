@@ -34,9 +34,9 @@ const Mobile = () => {
       
       
       <div>
-        <Image src={bottomgp} alt="" className='-bottom-[3rem] w-full fixed'></Image>
+        <Image src={bottomgp} alt="" className='-bottom-[3rem] z-[3] w-full fixed'></Image>
       </div>
-      <Rounds></Rounds>
+      <div id="Rounds"><Rounds></Rounds></div>
       {/* <NavBar1></NavBar1> */}
       
       <Categories></Categories>
@@ -45,7 +45,7 @@ const Mobile = () => {
       
       <Syllabus></Syllabus>
       <div className='bg-[#2445B5] relative z-20'>
-        <HomePageCarousel/>
+      <HomePageCarousel/>
        <Footer></Footer>
 
       </div>

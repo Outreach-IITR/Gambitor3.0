@@ -10,7 +10,9 @@ interface ButtongpProps {
 
 export default function Buttongp({text}: ButtongpProps) {
   return (
-    <button style={{ 
+    <a href={`#${text}`}>
+
+    <button className="pointer-events-none" style={{ 
       background: "#2445B5", 
       border: '3px solid', 
       width: '208px', 
@@ -24,8 +26,10 @@ export default function Buttongp({text}: ButtongpProps) {
       display:'flex',
       justifyContent:'center',
       alignItems:'center'
-    }}>
+    }}
+    >
       {text.replace(/'/g, '&apos;')}
     </button>
+    </a>
   );
 }

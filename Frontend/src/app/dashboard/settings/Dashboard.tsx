@@ -125,7 +125,7 @@ const Personal = () => {
 
         <button
           type="submit"
-          className="bg-[#0452D8] text-white rounded-[4px] w-[25%] h-[35px] flex items-center justify-center"
+          className="bg-[#0452D8] text-white rounded-[4px] w-[25%] h-[35px] flex items-center justify-center rmd:w-[43%]"
         >
           Save Changes
         </button>

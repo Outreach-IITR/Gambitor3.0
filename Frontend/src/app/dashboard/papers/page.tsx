@@ -9,18 +9,27 @@ interface list{
 function List({desc,download, index}: list){
     return(
         <div className={index%2==0?"flex justify-between px-10 p-2 bg-gray-200":"flex bg-gray-300 justify-between px-10 p-2"}>
-            <li className="text-[16px] flex items-center text-justify font-semibold tracking-[0.5px]">
+            <li className="text-[20px] flex items-center text-justify font-semibold tracking-[0.5px] rmd:text-[16px]">
                 <h1>{desc}</h1></li>
-            <button className="text-[16px] ml-5 font-semibold leading-[51px] tracking-[0.5px] text-[#0452D8]" type="button" data-download>Download</button>
+                <a
+                className="text-[16px] ml-5 font-semibold leading-[51px] tracking-[0.5px] text-[#0452D8]"
+                href={`/${download}`}
+                download
+            >
+                Download
+            </a>
         </div>
     )
 }
 
 export default function Papers(){
 
-        const papers = [{desc:"This is the update the weekly questions will be uploaded from the next week", download: "leclerc"},
-                        {desc:"This is the update the weekly questions will be uploaded from the next week", download: "leclerc"},
-                        {desc:"This is the update the weekly questions will be uploaded from the next week", download: "leclerc"}
+        const papers = [{desc:"Metiox Inception", download: "Metiox_Inception'23.pdf"},
+            {desc:"Athenox Inception", download: "Athenox_Inception'23.pdf"},
+            {desc:"Apollox Inception", download: "Apollox_Inception'23.pdf"},
+                        {desc:"Metiox Pinnacle", download: "Metiox_Pinnacle'23.pdf"},
+                        {desc:"Athenox Pinnacle", download: "Athenox_Pinnacle'23.pdf"},
+                        {desc:"Apollox Pinnacle", download: "Apollox_Pinnacle'23.pdf"}
 
         ]
 

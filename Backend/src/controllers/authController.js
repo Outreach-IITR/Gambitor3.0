@@ -150,6 +150,13 @@ class AuthController {
         subject: "Registration for GambitoR Successful.",
         text: `Hello ${req.body.name}, \n
         Team GambitoR is delighted to inform you that you have successfully registered for GambitoR 3.0! \n  
+        These are the credentials you have entered.
+        Mobile Number: ${req.body.contactNumber} 
+        Email: ${user.email} 
+        \n
+        For Android Users: Download our app from the Play Store and log in using your Batch Code: ${user.category.toLowerCase()}. 
+
+        For iOS Users: Install Classplus app from app store, enter the org code QNMPJQ and then the Batch code: ${user.category.toLowerCase()}.
         Follow us on our social media handles to stay connected! \n
         Further updates will be sent to your registered email address. \n
         \n

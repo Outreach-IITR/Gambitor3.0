@@ -50,7 +50,7 @@ const HomePageCarousel = () => {
   };
 
   return (
-    <div className="YTCarousel relative z-1 pt-[5vw] lg:top-[10rem]" id="TESTIMONAL">
+    <div className="YTCarousel relative mt-0 z-1 pt-[5vw] lg:top-[10rem] top-[5rem] lg:bg-transparent lg:bg-[#2445B5]" id="TESTIMONIAL">
       <div className="">
         <h3 className="text-[3rem] font-bold text-center leading-[60px] font-overpass text-white my-10">IIT Roorkee at a Glance</h3>
         {/* <p>Don't just take our word, see for yourself</p> */}

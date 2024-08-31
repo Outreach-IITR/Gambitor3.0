@@ -9,14 +9,26 @@ function PostAbout() {
   const [count, setCount] = useState(0);
 
   return (
-    <div className='flex flex-col h-[852px] relative bg-[#E5F2FF] z-[-1]' >
-      <div style={{ 
+    <div className='flex flex-col h-[852px] relative bg-[#E5F2FF] z-[1]' >
+      <div className='relative z-50' style={{ 
         display: 'flex', 
         flexDirection: 'column', 
         alignItems: 'center', 
         marginTop: '10vh' 
-      }}>
-        <Buttongp text="Rounds" />
+      }}
+      onClick ={(event)=>{
+        //scroll to section
+        event.preventDefault();
+        const target = event.target as HTMLAnchorElement;
+        let id = target.getAttribute('href')?.replace('#','')
+        id = id?.toUpperCase()
+        const element = document.getElementById(String(id))
+        element?.scrollIntoView({
+            behavior: 'smooth'
+        })
+    }}
+      >
+        <Buttongp text="Rounds"  />
         <Buttongp text="Categories" />
         <Buttongp text="Prizes" />
         <Buttongp text="Syllabus" />

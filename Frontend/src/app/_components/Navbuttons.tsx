@@ -18,9 +18,9 @@ function NavButton({text}:content){
 export default function NavButtons() {
     
 
-    const buttons = ['ROUNDS','CATEGORIES','PRIZES','SYLLABUS','DATE/VENUE','TESTIMONAL']
+    const buttons = ['ROUNDS','CATEGORIES','PRIZES','SYLLABUS','DATE/VENUE','TESTIMONIAL']
     return (
-        <div className="py-[9rem] z-[1] relative hidden lg:block max-w-[1380px] mx-auto" >
+        <div className="pb-[4rem] pt-[15rem] z-[1] relative hidden lg:block max-w-[1380px] mx-auto" >
             <ul className="flex flex-row justify-between "
             onClick ={(event)=>{
                 //scroll to section

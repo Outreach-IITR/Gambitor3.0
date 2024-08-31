@@ -85,20 +85,28 @@ function Footer() {
         <div className="flex flex-row relative top-10 sm:top-0 justify-center items-center gap-6 lg:gap-[6rem] font-jost font-normal  lg:text-base leading-1.5 text-center tracking-wide text-white xl:text-left xl:text-[24px] xl:leading-normal">
           {/* column 1 */}
           <div className="flex flex-col items-start gap-y-5 xl:gap-y-3 ">
-            <Link href="#ABOUT">ABOUT</Link>
-            <Link href="/events">EVENTS</Link>
-            <Link href="/contacts">CONTACTS</Link>
-            <Link href="/contacts">INITATORS</Link>
+            <Link href="/">ABOUT</Link>
+            <Link href="/">EVENTS</Link>
+            <div className="relative group inline-block">
+              <Link href="tel:+918130109526" className="text-white">
+                CONTACTS
+              </Link>
+              <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 hidden group-hover:block bg-gray-800 text-white text-lg font-semibold p-2 rounded-md shadow-lg rmd:text-sm">
+              +918130109526
+              </div>
+            </div>
+
+            {/* <Link href="/">INITATORS</Link> */}
           </div>
 
           {/* column 2 */}
           <div className="flex flex-col items-start gap-y-5 xl:gap-y-3 ">
-            <Link href="/">RESOURCES</Link>
+            <Link href="#SYLLABUS">RESOURCES</Link>
             <Link href="#SYLLABUS">SYLLABUS</Link>
             {/* <a href={mockPaper} target="_blank" className="hover:translate-y-[-0.1em] hover:text-blue-500">
               MOCK PAPERS
             </a> */}
-            <Link href="/dashboard/papers">PRACTICE PAPERS</Link>
+            {/* <Link href="">PRACTICE PAPERS</Link> */}
             <a href="FAQs.pdf" download>FAQs</a>
           </div>
 
