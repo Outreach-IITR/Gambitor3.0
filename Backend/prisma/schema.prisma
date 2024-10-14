@@ -56,3 +56,14 @@ enum Role {
   SCHOOL_AMBASSADOR
   ADMIN
 }
+
+model Result {
+  id                  Int     @id @default(autoincrement())
+  rank                Int?
+  email               String  @unique
+  name                String?
+  category            String?
+  totalMarks          Int?
+  totalPositiveMarks  Int?
+  totalNegativeMarks  Int?
+}

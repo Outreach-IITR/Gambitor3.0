@@ -138,12 +138,15 @@ class AuthController {
       console.log(data)
       const userId = parseInt(req.params.id);
       console.log(userId);
-      const user = await prisma.user.findUnique({where :{id:userId}});
       const updatedUser = await prisma.user.update({
         where: { id: userId },
         data: data,
       });
+      const user = await prisma.user.findUnique({where :{id:userId}});
+      console.log(user.email)
+      console.log(user)
       const response = new ApiResponse(200, {...updatedUser }, "User updated successfully");
+      console.log(user.category.toLowerCase())
       const mailOptions = {
         from: process.env.your_gmail,
         to: user.email,
@@ -179,6 +182,7 @@ class AuthController {
       return res.status(200).json(response);
   
     } catch (error) {
+      console.log(error)
       if (error instanceof errors.E_VALIDATION_ERROR) {
         throw new ApiError(400, "Validation Error", error.messages);
       }

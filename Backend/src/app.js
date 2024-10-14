@@ -6,12 +6,15 @@ import globalErrorHandler from "./controllers/errorController.js";
 import cookieParser from "cookie-parser";
 import { ApiError } from "./utils/ApiError.js";
 import  passport  from "passport";
+import dotenv from "dotenv";
 
 //routes import
 import {router} from "./routes/authRoutes.js";
 import { userRouter } from "./routes/userRoutes.js";
 
 const app = express();
+
+dotenv.config();
 
 console.log('CORS_ORIGIN:', process.env.CORS_ORIGIN );
 

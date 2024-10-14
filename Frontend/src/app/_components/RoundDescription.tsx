@@ -69,7 +69,7 @@ export default function RoundDescription() {
             </p>
           </div>
           <div className='lg:flex justify-center items-center hidden'>
-            <Image alt='' width="616" height="701" src="/sharks.svg" className='pl-[5rem] w-[100%] '></Image>
+            <Image alt='' width="616" height="701" src="sharks.svg" className='pl-[5rem] w-[100%] '></Image>
             <Image alt='' width="44" height="119" className='ml-[10px]' src="bubble4.svg"/>
           </div>
         </div>

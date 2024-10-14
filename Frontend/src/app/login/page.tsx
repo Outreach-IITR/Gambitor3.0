@@ -5,9 +5,10 @@ import { FaEnvelope, FaEye, FaEyeSlash, FaLock } from "react-icons/fa"; // Impor
 import { useRouter, useSearchParams } from "next/navigation";
 import axios from "../https/api";
 import dynamic from "next/dynamic";
-import { signInStart, signInSuccess, signInFailure } from "../../redux/user/userSlice.js";
+import { signInStart, signInSuccess, signInFailure,signInStop } from "../../redux/user/userSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 import Load from "../_components/load";
+import { endSubmit } from "@/redux/user/signUpSlice";
 
 interface UserState {
   currentUser: any;
@@ -34,10 +35,9 @@ const LoginComponent = () => {
   const loginwithgoogle = async () => {
     try {
       dispatch(signInStart());
-
+      dispatch(signInStop())
       // Step 1: Redirect the user to Google login
       window.location.href = "http://localhost:8000/api/v1/auth/google";
-
       // Step 2: The redirection will be handled by your backend
       // Since OAuth redirection is handled server-side and browser-based redirection to handle tokens might not be possible,
       // you should instead handle the redirection in the callback route as shown in the backend.
