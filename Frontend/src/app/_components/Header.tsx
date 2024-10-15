@@ -40,10 +40,10 @@ export default function Header(){
             {currentUser?(<a href="/dashboard">
                     <button className="text-[20px] font-overpass leading-[25px] font-medium  border border-slate-200 rounded-xl bg-white w-[120px]  text-black  h-[45px] active:bg-slate-200 cursor-pointer">Dashboard</button>
                 </a>):(null)}
-                <a href="/signup">
+                <a href="/results">
                 <button className="text-[20px] font-overpass leading-[25px] font-medium  border border-blue-500 rounded-xl bg-white w-[100px]  text-black  h-[45px] active:bg-slate-200 cursor-pointer">Results</button>
                 </a>
-                <a href="/results">
+                <a href="/signup">
                 <button className="text-[20px] font-overpass leading-[25px] font-medium  border border-blue-500 rounded-xl bg-white w-[100px]  text-black  h-[45px] active:bg-slate-200 cursor-pointer">Sign up</button>
                 </a>
                 {!currentUser?(<a href="/login">
