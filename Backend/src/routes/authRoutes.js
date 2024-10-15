@@ -4,7 +4,10 @@ import passport from "passport";
 import "../utils/passportConfig.js";
 import errorHandler from "../controllers/errorController.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-
+import ResultController from '../controllers/resultController.js';
+import multer from 'multer';
+const storage = multer.memoryStorage(); // Store files in memory
+const upload = multer({ storage: storage }); // Create multer instance
 const router = Router();
 
 router.use(passport.initialize());
@@ -44,5 +47,7 @@ router.post("/verifyOtpPhone", AuthController.verifyOtpPhone);
 
 //info
 router.post('/user/:id/details', AuthController.updateAdditionalDetails);
-
+router.post('/upload', upload.single('file'), ResultController.upload);
+router.post('/result', ResultController.createResult);
+router.get('/myresult', ResultController.getResults);
 export { router };

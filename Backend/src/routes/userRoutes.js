@@ -9,4 +9,5 @@ userRouter.put("/:id/update", protectRoute, ProfileController.updateUser);
 userRouter.get("/school-ambassador/:id", protectRoute, ProfileController.schoolAmbassador);
 userRouter.get("/getUser", protectRoute, ProfileController.getUserByEmail);
 
+
 export { userRouter };

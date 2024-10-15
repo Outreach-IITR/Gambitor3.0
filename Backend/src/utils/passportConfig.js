@@ -81,8 +81,9 @@ passport.use(
     async (req, accessToken, refreshToken, profile, done) => {
       try {
         const { user, isNew } = await findOrCreateUser(profile);
+        if(!user)
+          return done(false,null)
         user.isNew = isNew;
-
         const payloadData = {
           id: user.id,
           email: user.email,
@@ -104,24 +105,8 @@ async function findOrCreateUser(profile) {
   let user = await prisma.user.findUnique({ where: { email: profile.emails[0].value } });
   let isNew = false;
 
-  if (!user) {
-    user = await prisma.user.create({
-      data: {
-        googleId: profile.id,
-        name: profile.displayName,
-        email: profile.emails[0].value,
-      },
-    });
-    isNew = true;
-  } else if (!user.googleId) {
-    user = await prisma.user.update({
-      where: { email: profile.emails[0].value },
-      data: { googleId: profile.id },
-    });
-    isNew =false;
-  } else {
-    isNew = false;
-  }
+  if (!user) 
+    return {user:null,isNew};
 
   return { user, isNew };
 }
