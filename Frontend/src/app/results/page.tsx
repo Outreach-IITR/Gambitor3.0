@@ -1,6 +1,6 @@
 "use client"
 // components/ContactForm.tsx
-
+import Image from 'next/image';
 import { useState } from 'react';
 import Table from "./table"
 import { defaultOverrides } from 'next/dist/server/require-hook';
@@ -29,18 +29,19 @@ const ContactForm = () => {
   };
 
   return (
-    <div>
+    <div className='bg-gradient-to-b from-indigo-600 to-[#1d1d7a]'>
+      <Image src="/wave1.svg" height={500} width={500} alt="" className="w-full absolute left-0 z-1 mt-[10rem]"/>
     { !toggle? (
 
-    <div className="flex flex-col justify-center items-center min-h-screen bg-blue-50">
+    <div className="flex flex-col justify-center items-center min-h-screen bg-transparent">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-md bg-blue-900 p-8 rounded-lg shadow-md border border-blue-200"
+        className="w-full max-w-md p-8 rounded-lg shadow-xl bg-transparent backdrop-blur-xl text-white "
       >
         <h2 className="text-2xl font-semibold text-center text-white mb-6">RESULTS</h2>
         
         <div className="mb-4">
-          <label htmlFor="name" className="block text-white mb-2">
+          <label htmlFor="name" className="block mb-2">
             Name
           </label>
           <input
@@ -49,7 +50,7 @@ const ContactForm = () => {
             name="name"
             value={formData.name}
             onChange={handleInputChange}
-            className="w-full p-3 border border-blue-300 bg-blue-900 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border border-blue-300 bg-transparent text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Enter your name"
             required
           />
@@ -65,7 +66,7 @@ const ContactForm = () => {
             name="email"
             value={formData.email}
             onChange={handleInputChange}
-            className="w-full p-3 border border-blue-300 text-white bg-blue-900 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border border-blue-300 text-white bg-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Enter your email"
             required
           />

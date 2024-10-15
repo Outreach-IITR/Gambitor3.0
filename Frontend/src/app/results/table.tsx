@@ -2,8 +2,8 @@
 
 const ResultTable = () => {
   return (
-    <div className="flex justify-center items-center min-h-screen bg-blue-50">
-      <div className="md:w-[60%] bg-blue-900 text-white md:text-2xl p-8 rounded-lg shadow-md">
+    <div className="flex justify-center items-center min-h-screen bg-transparent">
+      <div className="md:w-[60%] bg-transparent backdrop-blur-xl text-white md:text-2xl p-8 rounded-lg shadow-xl">
         <table className="w-full table-auto border-collapse border border-white">
           <thead>
             <tr>
