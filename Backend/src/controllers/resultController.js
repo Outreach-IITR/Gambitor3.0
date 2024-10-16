@@ -41,7 +41,7 @@ class ResultController {
 
   // Function to create a new result
   static createResult = asyncHandler(async (req, res) => {
-    const { contactNumber,name,rank } = req.body;
+    const { contactNumber,name } = req.body;
 
     const existingResult = await prisma.result.findFirst({
       where: {
@@ -53,14 +53,13 @@ class ResultController {
     if (existingResult) {
       throw new ApiError(400, 'Result already exists with the same name and contact number');
     }
-    const totalMarks = Number(req.body.totalMarks); // This will convert it to a number
+    const totalMarks = Number(req.body.totalMarks);
+    const rank = Number(req.body.rank); // This will convert it to a number
     const newResult = await prisma.result.create({
       data:{
         contactNumber,
         name,
         totalMarks,
-        totalPositiveMarks,
-        totalNegativeMarks,
         rank
       }
     });
