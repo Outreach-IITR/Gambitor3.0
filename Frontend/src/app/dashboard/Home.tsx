@@ -3,6 +3,7 @@ import Image from "next/image";
 import axios from "../https/api"
 import {useDispatch, useSelector } from "react-redux";
 import { ambassadorStart,ambassadorSuccess,ambassadorFailure } from "@/redux/user/userSlice";
+import { DiVim } from "react-icons/di";
 
 interface UserState {
   currentUser: any;
@@ -17,9 +18,9 @@ export default function Home(){
 
 
    const router = useRouter();
-    const updates = ["Exam will be conducted on 13th October." ,
-"Students registered for Areteox category kindly refer to previous year papers from the Metiox category.",
-"You can enroll as a School Ambassador now!!"
+    const updates = [{text:"exam will be conducted using Gambitor app. Ensure that you have it installed", button:"1"} ,
+{text:"Students registered for Areteox category kindly refer to previous year papers from the Metiox category."},
+{text:"You can enroll as a School Ambassador now!!"}
          
 ]
 const user = useSelector(((state:RootState) => state.user.currentUser.data))
@@ -55,7 +56,7 @@ const button= "w-[144px] font-bold sm:text-[20px] text-[14px] leading-[16.45px] 
                         <div className="h-[calc(100%-33px-28px)] text-justify flex ">
                         <ul className="flex flex-col list-inside list-disc">
                             {updates.map((updates, key)=>(
-                                <li key={key} className={key%2==0?'bg-blue-600 sm:py-4 py-1 px-5 sm:px-10 h-[7rem]':'bg-blue-500 h-[7rem] px-5 py-1 sm:py-4 sm:px-10'}>{updates}</li>
+                                <li key={key} className={key%2==0?'bg-blue-600 sm:py-4 py-1 px-5 sm:px-10 h-[7rem]':'bg-blue-500 h-[7rem] px-5 py-1 sm:py-4 sm:px-10'}>{updates.text}</li>
                             )
                             )}
                         </ul>
