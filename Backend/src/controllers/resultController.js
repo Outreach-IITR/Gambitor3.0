@@ -41,8 +41,8 @@ class ResultController {
 
   // Function to create a new result
   static createResult = asyncHandler(async (req, res) => {
-    const { contactNumber,name } = req.body;
-
+    const { contactNumber,name,category} = req.body;
+    console.log(req.body)
     const existingResult = await prisma.result.findFirst({
       where: {
         contactNumber,
@@ -60,7 +60,8 @@ class ResultController {
         contactNumber,
         name,
         totalMarks,
-        rank
+        rank,
+        category
       }
     });
     const response = new ApiResponse(200, newResult, "Result added successfully");
