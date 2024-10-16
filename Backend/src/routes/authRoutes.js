@@ -47,7 +47,7 @@ router.post("/verifyOtpPhone", AuthController.verifyOtpPhone);
 
 //info
 router.post('/user/:id/details', AuthController.updateAdditionalDetails);
-router.post('/upload', upload.single('file'), ResultController.upload);
+// router.post('/upload', upload.single('file'), ResultController.upload);
 router.post('/result', ResultController.createResult);
 router.get('/myresult', ResultController.getResults);
 export { router };

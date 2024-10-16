@@ -60,10 +60,8 @@ enum Role {
 model Result {
   id                  Int     @id @default(autoincrement())
   rank                Int?
-  email               String  @unique
+  contactNumber       String?
   name                String?
   category            String?
   totalMarks          Int?
-  totalPositiveMarks  Int?
-  totalNegativeMarks  Int?
 }

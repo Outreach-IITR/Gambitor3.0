@@ -10,29 +10,29 @@ class ResultController {
     if (!req.file) {
       throw new ApiError(400, 'No file provided');
     }
-
+    const category = req.body.category;
+    console.log(category);
     const fileData = req.file.buffer; // Get file data from the request
     const workbook = xlsx.read(fileData, { type: 'buffer' }); // Read the workbook
     const sheetName = workbook.SheetNames[0]; // Get the first sheet name
     const worksheet = workbook.Sheets[sheetName]; // Get the worksheet
     const data = xlsx.utils.sheet_to_json(worksheet); // Convert sheet data to JSON
-
+    console.log(data);
     const mappedData = data.map((row) => ({
-      rank: row.RANK,
-      email: row.EMAIL,
-      name: row.NAME,
-      category: row.CATEGORY,
+      rank: row.Rank,
+      contactNumber: row.Mobile,
+      name: row.Name,
+      category,
       totalMarks: row['TOTAL MARKS'],
-      totalPositiveMarks: row['TOTAL POSITIVE MARKS'],
-      totalNegativeMarks: row['TOTAL NEGATIVE MARKS'],
     }));
-
+    console.log(mappedData)
     try {
       await prisma.result.createMany({
         data: mappedData,
         skipDuplicates: true, // Optional: skip duplicates if needed
       });
-      return ApiResponse.success(res, 'Data from XLSX file uploaded and processed successfully');
+    const response = new ApiResponse(200, "Data from XLSX file uploaded and processed successfully");
+    return res.status(200).json(response);
     } catch (error) {
       console.error('Error saving data to the database:', error);
       throw new ApiError(500, 'An error occurred while saving the data to the database');
@@ -41,39 +41,56 @@ class ResultController {
 
   // Function to create a new result
   static createResult = asyncHandler(async (req, res) => {
-    const { email } = req.body;
+    const { contactNumber,name,rank } = req.body;
 
-    const existingResult = await prisma.result.findUnique({
-      where: { email },
-    });
+    const existingResult = await prisma.result.findFirst({
+      where: {
+        contactNumber,
+        name,
+      },
+    })
 
     if (existingResult) {
-      throw new ApiError(400, 'Result already exists with the same email');
+      throw new ApiError(400, 'Result already exists with the same name and contact number');
     }
-
+    const totalMarks = Number(req.body.totalMarks); // This will convert it to a number
     const newResult = await prisma.result.create({
-      data: req.body,
+      data:{
+        contactNumber,
+        name,
+        totalMarks,
+        totalPositiveMarks,
+        totalNegativeMarks,
+        rank
+      }
     });
-    return ApiResponse.success(res, 'Result Added Successfully', newResult);
+    const response = new ApiResponse(200, newResult, "Result added successfully");
+        
+    return res.status(200).json(response);
   });
 
   // Function to retrieve results by email
   static getResults = asyncHandler(async (req, res) => {
-    const { email } = req.query;
+    const { contactNumber,name } = req.body;
 
-    if (!email) {
-      throw new ApiError(400, 'Email parameter is missing in the request');
+    if (!contactNumber&&!name) {
+      throw new ApiError(400, 'Credentials missing');
     }
 
     const results = await prisma.result.findMany({
-      where: { email },
+      where: {
+        contactNumber,
+        name,
+      },
     });
 
     if (results.length === 0) {
-      throw new ApiError(404, 'No results found for the specified email');
+      throw new ApiError(404, 'No results found for the specified credentials');
     }
 
-    return ApiResponse.success(res, 'Results retrieved successfully', results);
+    const response = new ApiResponse(200, results, "Result fetched successfully");
+        
+    return res.status(200).json(response);
   });
 }
 
