@@ -70,16 +70,16 @@ class ResultController {
 
   // Function to retrieve results by email
   static getResults = asyncHandler(async (req, res) => {
-    const { contactNumber,name } = req.body;
+    const { contactNumber, name } = req.query;
 
-    if (!contactNumber&&!name) {
+    if (!contactNumber && !name) {
       throw new ApiError(400, 'Credentials missing');
     }
 
     const results = await prisma.result.findMany({
       where: {
-        contactNumber,
-        name,
+        contactNumber: contactNumber ? String(contactNumber) : undefined,
+        name: name ? String(name) : undefined,
       },
     });
 
@@ -88,7 +88,6 @@ class ResultController {
     }
 
     const response = new ApiResponse(200, results, "Result fetched successfully");
-        
     return res.status(200).json(response);
   });
 }
