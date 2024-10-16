@@ -1,17 +1,17 @@
 "use client";
-import Image from 'next/image';
-import { useState } from 'react';
-import axios from 'axios';
-import Table from "./table"; // Ensure this component is properly defined to accept data as props
+import Image from "next/image";
+import { useState } from "react";
+import axios from "axios";
+import Table from "./table";
 
 const ContactForm = () => {
   const [toggle, setToggle] = useState<boolean>(false);
   const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
+    name: "",
+    phone: "",
   });
-  const [error, setError] = useState<string>('');  // Error state for validation
-  const [result, setResult] = useState<any>(null); // Store fetched result
+  const [error, setError] = useState<string>("");
+  const [result, setResult] = useState<any>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -23,40 +23,51 @@ const ContactForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Trim whitespace from name and phone
+    const trimmedName = formData.name.trim();
+    const trimmedPhone = formData.phone.trim();
+
     const phoneRegex = /^\d{10}$/;
 
-    if (!phoneRegex.test(formData.phone)) {
-      setError('Phone number must be exactly and only 10 digits.');
+    if (!phoneRegex.test(trimmedPhone)) {
+      setError("Phone number must be exactly and only 10 digits.");
       return;
     }
 
-    setError('');
+    setError("");
 
     try {
-      const response = await axios.get('http://localhost:8000/api/v1/myresult', {
+      const response = await axios.get("http://localhost:8000/api/v1/myresult", {
         params: {
-          contactNumber: formData.phone,
-          name: formData.name,
+          contactNumber: trimmedPhone,
+          name: trimmedName,
         },
       });
 
       if (response.status === 200) {
         console.log(response.data.data[0]);
-        setResult(response.data.data[0]); // Set the fetched result
+        setResult(response.data.data[0]);
         setToggle(true);
       }
     } catch (err: any) {
       if (err.response?.status === 404) {
-        setError('No results found for the provided name and phone number.');
+        setError("No results found for the provided name and phone number.");
       } else {
-        setError('An error occurred while fetching the result.');
+        setError("An error occurred while fetching the result.");
       }
     }
   };
 
   return (
-    <div className='bg-gradient-to-b from-indigo-600 to-[#1d1d7a]'>
-      <Image src="/wave1.svg" height={500} width={500} alt="" className="w-full absolute left-0 z-1 mt-[10rem]" />
+    <div className="bg-gradient-to-b from-indigo-600 to-[#1d1d7a]">
+      <Image
+        src="/wave1.svg"
+        height={500}
+        width={500}
+        alt=""
+        className="w-full absolute left-0 z-1 mt-[10rem]"
+      />
       {!toggle ? (
         <div className="flex flex-col justify-center items-center min-h-screen bg-transparent">
           <form
@@ -95,7 +106,7 @@ const ContactForm = () => {
                 placeholder="Enter your phone number"
                 required
               />
-              {error && <p className="text-red-500 mt-2">{error}</p>}  {/* Display error message */}
+              {error && <p className="text-red-500 mt-2">{error}</p>}
             </div>
 
             <button
@@ -107,13 +118,7 @@ const ContactForm = () => {
           </form>
         </div>
       ) : (
-        <div>
-          {result ? (
-            <Table data={result} />
-          ) : (
-            <p>No results to display.</p>
-          )}
-        </div>
+        <div>{result ? <Table data={result} /> : <p>No results to display.</p>}</div>
       )}
     </div>
   );
