@@ -79,7 +79,10 @@ class ResultController {
     const results = await prisma.result.findMany({
       where: {
         contactNumber: contactNumber ? String(contactNumber) : undefined,
-        name: name ? String(name) : undefined,
+        name: name ? {
+          equals: String(name).toLowerCase(), // Convert name to lowercase
+          mode: 'insensitive' // Make the comparison case-insensitive
+        } : undefined,
       },
     });
 
@@ -89,7 +92,7 @@ class ResultController {
 
     const response = new ApiResponse(200, results, "Result fetched successfully");
     return res.status(200).json(response);
-  });
+});
 }
 
 export default ResultController;

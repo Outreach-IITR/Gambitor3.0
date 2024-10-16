@@ -1,9 +1,8 @@
 "use client";
-// components/ContactForm.tsx
 import Image from 'next/image';
 import { useState } from 'react';
 import axios from 'axios';
-import Table from "./table";
+import Table from "./table"; // Ensure this component is properly defined to accept data as props
 
 const ContactForm = () => {
   const [toggle, setToggle] = useState<boolean>(false);
@@ -27,7 +26,7 @@ const ContactForm = () => {
     const phoneRegex = /^\d{10}$/;
 
     if (!phoneRegex.test(formData.phone)) {
-      setError('Phone number must be exactly 10 digits.');
+      setError('Phone number must be exactly and only 10 digits.');
       return;
     }
 
@@ -42,8 +41,8 @@ const ContactForm = () => {
       });
 
       if (response.status === 200) {
-        console.log(response.data.data[0])
-        setResult(response.data.data[0]);
+        console.log(response.data.data[0]);
+        setResult(response.data.data[0]); // Set the fetched result
         setToggle(true);
       }
     } catch (err: any) {
@@ -110,12 +109,7 @@ const ContactForm = () => {
       ) : (
         <div>
           {result ? (
-            <div className="p-4 bg-white text-black">
-              <h3 className="text-2xl font-semibold">Result for {formData.name}</h3>
-              <p>Rank: {result.rank}</p>
-              <p>Total Marks: {result.totalMarks}</p>
-              <p>Category: {result.category}</p>
-            </div>
+            <Table data={result} />
           ) : (
             <p>No results to display.</p>
           )}
