@@ -15,6 +15,7 @@
     "boxicons": "^2.1.4",
     "multer": "^1.4.5-lts.1",
     "next": "14.2.3",
+    "pdf-lib": "^1.17.1",
     "react": "^18",
     "react-css-spinners": "^4.0.2",
     "react-dom": "^18",

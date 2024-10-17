@@ -110,12 +110,12 @@ export default function Navbar() {
             {modal &&  
             <div className='fixed z-50 top-0 w-[100%] h-[100vh] bg-transparent backdrop-blur-sm  flex justify-center items-center flex-col' onClick={toggleModal}>
                 <div className="max-w-[360px] h-[370px] p-[2rem] flex flex-col justify-center items-center space-y-5" style={backgroundImageStyle} onClick={childClick}>
-                    <h1 style={{fontFamily:'Cooper Black'}} className='text-[32px] leading-[37px] text-[#4C2D04] font-normal'>Register Now</h1>
+                    <h1 style={{fontFamily:'Cooper Black'}} className='text-[32px] leading-[37px] text-[#4C2D04] font-normal'>Results are Out !!</h1>
                     <p className='text-center font-overpass font-normal leading-[25.32px] text-[20px]'></p>
-                    <a href="/signup">
-                    <button className="w-[144px] h-[36px] rounded-[12px] bg-[#4C2D04] text-[20px] leading-[23px] text-[#FEFEFE] text-center " style={{fontFamily:'Cooper Black'}}>Register</button>
+                    <a href="/results">
+                    <button className="w-[144px] h-[36px] rounded-[12px] bg-[#4C2D04] text-[20px] leading-[23px] text-[#FEFEFE] text-center " style={{fontFamily:'Cooper Black'}}>Results</button>
                     </a>
-                    <p className='font-overpass font-normal text-lg leading-[28px] text-white text-center'><span className='text-[#4C2D04]'>Already registered?</span><a href="/login" className='cursor-pointer'> Click here to Login</a> </p>
+                    <p className='font-overpass font-normal text-lg leading-[28px] text-white text-center'><span className='text-[#4C2D04]'></span><a href="/login" className='cursor-pointer'> Click here to Login</a> </p>
                 </div>
                 <Image src="/chest.svg" alt="" height={250} width={347} onClick={childClick}></Image>
             </div>
